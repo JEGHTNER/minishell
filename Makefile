@@ -6,7 +6,7 @@
 #    By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/05 18:42:27 by jehelee           #+#    #+#              #
-#    Updated: 2023/04/05 19:41:37 by jehelee          ###   ########.fr        #
+#    Updated: 2023/04/06 20:23:03 by jehelee          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ NAME = minishell
 LIB_DIR		= ./lib/
 INC			=./inc/
 SRCS_DIR	= ./src/
-SRCS = main.c
+SRCS = test.c
 OBJ = $(addprefix $(SRCS_DIR), $(SRCS:.c=.o))
 
 CC = cc

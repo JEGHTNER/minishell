@@ -1,33 +1,51 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 19:02:23 by jehelee           #+#    #+#             */
-/*   Updated: 2023/04/05 21:08:42 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/04/06 20:27:57 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell_jehelee.h"
 #include <string.h>
 
-char    **cpy_env(char **envp)
-{
-    char **tmp;
-	char **my_env;
-	int	env_cnt = 0;
-	int	i;
+int	status;
 
-    tmp = envp;
-	
-    while (*tmp)
-    {
-        // printf("%s\n", *tmp);
+void	echo(char *str)
+{
+	printf("%s%%", str);
+}
+
+void	env(char **my_env)
+{
+	char	**tmp;
+
+	tmp = my_env;
+	while (*tmp)
+	{
+		printf("%s\n", *tmp);
+		tmp++;
+	}
+}
+
+char	**cpy_env(char **envp)
+{
+	char	**tmp;
+	char	**my_env;
+	int		env_cnt;
+	int		i;
+
+	tmp = envp;
+	env_cnt = 0;
+	while (*tmp)
+	{
 		env_cnt++;
-        tmp++;
-    }
+		tmp++;
+	}
 	my_env = malloc(sizeof(char *) * (env_cnt + 1));
 	i = -1;
 	while (++i < env_cnt)
@@ -36,28 +54,17 @@ char    **cpy_env(char **envp)
 	return (my_env);
 }
 
-int main(int ac, char ** av, char **envp)
+int	main(int ac, char **av, char **envp)
 {
-    char *value;
-    char **my_env = NULL;
+	// char	*value;
+	char	**my_env;
 
 	if (ac)
 		;
 	if (av)
 		;
-    my_env = cpy_env(envp);
-	char **tmp = my_env;
-	while (*tmp)
-    {
-        printf("%s\n", *tmp);
-        tmp++;
-    }
-    value = getenv("PATH");
-
-    if (value != NULL)
-    {
-        // printf("%s=%s\n", "PATH", value);
-        // printf("%s=%s\n", environ);
-    }
-    return 0;
+	my_env = cpy_env(envp);
+	echo("string test");
+	// env(my_env);
+	return 0;
 }
