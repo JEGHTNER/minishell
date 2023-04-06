@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 19:02:23 by jehelee           #+#    #+#             */
-/*   Updated: 2023/04/06 20:36:30 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/04/06 21:26:24 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,20 @@ void	pwd(void)
 		perror("getcwd error\n");
 	printf("%s\n", path);
 	return ;
+}
+
+void	cd(char **my_env, char *go_path)
+{
+	char	path[1024];
+	char	*new_path;
+
+	if( my_env)
+		;
+	if (getcwd(path, 1024) == NULL)
+		perror("getcwd error\n");
+	new_path = ft_strjoin(path, go_path);
+	chdir(new_path);
+	printf("%s\n", new_path);
 }
 
 char	**cpy_env(char **envp)

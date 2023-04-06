@@ -6,7 +6,7 @@
 #    By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/05 18:42:27 by jehelee           #+#    #+#              #
-#    Updated: 2023/04/06 20:23:03 by jehelee          ###   ########.fr        #
+#    Updated: 2023/04/06 21:28:31 by jehelee          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,16 +21,17 @@ OBJ = $(addprefix $(SRCS_DIR), $(SRCS:.c=.o))
 
 CC = cc
 CFLAGS = -Wextra -Werror -Wall -g
+LFLAGS = -L./inc/lib -l_jehelee
 
 #rules
 	
-all : ${NAME}
+all : libs ${NAME}
 
 %.o : %.c
-	$(CC) $(CFLAGS) -c -o $@ $^
+	$(CC) $(CFLAGS) -o $@ $^ $(LFLAGS) -I INC
 
 ${NAME} : ${OBJ}
-	$(CC) $(CFLAGS) -o $(NAME) ${OBJ}
+	$(CC) $(CFLAGS) -o $(NAME) ${OBJ} $(LFLAGS) -I INC
 
 clean	:
 	rm -rf $(OBJ)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 17:21:58 by jehelee           #+#    #+#             */
-/*   Updated: 2023/02/04 18:24:00 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/04/06 21:08:30 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,8 @@
 
 typedef struct s_list
 {
-	int				content;
+	char			*content;
 	int				index;
-	char			*string;
 	struct s_list	*next;
 	struct s_list	*prev;
 }				t_list;
@@ -60,7 +59,7 @@ char	*ft_strtrim(char const *string1, char const *trim_set);
 char	*ft_itoa(int number);
 char	**ft_split(char const *string, char seperator);
 char	*ft_strmapi(char const *string, char (*f)(unsigned int, char));
-t_list	*ft_lstnew(int content);
+t_list	*ft_lstnew(char *content);
 void	ft_lstadd_front(t_list **lst, t_list *new);
 int		ft_lstsize(t_list *lst);
 t_list	*ft_lstlast(t_list *lst);
