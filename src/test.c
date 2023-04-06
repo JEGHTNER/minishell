@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 19:02:23 by jehelee           #+#    #+#             */
-/*   Updated: 2023/04/06 20:27:57 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/04/06 20:36:30 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,16 @@ void	env(char **my_env)
 		printf("%s\n", *tmp);
 		tmp++;
 	}
+}
+
+void	pwd(void)
+{
+	char	path[1024];
+
+	if (getcwd(path, 1024) == NULL)
+		perror("getcwd error\n");
+	printf("%s\n", path);
+	return ;
 }
 
 char	**cpy_env(char **envp)
@@ -65,6 +75,7 @@ int	main(int ac, char **av, char **envp)
 		;
 	my_env = cpy_env(envp);
 	echo("string test");
+	pwd();
 	// env(my_env);
 	return 0;
 }
