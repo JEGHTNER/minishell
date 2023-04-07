@@ -6,7 +6,7 @@
 #    By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/05 18:42:27 by jehelee           #+#    #+#              #
-#    Updated: 2023/04/07 11:51:24 by jehelee          ###   ########.fr        #
+#    Updated: 2023/04/07 20:31:59 by jehelee          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,10 +31,10 @@ libs:
 	make -C $(LIB_DIR)
 
 %.o : %.c
-	$(CC)  -c  -I INC $(LFLAGS) -o $@ $^ 
+	$(CC)  -g -c  -I INC $(LFLAGS) -o $@ $^ 
 
 ${NAME} : ${OBJ}
-	$(CC) -o $(NAME) ${OBJ} -I ${INC} -L$(LIB_DIR) -l_jehelee
+	$(CC) -g -o $(NAME) ${OBJ} -I ${INC} -L$(LIB_DIR) -l_jehelee
 
 clean	:
 	make -C $(LIB_DIR) clean

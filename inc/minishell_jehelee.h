@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 18:41:51 by jehelee           #+#    #+#             */
-/*   Updated: 2023/04/05 19:51:24 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/04/07 15:59:10 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,9 @@
 
 typedef struct s_env_lst
 {
-    t_list  *content;
-    t_list  *next;
-}               t_env_lst;
+	t_list	*next;
+	t_list	*prev;
+	char	*env_string;
+}	t_env_lst;
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 19:02:23 by jehelee           #+#    #+#             */
-/*   Updated: 2023/04/07 13:57:00 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/04/07 21:07:20 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ void	echo(char *str, int option)
 
 void	env(char **my_env)
 {
-	char	**tmp;
+	t_list	*tmp;
 
-	tmp = my_env;
-	while (*tmp)
+	tmp = *my_env;
+	while (tmp)
 	{
-		printf("%s\n", *tmp);
-		tmp++;
+		printf("%s\n", tmp->content);
+		tmp = tmp->next;
 	}
 }
 
@@ -61,10 +61,18 @@ void	cd(char **my_env, char *go_path)
 	printf("%s\n", new_path);
 }
 
-char	**cpy_env(char **envp)
+void	export(char **my_env, char *string)
+{
+	if (string == NULL)
+	{
+		env(my_env);
+	}
+	
+}
+
+void	cpy_env(t_list *my_env, char **envp)
 {
 	char	**tmp;
-	char	**my_env;
 	int		env_cnt;
 	int		i;
 
@@ -75,27 +83,31 @@ char	**cpy_env(char **envp)
 		env_cnt++;
 		tmp++;
 	}
-	my_env = malloc(sizeof(char *) * (env_cnt + 1));
 	i = -1;
 	while (++i < env_cnt)
-		my_env[i] = strdup(envp[i]);
-	my_env[i] = NULL;
-	return (my_env);
+	{
+		t_list *envp_i = ft_lstnew(envp[i]);
+		ft_lstadd_back(&my_env, envp_i);
+	}
+	return ;
 }
 
 int	main(int ac, char **av, char **envp)
 {
 	// char	*value;
-	char	**my_env;
+	t_env_lst	*my_env;
 
 	if (ac)
 		;
 	if (av)
 		;
-	my_env = cpy_env(envp);
+	my_env = malloc(sizeof(t_list *));
+	if (!my_env)
+		return(1);
+	cpy_env(my_env, envp);
 	echo("string test", 0);
 	// pwd();
-	// env(my_env);
-	cd(my_env,"src");
+	env(my_env);
+	cd(my_env,"src"); 
 	return 0;
 }
