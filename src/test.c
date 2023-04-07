@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 19:02:23 by jehelee           #+#    #+#             */
-/*   Updated: 2023/04/07 11:49:39 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/04/07 13:57:00 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,12 @@
 
 int	status;
 
-void	echo(char *str)
+void	echo(char *str, int option)
 {
-	printf("%s%%", str);
+	if (option == 0)
+		printf("%s\n", str);
+	else
+		printf("%s%%", str);
 }
 
 void	env(char **my_env)
@@ -90,7 +93,7 @@ int	main(int ac, char **av, char **envp)
 	if (av)
 		;
 	my_env = cpy_env(envp);
-	// echo("string test");
+	echo("string test", 0);
 	// pwd();
 	// env(my_env);
 	cd(my_env,"src");
