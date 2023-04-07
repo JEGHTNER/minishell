@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 19:02:23 by jehelee           #+#    #+#             */
-/*   Updated: 2023/04/06 21:26:24 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/04/07 11:49:39 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,14 @@ void	cd(char **my_env, char *go_path)
 {
 	char	path[1024];
 	char	*new_path;
+	char	*tmp;
 
 	if( my_env)
 		;
 	if (getcwd(path, 1024) == NULL)
 		perror("getcwd error\n");
-	new_path = ft_strjoin(path, go_path);
+	tmp = ft_strjoin(path, "/");
+	new_path = ft_strjoin(tmp, go_path);
 	chdir(new_path);
 	printf("%s\n", new_path);
 }
@@ -88,8 +90,9 @@ int	main(int ac, char **av, char **envp)
 	if (av)
 		;
 	my_env = cpy_env(envp);
-	echo("string test");
-	pwd();
+	// echo("string test");
+	// pwd();
 	// env(my_env);
+	cd(my_env,"src");
 	return 0;
 }
