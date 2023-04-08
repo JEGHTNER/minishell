@@ -6,14 +6,14 @@
 /*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 19:02:23 by jehelee           #+#    #+#             */
-/*   Updated: 2023/04/08 20:55:22 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/04/08 21:43:22 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell_jehelee.h"
 #include <string.h>
 
-int	status;
+int	exit_status = 0;
 
 void	echo(char *str, int option)
 {
@@ -21,7 +21,7 @@ void	echo(char *str, int option)
 		printf("%s\n", str);
 	else
 		printf("%s%%", str);
-	status = 0;
+	exit_status = 0;
 }
 
 void	env(char **my_env)
@@ -34,6 +34,7 @@ void	env(char **my_env)
 		printf("%s\n", tmp->content);
 		tmp = tmp->next;
 	}
+	exit_status = 0;
 }
 
 void	pwd(void)
@@ -43,6 +44,7 @@ void	pwd(void)
 	if (getcwd(path, 1024) == NULL)
 		perror("getcwd error\n");
 	printf("%s\n", path);
+	exit_status = 0;
 	return ;
 }
 
@@ -121,17 +123,25 @@ void sort_env(t_list **my_env)
 void	export(t_list **my_env, char *string)
 {
 	t_list	*find;
+	t_list	*tmp;
 	char	**split;
 
 	if (string == NULL)
 	{
+		tmp = *my_env;
 		sort_env(my_env);
-		// env(my_env);
+		while (tmp)
+		{
+			printf("declare -x %s\n", tmp->content);
+			tmp = tmp->next;
+		}
+		exit_status = 0;
 		return ;
 	}
 	if (export_argument_check(string) == 0)
 	{
 		printf("export: '%s': not a valid identifier\n", string);
+		exit_status = 1;
 		return ;
 	}
 	split = ft_split(string, '=');
@@ -144,6 +154,7 @@ void	export(t_list **my_env, char *string)
 		free(find->content);
 		find->content = ft_strdup(string);
 	}
+	exit_status = 0;
 }
 
 void	cpy_env(t_list **my_env, char **envp)
@@ -181,7 +192,7 @@ int	main(int ac, char **av, char **envp)
 	echo("string test", 0);
 	// pwd();
 	cd(my_env, "..");
-	export(my_env, "test=a");
+	export(my_env, NULL);
 	env(my_env);
 	return 0;
 }
