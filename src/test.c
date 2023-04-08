@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 19:02:23 by jehelee           #+#    #+#             */
-/*   Updated: 2023/04/08 14:28:50 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/04/08 20:25:23 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	echo(char *str, int option)
 		printf("%s\n", str);
 	else
 		printf("%s%%", str);
+	status = 0;
 }
 
 void	env(char **my_env)
@@ -61,13 +62,61 @@ void	cd(char **my_env, char *go_path)
 	printf("%s\n", new_path);
 }
 
-void	export(char **my_env, char *string)
+t_list	*find_env(t_list **my_env, char *string)
 {
+	t_list	*tmp;
+
+	tmp = *my_env;
+	while (tmp)
+	{
+		if (ft_strncmp(tmp->content, string, ft_strlen(string)) == 0)
+			return (tmp);
+		tmp = tmp->next;
+	}
+	return (NULL);
+}
+
+int	export_argument_check(char *string)
+{
+	int	i;
+
+	i = 0;
+	if (ft_isalpha(string[0])== 0 && string[0] != '_')
+		return (0);
+	while (string[i])
+	{
+		if (ft_isalnum(string[i]) == 0 && string[i] != '_')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+void	export(t_list **my_env, char *string)
+{
+	t_list	*find;
+	char	**split;
+
 	if (string == NULL)
 	{
 		env(my_env);
+		return ;
 	}
-	
+	if (export_argument_check(string) == 0)
+	{
+		printf("export: '%s': not a valid identifier\n", string);
+		return ;
+	}
+	split = ft_split(string, '=');
+	printf("%s", split[0]);
+	find = find_env(my_env, split[0]);
+	if (find == NULL)
+		ft_lstadd_back(my_env, ft_lstnew(string));
+	else
+	{
+		free(find->content);
+		find->content = ft_strdup(string);
+	}
 }
 
 void	cpy_env(t_list **my_env, char **envp)
@@ -85,10 +134,7 @@ void	cpy_env(t_list **my_env, char **envp)
 	}
 	i = -1;
 	while (++i < env_cnt)
-	{
-		t_list *envp_i = ft_lstnew(envp[i]);
-		ft_lstadd_back(my_env, envp_i);
-	}
+		ft_lstadd_back(my_env, ft_lstnew(envp[i]));
 	return ;
 }
 
@@ -103,11 +149,12 @@ int	main(int ac, char **av, char **envp)
 		;
 	my_env = malloc(sizeof(t_list *));
 	if (!my_env)
-		return(1);
+		return (1);
 	cpy_env(my_env, envp);
 	echo("string test", 0);
 	// pwd();
-	env(my_env);
-	cd(my_env,"src"); 
+	cd(my_env, "..");
+	export(my_env, "1test==a");
+	// env(my_env);
 	return 0;
 }
