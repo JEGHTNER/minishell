@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 19:02:23 by jehelee           #+#    #+#             */
-/*   Updated: 2023/04/07 21:07:20 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/04/08 14:28:50 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	export(char **my_env, char *string)
 	
 }
 
-void	cpy_env(t_list *my_env, char **envp)
+void	cpy_env(t_list **my_env, char **envp)
 {
 	char	**tmp;
 	int		env_cnt;
@@ -87,7 +87,7 @@ void	cpy_env(t_list *my_env, char **envp)
 	while (++i < env_cnt)
 	{
 		t_list *envp_i = ft_lstnew(envp[i]);
-		ft_lstadd_back(&my_env, envp_i);
+		ft_lstadd_back(my_env, envp_i);
 	}
 	return ;
 }
@@ -95,7 +95,7 @@ void	cpy_env(t_list *my_env, char **envp)
 int	main(int ac, char **av, char **envp)
 {
 	// char	*value;
-	t_env_lst	*my_env;
+	t_env_lst	**my_env;
 
 	if (ac)
 		;
