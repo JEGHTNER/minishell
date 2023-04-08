@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 19:02:23 by jehelee           #+#    #+#             */
-/*   Updated: 2023/04/08 20:25:23 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/04/08 20:55:22 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	cd(char **my_env, char *go_path)
 	char	*new_path;
 	char	*tmp;
 
-	if( my_env)
+	if (my_env)
 		;
 	if (getcwd(path, 1024) == NULL)
 		perror("getcwd error\n");
@@ -85,11 +85,37 @@ int	export_argument_check(char *string)
 		return (0);
 	while (string[i])
 	{
+		if (string[i] == '=')
+			return (1);
 		if (ft_isalnum(string[i]) == 0 && string[i] != '_')
 			return (0);
 		i++;
 	}
 	return (1);
+}
+
+void sort_env(t_list **my_env)
+{
+	t_list	*tmp;
+	t_list	*tmp2;
+	char	*tmp_str;
+
+	tmp = *my_env;
+	while (tmp)
+	{
+		tmp2 = tmp->next;
+		while (tmp2)
+		{
+			if (ft_strncmp(tmp->content, tmp2->content, ft_strlen(tmp->content)) > 0)
+			{
+				tmp_str = tmp->content;
+				tmp->content = tmp2->content;
+				tmp2->content = tmp_str;
+			}
+			tmp2 = tmp2->next;
+		}
+		tmp = tmp->next;
+	}
 }
 
 void	export(t_list **my_env, char *string)
@@ -99,7 +125,8 @@ void	export(t_list **my_env, char *string)
 
 	if (string == NULL)
 	{
-		env(my_env);
+		sort_env(my_env);
+		// env(my_env);
 		return ;
 	}
 	if (export_argument_check(string) == 0)
@@ -108,7 +135,7 @@ void	export(t_list **my_env, char *string)
 		return ;
 	}
 	split = ft_split(string, '=');
-	printf("%s", split[0]);
+	// printf("%s", split[0]);
 	find = find_env(my_env, split[0]);
 	if (find == NULL)
 		ft_lstadd_back(my_env, ft_lstnew(string));
@@ -154,7 +181,7 @@ int	main(int ac, char **av, char **envp)
 	echo("string test", 0);
 	// pwd();
 	cd(my_env, "..");
-	export(my_env, "1test==a");
-	// env(my_env);
+	export(my_env, "test=a");
+	env(my_env);
 	return 0;
 }
