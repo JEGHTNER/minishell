@@ -27,14 +27,11 @@ typedef enum e_type
 	CMD, REDIR, PIPE, SEP, CTR_OP
 }	t_type;
 
-typedef struct s_node
+typedef struct s_token
 {
 	enum e_type		type;
 	char 			*data;
-	struct s_token	*left;
-	struct s_token	*right;
-}	t_node;
-
+}	t_token;
 
 
 #endif
