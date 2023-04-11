@@ -22,9 +22,21 @@
 #include <termios.h>
 #include <term.h>
 
+typedef struct s_env_lst
+{
+	struct s_env_lst	*next;
+	struct s_env_lst	*prev;
+	char				*key;
+	char				*value;
+}	t_env_lst;
+
 typedef enum e_type
 {
-	CMD, REDIR, PIPE, SEP, CTR_OP
+	CMD,
+	REDIR,
+	PIPE,
+	SEP,
+	CTR_OP
 }	t_type;
 
 typedef struct s_token
@@ -33,5 +45,7 @@ typedef struct s_token
 	char 			*data;
 }	t_token;
 
+//manage signal(SIGINT, SIGQUIT)
+void	signal_init(void);
 
 #endif
