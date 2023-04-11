@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 19:02:23 by jehelee           #+#    #+#             */
-/*   Updated: 2023/04/11 19:57:47 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/04/11 20:48:43 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,55 @@
 int	argument_check(char *string);
 t_list	*find_env(t_list **my_env, char *string);
 
-int	exit_status = 0;
+long long	exit_status = 0;
+
+int	check_isdigit(char *string)
+{
+	if (string == NULL)
+		return (1);
+	while (*string)
+	{
+		if (!ft_isdigit(*string))
+			return (0);
+		string++;
+	}
+	return (1);
+}
+
+void	check_exit_arguments(char **arguments)
+{
+	char	*tmp;
+	int		cnt;
+
+	tmp = *arguments;
+	cnt = 0;
+	while (tmp)
+	{
+		cnt++;
+		if (!check_isdigit(tmp))
+		{
+			exit_status = 255;
+			break ;
+		}
+		tmp++;
+	}
+	if (cnt > 1)
+	{
+		exit_status = 1;
+		printf("minishell: exit: too many arguments\n");
+	}
+	if (exit_status == 255)
+		printf("minishell: exit: %s: numeric argument required\n", tmp);
+}
+
+void	ft_exit(char **arguments)
+{
+	if (arguments == NULL)
+		exit(0);
+	if (*arguments == NULL)
+		exit(0);
+	check_exit_arguments(arguments);
+}
 
 void	echo(char *str, int option)
 {
@@ -76,6 +124,7 @@ void	unset(t_list **my_env, char *string)
 	if (find == NULL)
 		return ;
 	del_env(my_env, find);
+	exit_status = 0;
 }
 
 void	pwd(void)
@@ -259,5 +308,7 @@ int	main(int ac, char **av, char **envp)
 	cd(my_env, "..");
 	pwd();
 	env(my_env);
+	char extest[1] = {"a"};
+	ft_exit(extest);
 	return 0;
 }
