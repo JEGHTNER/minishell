@@ -3,15 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 19:02:23 by jehelee           #+#    #+#             */
-/*   Updated: 2023/04/08 21:43:22 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/04/11 19:57:47 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell_jehelee.h"
 #include <string.h>
+
+int	argument_check(char *string);
+t_list	*find_env(t_list **my_env, char *string);
 
 int	exit_status = 0;
 
@@ -24,7 +27,7 @@ void	echo(char *str, int option)
 	exit_status = 0;
 }
 
-void	env(char **my_env)
+void	env(t_list **my_env)
 {
 	t_list	*tmp;
 
@@ -35,6 +38,44 @@ void	env(char **my_env)
 		tmp = tmp->next;
 	}
 	exit_status = 0;
+}
+
+void	del_env(t_list **my_env, t_list *find)
+{
+	if (find == NULL)
+		return ;
+	if (find == *my_env)
+	{
+		*my_env = find->next;
+		if (*my_env)
+			(*my_env)->prev = NULL;
+		free(find->content);
+		free(find);
+		return ;
+	}
+	find->prev->next = find->next;
+	if (find->next)
+		find->next->prev = find->prev;
+	free(find->content);
+	free(find);
+	return ;
+}
+
+void	unset(t_list **my_env, char *string)
+{
+	t_list	*find;
+
+	if (string == NULL)
+		return ;
+	if (argument_check(string) == 0)
+	{
+		printf("unset: '%s': not a valid identifier\n", string);
+		exit_status = 1;
+	}
+	find = find_env(my_env, string);
+	if (find == NULL)
+		return ;
+	del_env(my_env, find);
 }
 
 void	pwd(void)
@@ -48,20 +89,39 @@ void	pwd(void)
 	return ;
 }
 
-void	cd(char **my_env, char *go_path)
+void	cd(t_list **my_env, char *go_path)
 {
 	char	path[1024];
 	char	*new_path;
 	char	*tmp;
+	t_list	*old_pwd;
+	t_list	*pwd;
 
 	if (my_env)
 		;
 	if (getcwd(path, 1024) == NULL)
 		perror("getcwd error\n");
+	pwd = find_env(my_env, "PWD");
+	old_pwd = find_env(my_env, "OLDPWD");
+	if (old_pwd == NULL)
+		ft_lstadd_back(my_env, ft_lstnew("OLDPWD="));
+	free(old_pwd->content);
+	old_pwd ->content = ft_strjoin("OLD", pwd->content);
 	tmp = ft_strjoin(path, "/");
 	new_path = ft_strjoin(tmp, go_path);
+	free(tmp);
+	if (access(new_path, F_OK) == -1)
+	{
+		exit_status = 1;
+		printf("bash: cd: %s: No such file or directory", go_path);
+	}
+	pwd->content = ft_strjoin("PWD=", new_path);
+	if (getcwd(path, 1024) == NULL)
+		perror("getcwd error\n");
+	pwd->content = ft_strjoin("PWD=", path);
 	chdir(new_path);
-	printf("%s\n", new_path);
+	free(new_path);
+	exit_status = 0;
 }
 
 t_list	*find_env(t_list **my_env, char *string)
@@ -78,7 +138,7 @@ t_list	*find_env(t_list **my_env, char *string)
 	return (NULL);
 }
 
-int	export_argument_check(char *string)
+int	argument_check(char *string)
 {
 	int	i;
 
@@ -138,7 +198,7 @@ void	export(t_list **my_env, char *string)
 		exit_status = 0;
 		return ;
 	}
-	if (export_argument_check(string) == 0)
+	if (argument_check(string) == 0)
 	{
 		printf("export: '%s': not a valid identifier\n", string);
 		exit_status = 1;
@@ -179,7 +239,7 @@ void	cpy_env(t_list **my_env, char **envp)
 int	main(int ac, char **av, char **envp)
 {
 	// char	*value;
-	t_env_lst	**my_env;
+	t_list	**my_env;
 
 	if (ac)
 		;
@@ -189,10 +249,15 @@ int	main(int ac, char **av, char **envp)
 	if (!my_env)
 		return (1);
 	cpy_env(my_env, envp);
-	echo("string test", 0);
-	// pwd();
+	// echo("string test", 0);
+	// env(my_env);
+	cd(my_env, "src");
+	pwd();
+	// export(my_env, NULL);
+	// env(my_env);
+	// unset(my_env, "test1");
 	cd(my_env, "..");
-	export(my_env, NULL);
+	pwd();
 	env(my_env);
 	return 0;
 }
