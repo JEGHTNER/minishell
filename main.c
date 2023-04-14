@@ -14,8 +14,8 @@ void	init_main(int ac, char **av, char **envp, t_env_lst **env_list)
 int main(int ac, char **av, char **envp)
 {
 	struct termios	term;
-	char			*line;																		
-	t_cmd			*cmd;
+	char			*line;
+	t_cmd			cmd;
 	t_env_lst		**env_lst;
 
 	if (ac != 1)
@@ -30,7 +30,8 @@ int main(int ac, char **av, char **envp)
 		if (line[0] != '\0')
 		{
 			add_history(line);
-			cmd = init_cmd();
+			lin
+			//line parse: ignore whitespace & check
 			//initiate cmd tree
 			//parse cmd & tokenize
 			//execute cmd with tokenized data
