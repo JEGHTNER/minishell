@@ -30,13 +30,12 @@ int main(int ac, char **av, char **envp)
 		if (line[0] != '\0')
 		{
 			add_history(line);
-			lin
-			//line parse: ignore whitespace & check
-			//initiate cmd tree
-			//parse cmd & tokenize
-			//execute cmd with tokenized data
+			line_parse(&cmd, line);
+			syntax_check(&cmd);
+			convert_tree(&cmd);
+			//execute cmd with parse tree
 		}
-		free(line);
+		ft_free(&cmd, line);
 	}
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	return (EXIT_SUCCESS);

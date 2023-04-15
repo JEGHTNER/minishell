@@ -37,6 +37,12 @@ typedef enum e_macro
 	NO
 }	t_macro;
 
+typedef enum e_quote
+{
+	NONE,
+	SINGLE,
+	DOUBLE
+}	t_quote;
 
 typedef struct s_env_lst
 {
@@ -61,6 +67,7 @@ typedef struct s_token
 
 typedef struct s_chunk
 {
+	t_quote			flag;
 	char			*data;
 	struct s_chunk	*next;
 }	t_chunk;
@@ -68,12 +75,26 @@ typedef struct s_chunk
 typedef struct s_cmd
 {
 	struct s_chunk	*chunk_head;
-	struct s_token	*head;
+	struct s_token	*tree_head;
 }	t_token;
 
 //manage signal(SIGINT, SIGQUIT)
 void	signal_init(void);
 
 //split line
+void	line_parse(t_cmd *cmd, char *line);
+
+//split line utils
+t_macro	is_whitespace(char tmp);
+
+//syntax check
+void	syntex_check(t_cmd *cmd);
+
+//syntax check utils
+
+//convert list to parse tree
+void	convert_tree(t_cmd *cmd);
+
+//parse tree utils
 
 #endif
