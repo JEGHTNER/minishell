@@ -21,6 +21,7 @@
 #include <dirent.h>
 #include <termios.h>
 #include <term.h>
+#include "libft/libft.h"
 
 typedef enum e_type
 {
@@ -36,13 +37,6 @@ typedef enum e_macro
 	YES,
 	NO
 }	t_macro;
-
-typedef enum e_quote
-{
-	NONE,
-	SINGLE,
-	DOUBLE
-}	t_quote;
 
 typedef struct s_env_lst
 {
@@ -65,18 +59,11 @@ typedef struct s_token
 	struct s_token	*right;
 }	t_token;
 
-typedef struct s_chunk
-{
-	t_quote			flag;
-	char			*data;
-	struct s_chunk	*next;
-}	t_chunk;
-
 typedef struct s_cmd
 {
-	struct s_chunk	*chunk_head;
+	struct s_list	*chunk_head;
 	struct s_token	*tree_head;
-}	t_token;
+}	t_cmd;
 
 //manage signal(SIGINT, SIGQUIT)
 void	signal_init(void);
@@ -85,7 +72,9 @@ void	signal_init(void);
 void	line_parse(t_cmd *cmd, char *line);
 
 //split line utils
-t_macro	is_whitespace(char tmp);
+void	manage_pipe(t_cmd *cmd, char *line, size_t *idx, size_t *quote);
+void	manage_quotation(t_cmd *cmd, char *line, size_t *idx, size_t *pipe);
+void	manage_chunk(t_cmd *cmd, char *line, size_t *idx);
 
 //syntax check
 void	syntex_check(t_cmd *cmd);
@@ -96,5 +85,9 @@ void	syntex_check(t_cmd *cmd);
 void	convert_tree(t_cmd *cmd);
 
 //parse tree utils
+
+//general utils
+void	ft_exit_with_error(char *message, char *specifier);
+t_macro	is_whitespace(char tmp);
 
 #endif
