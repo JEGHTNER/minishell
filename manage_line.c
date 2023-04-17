@@ -38,20 +38,17 @@ static size_t	check_side_quotation(char *line, size_t start)
 	char	quote;
 	int 	flag;
 
-	end_idx = ft_strlen(line) - 1;
 	quote = line[start];
 	if (line[start] == '\'')
 		flag = 0;
 	else
 		flag = 1;
-	while (start <= end_idx)
+	while (start <=
 	{
 		if (line[end_idx] == quote)
 			break ;
 		end_idx--;
 	}
-	if (start == end_idx)
-		ft_exit_with_error("syntax error: side quotation didn't match", 0);
 	return (end_idx);
 }
 
@@ -70,10 +67,6 @@ void	manage_quotation(t_cmd *cmd, char *line, size_t *idx, size_t *pipe)
 	end_idx = check_side_quotation(line, *idx);
 	check_quotation_match(line, *idx, end_idx);
 	quote = line[*idx];
-	while(1)
-	{
-
-	}
 
 }
 
