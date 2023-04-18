@@ -5,9 +5,7 @@
             "label": "debug",
             "command": "/usr/bin/make",
             "args": [
-                "${file}",
-                "-o",
-                "${fileDirname}/${fileBasenameNoExtension}"
+                "re"
             ],
             "options": {
                 "cwd": "${fileDirname}"

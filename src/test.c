@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 19:02:23 by jehelee           #+#    #+#             */
-/*   Updated: 2023/04/11 20:48:43 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/04/19 00:00:30 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,256 +14,37 @@
 #include <string.h>
 
 int	argument_check(char *string);
-t_list	*find_env(t_list **my_env, char *string);
 
 long long	exit_status = 0;
 
-int	check_isdigit(char *string)
+char	**get_path_args(t_list **my_env)
 {
-	if (string == NULL)
-		return (1);
-	while (*string)
-	{
-		if (!ft_isdigit(*string))
-			return (0);
-		string++;
-	}
-	return (1);
-}
+	int		i;
+	char	*path;
+	char	*new_envp;
+	t_list	*tmp;
 
-void	check_exit_arguments(char **arguments)
-{
-	char	*tmp;
-	int		cnt;
-
-	tmp = *arguments;
-	cnt = 0;
+	// if (!my_env || !*my_env)
+	// {
+	// 	new_envp = "PATH=/usr/local/bin:/usr/bin:/bin";
+	// 	if (ft_strncmp(new_envp, "PATH=", 5) == 0)
+	// 	{
+	// 		path = new_envp + 5;
+	// 		return (ft_split(path, ':'));
+	// 	}
+	// }
+	i = 0;
+	tmp = *my_env;
 	while (tmp)
 	{
-		cnt++;
-		if (!check_isdigit(tmp))
+		if (ft_strncmp(tmp->content, "PATH=", 5) == 0)
 		{
-			exit_status = 255;
-			break ;
+			path = tmp->content + 5;
+			return (ft_split(path, ':'));
 		}
-		tmp++;
-	}
-	if (cnt > 1)
-	{
-		exit_status = 1;
-		printf("minishell: exit: too many arguments\n");
-	}
-	if (exit_status == 255)
-		printf("minishell: exit: %s: numeric argument required\n", tmp);
-}
-
-void	ft_exit(char **arguments)
-{
-	if (arguments == NULL)
-		exit(0);
-	if (*arguments == NULL)
-		exit(0);
-	check_exit_arguments(arguments);
-}
-
-void	echo(char *str, int option)
-{
-	if (option == 0)
-		printf("%s\n", str);
-	else
-		printf("%s%%", str);
-	exit_status = 0;
-}
-
-void	env(t_list **my_env)
-{
-	t_list	*tmp;
-
-	tmp = *my_env;
-	while (tmp)
-	{
-		printf("%s\n", tmp->content);
-		tmp = tmp->next;
-	}
-	exit_status = 0;
-}
-
-void	del_env(t_list **my_env, t_list *find)
-{
-	if (find == NULL)
-		return ;
-	if (find == *my_env)
-	{
-		*my_env = find->next;
-		if (*my_env)
-			(*my_env)->prev = NULL;
-		free(find->content);
-		free(find);
-		return ;
-	}
-	find->prev->next = find->next;
-	if (find->next)
-		find->next->prev = find->prev;
-	free(find->content);
-	free(find);
-	return ;
-}
-
-void	unset(t_list **my_env, char *string)
-{
-	t_list	*find;
-
-	if (string == NULL)
-		return ;
-	if (argument_check(string) == 0)
-	{
-		printf("unset: '%s': not a valid identifier\n", string);
-		exit_status = 1;
-	}
-	find = find_env(my_env, string);
-	if (find == NULL)
-		return ;
-	del_env(my_env, find);
-	exit_status = 0;
-}
-
-void	pwd(void)
-{
-	char	path[1024];
-
-	if (getcwd(path, 1024) == NULL)
-		perror("getcwd error\n");
-	printf("%s\n", path);
-	exit_status = 0;
-	return ;
-}
-
-void	cd(t_list **my_env, char *go_path)
-{
-	char	path[1024];
-	char	*new_path;
-	char	*tmp;
-	t_list	*old_pwd;
-	t_list	*pwd;
-
-	if (my_env)
-		;
-	if (getcwd(path, 1024) == NULL)
-		perror("getcwd error\n");
-	pwd = find_env(my_env, "PWD");
-	old_pwd = find_env(my_env, "OLDPWD");
-	if (old_pwd == NULL)
-		ft_lstadd_back(my_env, ft_lstnew("OLDPWD="));
-	free(old_pwd->content);
-	old_pwd ->content = ft_strjoin("OLD", pwd->content);
-	tmp = ft_strjoin(path, "/");
-	new_path = ft_strjoin(tmp, go_path);
-	free(tmp);
-	if (access(new_path, F_OK) == -1)
-	{
-		exit_status = 1;
-		printf("bash: cd: %s: No such file or directory", go_path);
-	}
-	pwd->content = ft_strjoin("PWD=", new_path);
-	if (getcwd(path, 1024) == NULL)
-		perror("getcwd error\n");
-	pwd->content = ft_strjoin("PWD=", path);
-	chdir(new_path);
-	free(new_path);
-	exit_status = 0;
-}
-
-t_list	*find_env(t_list **my_env, char *string)
-{
-	t_list	*tmp;
-
-	tmp = *my_env;
-	while (tmp)
-	{
-		if (ft_strncmp(tmp->content, string, ft_strlen(string)) == 0)
-			return (tmp);
 		tmp = tmp->next;
 	}
 	return (NULL);
-}
-
-int	argument_check(char *string)
-{
-	int	i;
-
-	i = 0;
-	if (ft_isalpha(string[0])== 0 && string[0] != '_')
-		return (0);
-	while (string[i])
-	{
-		if (string[i] == '=')
-			return (1);
-		if (ft_isalnum(string[i]) == 0 && string[i] != '_')
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-void sort_env(t_list **my_env)
-{
-	t_list	*tmp;
-	t_list	*tmp2;
-	char	*tmp_str;
-
-	tmp = *my_env;
-	while (tmp)
-	{
-		tmp2 = tmp->next;
-		while (tmp2)
-		{
-			if (ft_strncmp(tmp->content, tmp2->content, ft_strlen(tmp->content)) > 0)
-			{
-				tmp_str = tmp->content;
-				tmp->content = tmp2->content;
-				tmp2->content = tmp_str;
-			}
-			tmp2 = tmp2->next;
-		}
-		tmp = tmp->next;
-	}
-}
-
-void	export(t_list **my_env, char *string)
-{
-	t_list	*find;
-	t_list	*tmp;
-	char	**split;
-
-	if (string == NULL)
-	{
-		tmp = *my_env;
-		sort_env(my_env);
-		while (tmp)
-		{
-			printf("declare -x %s\n", tmp->content);
-			tmp = tmp->next;
-		}
-		exit_status = 0;
-		return ;
-	}
-	if (argument_check(string) == 0)
-	{
-		printf("export: '%s': not a valid identifier\n", string);
-		exit_status = 1;
-		return ;
-	}
-	split = ft_split(string, '=');
-	// printf("%s", split[0]);
-	find = find_env(my_env, split[0]);
-	if (find == NULL)
-		ft_lstadd_back(my_env, ft_lstnew(string));
-	else
-	{
-		free(find->content);
-		find->content = ft_strdup(string);
-	}
-	exit_status = 0;
 }
 
 void	cpy_env(t_list **my_env, char **envp)
@@ -307,8 +88,68 @@ int	main(int ac, char **av, char **envp)
 	// unset(my_env, "test1");
 	cd(my_env, "..");
 	pwd();
-	env(my_env);
-	char extest[1] = {"a"};
+	// env(my_env);
+	char *extest[2] = {"1a", NULL};
+	// exec_pipe(my_env, cmd);
 	ft_exit(extest);
+	printf("exit status: %lld ", exit_status);
 	return 0;
 }
+// int	exec_pipe(t_list *cur_proc, char *cmd, t_list **path_args)
+// {
+// 	char	**cmd_arr;
+// 	int		i;
+// 	int		pipe_fd[2];
+// 	int		pid;
+
+// 	path = get_path(t_list *cur_proc, )
+// 	i = 0;
+// 	while (cmd_arr[i])
+// 	{
+// 		pipe(pipe_fd);
+// 		pid = fork();
+// 		if (pid == 0)
+// 		{
+// 			dup2(fd[1], 1);
+// 			close(fd[0]);
+// 			close(fd[1]);
+// 			execve(cmd_arr[i], cmd_arr, NULL);
+// 		}
+// 		else
+// 		{
+// 			dup2(fd[0], 0);
+// 			close(fd[0]);
+// 			close(fd[1]);
+// 			wait(NULL);
+// 		}
+// 		i++;
+// 	}
+// }
+
+// void		exec_process(t_list *head, t_list **my_env)
+// {
+// 	t_list	*cur_proc;
+// 	t_cmd	*cmd;
+// 	char	**path_args;
+
+// 	path_args = get_path_args(my_env);
+// 	cur_proc = head->next;
+// 	while (cur_proc != NULL)
+// 	{
+// 		cmd = cur_proc->content;
+// 		if (cmd->cmdlines[0])
+// 		{
+// 			if (cmd->has_redir == 1)
+// 			{
+// 				exec_redir(cmd, cmd->cmdlines);
+// 				break ;
+// 			}
+// 			if ((check_builtin(cmd->cmdlines) == TRUE))
+// 				exec_builtin(cmd, cmd->cmdlines);
+// 			else
+// 				exec_pipe(cur_proc, cmd);
+// 		}
+// 		cur_proc = cur_proc->next;
+// 	}
+// 	ft_lstclear(&head, free_cmdline);
+// }

@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 20:16:51 by jehelee           #+#    #+#             */
-/*   Updated: 2023/03/05 00:37:17 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/04/18 23:44:25 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void		here_doc_tmp(char *limiter);
 int			is_here_doc(t_pipex *pipex, char *argv_i);
 
 //init_pipex functions
-char		**get_path_args(char *envp[]);
+// char		**get_path_args(char *envp[]);
 int			check_sh(char *cmd);
 char		*get_path(char *cmd, char **path_args);
 void		init_pipex(t_pipex *pipex, int argc, char **argv, char *envp[]);

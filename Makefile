@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+         #
+#    By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/05 18:42:27 by jehelee           #+#    #+#              #
-#    Updated: 2023/04/07 20:31:59 by jehelee          ###   ########.fr        #
+#    Updated: 2023/04/16 14:21:10 by jehelee          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ NAME = minishell
 LIB_DIR		= ./inc/lib/
 INC			=./inc/
 SRCS_DIR	= ./src/
-SRCS = test.c
+SRCS = test.c built_in_func.c built_in_func2.c built_in_utils.c built_in_utils2.c \
+
 OBJ = $(addprefix $(SRCS_DIR), $(SRCS:.c=.o))
 
 CC = cc
@@ -46,8 +47,5 @@ fclean	:
 	rm -rf	$(NAME)
 
 re		: fclean all
-
-# bonus: 
-# 	make WITH_BONUS=1 all
 
 .PHONY: all libs clean fclean re bonus
