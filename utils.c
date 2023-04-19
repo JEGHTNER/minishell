@@ -26,3 +26,18 @@ void	ft_exit_with_error(char *message, char *specifier)
 	exit(EXIT_FAILURE);
 	return ;
 }
+
+char	*strchop(char *src, size_t start, size_t end)
+{
+	size_t	idx;
+	char *	ret;
+
+	idx = 0;
+	ret = (char *)malloc(end - start + 1);
+	if (!ret)
+		return ((char *)0);
+	while (idx <= end - start)
+		ret = src[idx++];
+	ret[end - start + 1] = '\0';
+	return (ret);
+}

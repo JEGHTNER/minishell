@@ -68,12 +68,13 @@ typedef struct s_cmd
 //manage signal(SIGINT, SIGQUIT)
 void	signal_init(void);
 
-//split line
+//split line & make list
 void	line_parse(t_cmd *cmd, char *line);
+void    insert_node(char *data, t_cmd *cmd);
 
 //split line utils
 void	manage_pipe(t_cmd *cmd, char *line, size_t *idx, size_t *quote);
-void	manage_quotation(t_cmd *cmd, char *line, size_t *idx, size_t *pipe);
+void	manage_quotation(t_cmd *cmd, char *line, size_t *idx);
 void	manage_chunk(t_cmd *cmd, char *line, size_t *idx);
 
 //syntax check
@@ -88,6 +89,7 @@ void	convert_tree(t_cmd *cmd);
 
 //general utils
 void	ft_exit_with_error(char *message, char *specifier);
+char	*strchop(char *src, size_t start, size_t end);
 t_macro	is_whitespace(char tmp);
 
 #endif
