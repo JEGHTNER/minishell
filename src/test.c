@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 19:02:23 by jehelee           #+#    #+#             */
-/*   Updated: 2023/04/19 19:47:34 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/04/19 21:19:25 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 int	argument_check(char *string);
 void	search_tree(t_token *node, t_list **my_env);
 int	execute_tree(t_token *node, t_list **my_env);
+int	exec_pipe(t_token *node);
+int	exec_cmd(t_token *node, t_list **my_env);
 
 
 long long	exit_status = 0;
@@ -146,7 +148,8 @@ int	main(int ac, char **av, char **envp)
 	
 	init_token(&first, "ls -al", my_env);
 	init_token(&second, "|", my_env);
-	init_token(&third, "ls -l", my_env);
+	second.type = PIPE;
+	init_token(&third, "wc -l", my_env);
 
 	*head = second;
 	head->left = &first;
@@ -170,12 +173,18 @@ int	execute_tree(t_token *node, t_list **my_env)
 {
 	int pid;
 	printf("%s\n",node->data);
-	char **argv =ft_split(node->data, " ");
+	char **argv = ft_split(node->data, ' ');
+	if (node->type == PIPE)
+		exec_pipe(node);
+	// if (node->type == REDIR)
+	// 	exec_redir(node);
+	// if (node->type == CMD)
+	// 	exec_cmd(node);
 	pid = fork();
 	if (pid == 0)
 	{
-		printf("child\n");
-		execve(node->cmd_path, argv, my_env);
+		exec_cmd(node, my_env);
+		// execve(node->cmd_path, argv, my_env);
 		exit(2);
 	}
 	printf("parent\n");
@@ -192,13 +201,13 @@ int	execute_tree(t_token *node, t_list **my_env)
 
 int	exec_pipe(t_token *node)
 {
+	node->pipe_fd = malloc(sizeof(int *) * 2);
 	if (pipe(node->pipe_fd) < 0)
 		perror("pipe error");
-	if (node->right)
-		node->right->pipe_fd = node->pipe_fd;
 	if (node->left)
 		node->left->pipe_fd = node->pipe_fd;
-
+	if (node->right)
+		node->right->pipe_fd = node->pipe_fd;
 }
 
 int	exec_cmd(t_token *node, t_list **my_env)
@@ -209,9 +218,10 @@ int	exec_cmd(t_token *node, t_list **my_env)
 	char	**path_args;
 	char	*path;
 
+	char **cmd_args = ft_split(node->data, ' ');
 	path_args = get_path_args(my_env);
-	path = get_path(cmd_arr[0], path_args);
-
+	path = get_path(cmd_args[0], path_args);
+	printf("path = %s\n", path);
 	pid = fork();
 	if (pid < 0)
 		perror("pipe");
@@ -222,13 +232,13 @@ int	exec_cmd(t_token *node, t_list **my_env)
 			close(node->pipe_fd[READ]);
 			dup2(node->pipe_fd[WRITE], STDOUT_FILENO);
 			close(node->pipe_fd[WRITE]);
-			if (execve(path, node->data, my_env) < 0)
+			if (execve(path, cmd_args, my_env) < 0)
 			{
 				perror("execve");
 				exit(127);
 			}
 		}
-		if (execve(path, node->data, my_env) < 0)
+		if (execve(path, cmd_args, my_env) < 0)
 		{
 			perror("execve");
 			exit(127);	
