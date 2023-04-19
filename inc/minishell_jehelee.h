@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_jehelee.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 18:41:51 by jehelee           #+#    #+#             */
-/*   Updated: 2023/04/18 23:49:59 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/04/19 18:49:07 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,41 @@
 # include "./lib/include/libft.h"
 # include "./lib/include/pipex_bonus.h"
 
+typedef enum s_pipe_fd
+{
+	READ,
+	WRITE
+} t_pipe_fd;
+
+typedef enum e_type
+{
+	CMD,
+	REDIR,
+	PIPE,
+	SEP,
+	CTR_OP
+}	t_type;
+
 typedef struct s_env_lst
 {
 	t_list	*next;
 	t_list	*prev;
 	char	*env_string;
 }	t_env_lst;
+
+typedef struct s_token
+{
+	enum e_type		type;
+	char 			*data;
+	//output
+	//input
+	//is_env
+	//is_pipe
+	int				*pipe_fd;
+	char			*cmd_path;
+	struct s_token	*left;
+	struct s_token	*right;
+}	t_token;
 
 // typedef struct s_pipex
 // {

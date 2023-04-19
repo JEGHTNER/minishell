@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 19:02:23 by jehelee           #+#    #+#             */
-/*   Updated: 2023/04/19 00:00:30 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/04/19 19:47:34 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,38 @@
 #include <string.h>
 
 int	argument_check(char *string);
+void	search_tree(t_token *node, t_list **my_env);
+int	execute_tree(t_token *node, t_list **my_env);
+
 
 long long	exit_status = 0;
+
+char	*get_path(char *cmd, char **path_args)
+{
+	int		i;
+	char	*tmp;
+	char	*tmp2;
+
+	if (!cmd || !path_args)
+		return (NULL);
+	if (access(cmd, X_OK) == 0)
+		return (ft_strdup(cmd));
+	i = 0;
+	while (path_args[i])
+	{
+		tmp = ft_strjoin(path_args[i], "/");
+		if (!tmp)
+			return (NULL);
+		tmp2 = ft_strjoin(tmp, cmd);
+		free(tmp);
+		if (access(tmp2, X_OK) == 0)
+			return (tmp2);
+		free(tmp2);
+		i++;
+	}
+	return (NULL);
+}
+
 
 char	**get_path_args(t_list **my_env)
 {
@@ -66,15 +96,31 @@ void	cpy_env(t_list **my_env, char **envp)
 	return ;
 }
 
+int init_token(t_token *token, char* str, t_list **my_env)
+{
+	char **path_args;
+	char **cmd_args = ft_split(str, ' ');
+	path_args = get_path_args(my_env);
+	token->cmd_path = get_path(cmd_args[0], path_args);
+	token->data = str;
+	token->left =NULL;
+	token->right =NULL;
+	token->pipe_fd = 0;
+}
+
 int	main(int ac, char **av, char **envp)
 {
 	// char	*value;
 	t_list	**my_env;
+	int		back_up_stdin;
+	int		back_up_stdout;
 
 	if (ac)
 		;
 	if (av)
 		;
+	back_up_stdin = dup(STDIN_FILENO);
+	back_up_stdout = dup(STDOUT_FILENO);
 	my_env = malloc(sizeof(t_list *));
 	if (!my_env)
 		return (1);
@@ -92,9 +138,113 @@ int	main(int ac, char **av, char **envp)
 	char *extest[2] = {"1a", NULL};
 	// exec_pipe(my_env, cmd);
 	ft_exit(extest);
-	printf("exit status: %lld ", exit_status);
+	printf("exit status: %lld \n", exit_status);
+	t_token *head;
+	t_token	first;
+	t_token second;
+	t_token third;
+	
+	init_token(&first, "ls -al", my_env);
+	init_token(&second, "|", my_env);
+	init_token(&third, "ls -l", my_env);
+
+	*head = second;
+	head->left = &first;
+	head->right = &third;
+	search_tree(head, my_env);
+	dup2(back_up_stdin, STDIN_FILENO);
+	dup2(back_up_stdout, STDOUT_FILENO);
 	return 0;
 }
+
+void	search_tree(t_token *node, t_list **my_env)
+{
+	execute_tree(node, my_env);
+	if (node->left != NULL)
+		search_tree(node->left, my_env);
+	if (node->right != NULL)
+		search_tree(node->right, my_env);
+}
+
+int	execute_tree(t_token *node, t_list **my_env)
+{
+	int pid;
+	printf("%s\n",node->data);
+	char **argv =ft_split(node->data, " ");
+	pid = fork();
+	if (pid == 0)
+	{
+		printf("child\n");
+		execve(node->cmd_path, argv, my_env);
+		exit(2);
+	}
+	printf("parent\n");
+
+	// wait(NULL);
+	// if (node->type == PIPE)
+	// 	exec_pipe();
+	// if (node->type == CMD)
+	// 	exec_cmd(node->data, my_env);
+	// if (node->type == REDIR)
+	// 	exec_redir();
+
+}
+
+int	exec_pipe(t_token *node)
+{
+	if (pipe(node->pipe_fd) < 0)
+		perror("pipe error");
+	if (node->right)
+		node->right->pipe_fd = node->pipe_fd;
+	if (node->left)
+		node->left->pipe_fd = node->pipe_fd;
+
+}
+
+int	exec_cmd(t_token *node, t_list **my_env)
+{
+	char	**cmd_arr;
+	int		i;
+	int		pid;
+	char	**path_args;
+	char	*path;
+
+	path_args = get_path_args(my_env);
+	path = get_path(cmd_arr[0], path_args);
+
+	pid = fork();
+	if (pid < 0)
+		perror("pipe");
+	if (pid == 0) // child
+	{
+		if (node->pipe_fd)
+		{
+			close(node->pipe_fd[READ]);
+			dup2(node->pipe_fd[WRITE], STDOUT_FILENO);
+			close(node->pipe_fd[WRITE]);
+			if (execve(path, node->data, my_env) < 0)
+			{
+				perror("execve");
+				exit(127);
+			}
+		}
+		if (execve(path, node->data, my_env) < 0)
+		{
+			perror("execve");
+			exit(127);	
+		}
+	}
+	else // parent
+	{
+		if (node->pipe_fd)
+		{
+			close(node->pipe_fd[WRITE]);
+			dup2(node->pipe_fd[READ], STDIN_FILENO);
+			close(node->pipe_fd[READ]);
+		}
+	}
+}
+
 // int	exec_pipe(t_list *cur_proc, char *cmd, t_list **path_args)
 // {
 // 	char	**cmd_arr;
