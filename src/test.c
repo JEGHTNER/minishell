@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 19:02:23 by jehelee           #+#    #+#             */
-/*   Updated: 2023/04/19 21:19:25 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/04/20 21:02:06 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,36 +129,41 @@ int	main(int ac, char **av, char **envp)
 	cpy_env(my_env, envp);
 	// echo("string test", 0);
 	// env(my_env);
-	cd(my_env, "src");
-	pwd();
+	// cd(my_env, "src");
+	// pwd();
 	// export(my_env, NULL);
 	// env(my_env);
 	// unset(my_env, "test1");
-	cd(my_env, "..");
-	pwd();
+	// cd(my_env, "..");
+	// pwd();
 	// env(my_env);
 	char *extest[2] = {"1a", NULL};
 	// exec_pipe(my_env, cmd);
-	ft_exit(extest);
-	printf("exit status: %lld \n", exit_status);
+	// ft_exit(extest);
+	// printf("exit status: %lld \n", exit_status);
 	t_token *head;
 	t_token	first;
 	t_token second;
 	t_token third;
 	
 	init_token(&first, "ls -al", my_env);
+	first.type = CMD;
 	init_token(&second, "|", my_env);
 	second.type = PIPE;
 	init_token(&third, "wc -l", my_env);
+	third.type = CMD;
 
-	*head = second;
+	head = &second;
 	head->left = &first;
 	head->right = &third;
 	search_tree(head, my_env);
-	dup2(back_up_stdin, STDIN_FILENO);
-	dup2(back_up_stdout, STDOUT_FILENO);
-	return 0;
+	// dup2(back_up_stdin, STDIN_FILENO);
+	// dup2(back_up_stdout, STDOUT_FILENO);
+
+	return(0);
 }
+
+
 
 void	search_tree(t_token *node, t_list **my_env)
 {
@@ -180,14 +185,11 @@ int	execute_tree(t_token *node, t_list **my_env)
 	// 	exec_redir(node);
 	// if (node->type == CMD)
 	// 	exec_cmd(node);
-	pid = fork();
-	if (pid == 0)
+	else if (node->type == CMD)
 	{
 		exec_cmd(node, my_env);
-		// execve(node->cmd_path, argv, my_env);
-		exit(2);
 	}
-	printf("parent\n");
+		// execve(node->cmd_path, argv, my_env);
 
 	// wait(NULL);
 	// if (node->type == PIPE)
@@ -241,11 +243,12 @@ int	exec_cmd(t_token *node, t_list **my_env)
 		if (execve(path, cmd_args, my_env) < 0)
 		{
 			perror("execve");
-			exit(127);	
+			exit(127);
 		}
 	}
 	else // parent
 	{
+		// wait(NULL);
 		if (node->pipe_fd)
 		{
 			close(node->pipe_fd[WRITE]);
