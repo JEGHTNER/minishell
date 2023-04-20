@@ -19,8 +19,16 @@
 # include <unistd.h>
 # include <limits.h>
 
+typedef enum e_quote
+{
+	NONE,
+	SINGLE,
+	DOUBLE
+}	t_quote;
+
 typedef struct s_list
 {
+	enum 			e_quote;
 	void			*content;
 	struct s_list	*next;
 }					t_list;
