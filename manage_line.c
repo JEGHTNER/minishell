@@ -15,7 +15,7 @@
 void	manage_pipe(t_cmd *cmd, char *line, size_t *idx, size_t *quote)
 {
 	if (cmd->chunk_head == 0)
-		ft_exit_with_error("syntax error near unexpected token", "`|'");
+		ft_exit_with_error("syntax error near unexpected token", "'|'");
 	else
 	{
 		if (line[*idx + 1] == '|')

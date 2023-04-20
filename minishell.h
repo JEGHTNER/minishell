@@ -71,6 +71,7 @@ void	signal_init(void);
 //split line & make list
 void	line_parse(t_cmd *cmd, char *line);
 void    insert_node(char *data, t_cmd *cmd);
+size_t	find_node(char *to_find, t_cmd *cmd);
 
 //split line utils
 void	manage_pipe(t_cmd *cmd, char *line, size_t *idx, size_t *quote);
@@ -91,5 +92,6 @@ void	convert_tree(t_cmd *cmd);
 void	ft_exit_with_error(char *message, char *specifier);
 char	*strchop(char *src, size_t start, size_t end);
 t_macro	is_whitespace(char tmp);
+t_macro is_everything_whitespace(char *tmp);
 
 #endif

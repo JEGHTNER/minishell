@@ -21,16 +21,20 @@ static size_t	check_side_quotation(char *line, size_t start)
 	return (idx);
 }
 
-static char *quotation_to_string(char *line, size_t *idx)
+static char	*quotation_to_string(char *line, size_t *idx, char *data)
 {
-	char	*data;
-	char	*env;
+	char	*tmp;
+	char	*before;
 	size_t	start_idx;
 	size_t	end_idx;
 
+	if (data == 0)
+		data = ft_strdup("");
 	end_idx = check_side_quotation(line, *idx);
 	start_idx = *idx + 1;
-	data = strchop(line, start_idx, *idx - 1);
+	tmp = strchop(line, start_idx, *idx - 1);
+	data = ft_strjoin(data, tmp);
+	*idx = end_idx + 1;
     return (data);
 }
 
@@ -43,8 +47,8 @@ static char	*check_remain(char *line, size_t *idx, char *data)
 	{
 		while (is_whitespace(line[*idx]) == NO)
 		{
-			if (line[*line] == '\'' || line[*line] == '\"')
-                data = quotation_to_string(line, idx);
+			if (line[*idx] == '\'' || line[*idx] == '\"')
+                data = quotation_to_string(line, idx, data);
 			*idx++;
 		}
 		return (data);
@@ -55,9 +59,10 @@ static char	*check_remain(char *line, size_t *idx, char *data)
 
 void	manage_quotation(t_cmd *cmd, char *line, size_t *idx)
 {
-    char *data;
+    char	*data;
 
-    data = quotation_to_string(line, idx);
+	data = 0;
+    data = quotation_to_string(line, idx, data);
 	data = check_remain(line, idx, data);
 	insert_node(data, cmd);
 }

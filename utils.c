@@ -9,8 +9,18 @@
 /*   Updated: 2023/04/17 15:27:14 by joon-lee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "minishell.h"
+
+t_macro is_everything_whitespace(char *tmp)
+{
+	while (*tmp)
+	{
+		if (is_whitespace(*tmp) == NO)
+			return (NO);
+		tmp++;
+	}
+	return (YES);
+}
 
 t_macro	is_whitespace(char tmp)
 {
