@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
+#include <stdio.h>
 
 static void	init_main(int ac, char **av, char **envp, t_env_lst **env_list)
 {
@@ -18,15 +19,16 @@ static void	init_main(int ac, char **av, char **envp, t_env_lst **env_list)
 	tcgetattr(STDIN_FILENO, &term);
 	term.c_lflag &= ~(ECHOCTL);
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
-	signal_init();
+	// signal_init();
 	// initiate env list
 }
 
 static void	parse_n_execute(t_cmd *cmd, char *line)
 {
 	line_parse(cmd, line);
+	print_list(cmd->chunk_head);
 	syntax_check(cmd);
-	convert_tree(cmd);
+	// convert_tree(cmd);
 	//execute cmd with parse tree
 }
 
@@ -46,11 +48,12 @@ int main(int ac, char **av, char **envp)
 		line = readline("MINISHELL $");
 		if (!line)
 			break ;
-		if (line[0] != '\0')
+		printf("%s", line);
+		if (*line != '\0')
 			add_history(line);
-		if (line[0] != '\0' && is_everything_whitespace(line) == NO)
+		if (*line != '\0' && is_everything_whitespace(line) == NO)
 			parse_n_execute(&cmd, line);
-		ft_free(&cmd, line);
+		// ft_free(&cmd, line);
 	}
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	return (EXIT_SUCCESS);

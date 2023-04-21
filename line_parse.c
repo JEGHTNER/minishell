@@ -34,7 +34,7 @@ void	line_parse(t_cmd *cmd, char *line)
 		else if (line[idx] == '\'' || line[idx] == '\"')
 			manage_quotation(cmd, line, &idx);
 		else if (line[idx] == '\\' || line[idx] == ';')
-			ft_exit_with_error("syntax error near unexpected token\n", *line);
+			ft_exit_with_error("syntax error near unexpected token\n", line);
 		else if (is_whitespace(line[idx]) == YES)
 			idx++;
 		else

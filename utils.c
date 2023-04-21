@@ -47,7 +47,10 @@ char	*strchop(char *src, size_t start, size_t end)
 	if (!ret)
 		return ((char *)0);
 	while (idx <= end - start)
-		ret = src[idx++];
+	{
+		ret[idx] = src[start + idx];
+		idx++;
+	}
 	ret[end - start + 1] = '\0';
 	return (ret);
 }

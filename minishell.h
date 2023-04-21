@@ -94,4 +94,7 @@ char	*strchop(char *src, size_t start, size_t end);
 t_macro	is_whitespace(char tmp);
 t_macro is_everything_whitespace(char *tmp);
 
+//test
+void print_list(t_list *head);
+
 #endif

@@ -28,7 +28,7 @@ typedef enum e_quote
 
 typedef struct s_list
 {
-	enum 			e_quote;
+	enum e_quote	flag;
 	void			*content;
 	struct s_list	*next;
 }					t_list;

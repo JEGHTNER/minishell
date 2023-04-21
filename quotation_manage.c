@@ -40,7 +40,7 @@ static char	*quotation_to_string(char *line, size_t *idx, char *data)
 
 static char	*check_remain(char *line, size_t *idx, char *data)
 {
-	*idx++;
+	(*idx)++;
 	if (*idx == ft_strlen(line))
 		return (data);
 	if (is_whitespace(line[*idx]) == NO)
@@ -49,7 +49,7 @@ static char	*check_remain(char *line, size_t *idx, char *data)
 		{
 			if (line[*idx] == '\'' || line[*idx] == '\"')
                 data = quotation_to_string(line, idx, data);
-			*idx++;
+			(*idx)++;
 		}
 		return (data);
 	}

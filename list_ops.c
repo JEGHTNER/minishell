@@ -8,6 +8,7 @@ void    insert_node(char *data, t_cmd *cmd)
 	if (!to_add)
 		ft_exit_with_error("malloc error", 0);
 	ft_lstadd_back(&(cmd->chunk_head), to_add);
+	print_list(cmd->chunk_head);
 }
 
 size_t	find_node(char *to_find, t_cmd *cmd)
