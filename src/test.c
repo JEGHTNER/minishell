@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 19:02:23 by jehelee           #+#    #+#             */
-/*   Updated: 2023/04/20 21:02:06 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/04/21 19:58:49 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ int	argument_check(char *string);
 void	search_tree(t_token *node, t_list **my_env);
 int	execute_tree(t_token *node, t_list **my_env);
 int	exec_pipe(t_token *node);
-int	exec_cmd(t_token *node, t_list **my_env);
+int	exec_cmd(t_token *node);
+int	exec_scmd(t_token *node, t_list **my_env);
+int	exec_redir(t_token *node);
 
 
 long long	exit_status = 0;
@@ -104,10 +106,15 @@ int init_token(t_token *token, char* str, t_list **my_env)
 	char **cmd_args = ft_split(str, ' ');
 	path_args = get_path_args(my_env);
 	token->cmd_path = get_path(cmd_args[0], path_args);
+	token->back_up_fd[0] = dup(STDIN_FILENO);
+	token->back_up_fd[1] = dup(STDOUT_FILENO);
 	token->data = str;
-	token->left =NULL;
-	token->right =NULL;
-	token->pipe_fd = 0;
+	token->left = NULL;
+	token->right = NULL;
+	token->pipe_fd = NULL;
+	token->last_flag = 0;
+	token->redirect_flag = malloc(sizeof (int *));
+	*(token->redirect_flag) = 0;
 }
 
 int	main(int ac, char **av, char **envp)
@@ -141,29 +148,52 @@ int	main(int ac, char **av, char **envp)
 	// exec_pipe(my_env, cmd);
 	// ft_exit(extest);
 	// printf("exit status: %lld \n", exit_status);
-	t_token *head;
-	t_token	first;
-	t_token second;
-	t_token third;
+	t_token *root;
+	t_token	cmd1;
+	t_token redirects1;
+	t_token redirect1;
+	t_token redirects2;
+	t_token	single_cmd1;
+	t_token cmd2;
+	t_token	single_cmd2;
+	t_token	pipe1;
+	t_token	pipe2;
 	
-	init_token(&first, "ls -al", my_env);
-	first.type = CMD;
-	init_token(&second, "|", my_env);
-	second.type = PIPE;
-	init_token(&third, "wc -l", my_env);
-	third.type = CMD;
+	init_token(&cmd1, "", my_env);
+	cmd1.type = CMD;
+	init_token(&cmd2, "", my_env);
+	cmd2.type = CMD;
+	init_token(&single_cmd1, "ls -al", my_env);
+	single_cmd1.type = S_CMD;
+	init_token(&single_cmd2, "wc -l", my_env);
+	single_cmd2.type = S_CMD;
+	init_token(&pipe1, "|", my_env);
+	pipe1.type = PIPE;
+	init_token(&pipe2, "|", my_env);
+	pipe2.type = PIPE;
+	init_token(&redirects1, "", my_env);
+	redirects1.type = REDIRS;
+	init_token(&redirect1, "> a", my_env);
+	redirect1.type = REDIR;
+	init_token(&redirects2, "", my_env);
+	redirect1.type = REDIRS;
 
-	head = &second;
-	head->left = &first;
-	head->right = &third;
-	search_tree(head, my_env);
+	root = &pipe1;
+	root->left = &cmd1;
+	root->right = &pipe2;
+	cmd1.left = &redirects1;
+	redirects1.left = &redirect1;
+	cmd1.right = &single_cmd1;
+	pipe2.left = &cmd2;
+	cmd2.left = &redirects2;
+	cmd2.right = &single_cmd2;
+
+	search_tree(root, my_env);
 	// dup2(back_up_stdin, STDIN_FILENO);
 	// dup2(back_up_stdout, STDOUT_FILENO);
 
 	return(0);
 }
-
-
 
 void	search_tree(t_token *node, t_list **my_env)
 {
@@ -181,24 +211,24 @@ int	execute_tree(t_token *node, t_list **my_env)
 	char **argv = ft_split(node->data, ' ');
 	if (node->type == PIPE)
 		exec_pipe(node);
-	// if (node->type == REDIR)
-	// 	exec_redir(node);
-	// if (node->type == CMD)
-	// 	exec_cmd(node);
+	else if (node->type == REDIRS)
+		exec_redir(node);
 	else if (node->type == CMD)
-	{
-		exec_cmd(node, my_env);
-	}
-		// execve(node->cmd_path, argv, my_env);
+		exec_cmd(node);
+	else if (node->type == S_CMD)
+		exec_scmd(node, my_env);
+}
 
-	// wait(NULL);
-	// if (node->type == PIPE)
-	// 	exec_pipe();
-	// if (node->type == CMD)
-	// 	exec_cmd(node->data, my_env);
-	// if (node->type == REDIR)
-	// 	exec_redir();
-
+int	exec_redir(t_token *node)
+{
+	if (node->pipe_fd)
+		node->left->pipe_fd = node->pipe_fd;
+	*(node->redirect_flag) = 1;
+	int fd = open("a", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	perror("open error");
+	printf("fd = %d\n");
+	dup2(fd, STDOUT_FILENO);
+	close(fd);
 }
 
 int	exec_pipe(t_token *node)
@@ -210,9 +240,21 @@ int	exec_pipe(t_token *node)
 		node->left->pipe_fd = node->pipe_fd;
 	if (node->right)
 		node->right->pipe_fd = node->pipe_fd;
+	if (node->right == NULL)
+		node->last_flag = 1;
 }
 
-int	exec_cmd(t_token *node, t_list **my_env)
+int exec_cmd(t_token *node)
+{
+
+	node->right->pipe_fd = node->pipe_fd;
+	node->right->last_flag = node->last_flag;
+	node->left->redirect_flag = node->redirect_flag;
+	node->right->redirect_flag = node->redirect_flag; 
+
+}
+
+int	exec_scmd(t_token *node, t_list **my_env)
 {
 	char	**cmd_arr;
 	int		i;
@@ -229,7 +271,17 @@ int	exec_cmd(t_token *node, t_list **my_env)
 		perror("pipe");
 	if (pid == 0) // child
 	{
-		if (node->pipe_fd)
+		if (node->redirect_flag)
+		{
+			close(node->pipe_fd[READ]);
+			close(node->pipe_fd[WRITE]);
+			if (execve(path, cmd_args, my_env) < 0)
+			{
+				perror("execve");
+				exit(127);
+			}
+		}
+		if (node->pipe_fd && node->last_flag == 0)
 		{
 			close(node->pipe_fd[READ]);
 			dup2(node->pipe_fd[WRITE], STDOUT_FILENO);
@@ -240,6 +292,7 @@ int	exec_cmd(t_token *node, t_list **my_env)
 				exit(127);
 			}
 		}
+		dup2(node->back_up_fd[1], STDOUT_FILENO);
 		if (execve(path, cmd_args, my_env) < 0)
 		{
 			perror("execve");

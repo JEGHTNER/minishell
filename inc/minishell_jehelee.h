@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 18:41:51 by jehelee           #+#    #+#             */
-/*   Updated: 2023/04/19 18:49:07 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/04/21 19:44:58 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ typedef enum s_pipe_fd
 typedef enum e_type
 {
 	CMD,
+	S_CMD,
+	REDIRS,
 	REDIR,
 	PIPE,
 	SEP,
@@ -51,6 +53,9 @@ typedef struct s_token
 	//input
 	//is_env
 	//is_pipe
+	int				back_up_fd[2];
+	int				last_flag;
+	int				*redirect_flag;
 	int				*pipe_fd;
 	char			*cmd_path;
 	struct s_token	*left;
