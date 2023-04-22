@@ -80,6 +80,10 @@ void	manage_chunk(t_cmd *cmd, char *line, size_t *idx);
 
 //syntax check
 void	syntex_check(t_cmd *cmd);
+void	pipe_syntax_check(t_list *cur);
+void	redir_syntax_check(t_list *cur);
+void	cmd_syntax_check(t_list *cur);
+
 
 //syntax check utils
 

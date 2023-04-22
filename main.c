@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
-#include <stdio.h>
 
 static void	init_main(int ac, char **av, char **envp, t_env_lst **env_list)
 {
@@ -48,7 +47,6 @@ int main(int ac, char **av, char **envp)
 		line = readline("MINISHELL $");
 		if (!line)
 			break ;
-		printf("%s", line);
 		if (*line != '\0')
 			add_history(line);
 		if (*line != '\0' && is_everything_whitespace(line) == NO)

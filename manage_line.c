@@ -9,8 +9,8 @@
 /*   Updated: 2023/04/17 15:26:55 by joon-lee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "minishell.h"
+#include <stdio.h>
 
 void	manage_pipe(t_cmd *cmd, char *line, size_t *idx, size_t *quote)
 {
@@ -34,7 +34,8 @@ void	manage_chunk(t_cmd *cmd, char *line, size_t *idx)
 	size_t	end_idx;
 
 	start_idx = *idx;
-	while (is_whitespace(line[*idx]) == NO)
+
+	while ((is_whitespace(line[*idx]) == NO && line[*idx]))
 		(*idx)++;
 	end_idx = *idx - 1;
 	data = strchop(line, start_idx, end_idx);

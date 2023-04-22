@@ -5,9 +5,9 @@ void print_list(t_list *head)
 {
 	size_t	idx = 1;
 
-	while (!head)
+	while (head)
 	{
-		printf("list no.%zu\t:\t%s", idx, head->content);
+		printf("list no.%zu\t:\t%s\n", idx, (char *)head->content);
 		head = head->next;
 		idx++;
 	}
