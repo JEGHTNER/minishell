@@ -30,7 +30,7 @@ void	line_parse(t_cmd *cmd, char *line)
 	while (line[idx])
 	{
 		if (line[idx] == '|')
-			manage_pipe(cmd, line, &idx, &quote);
+			manage_pipe(cmd, line, &idx);
 		else if (line[idx] == '\'' || line[idx] == '\"')
 			manage_quotation(cmd, line, &idx);
 		else if (line[idx] == '\\' || line[idx] == ';')

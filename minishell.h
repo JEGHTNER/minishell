@@ -23,18 +23,13 @@
 #include <term.h>
 #include "libft/libft.h"
 
-typedef enum e_quote
-{
-	NONE,
-	SINGLE,
-	DOUBLE
-}	t_quote;
-
 typedef enum e_type
 {
-	CMD,
+	WORD,
+	W_SINGLE,
+	W_DOUBLE,
 	REDIR,
-	PIPE
+	PIPE,
 }	t_type;
 
 typedef enum e_macro
@@ -52,8 +47,7 @@ typedef struct s_env_lst
 }	t_env_lst;
 
 typedef struct s_element
-{	
-	enum e_quote		q_flag;
+{
 	enum e_type			t_flag;
 	char				*content;
 	struct s_element	*next;
@@ -83,7 +77,7 @@ void	signal_init(void);
 
 //split line & make list
 void		line_parse(t_cmd *cmd, char *line);
-void    	insert_node(char *data, t_cmd *cmd, t_type type, t_quote qoute);
+void    	insert_node(char *data, t_cmd *cmd, t_type type);
 size_t		find_node(char *to_find, t_cmd *cmd);
 t_element	*ft_lstnew_mini(char *content);
 void		ft_lstadd_back_mini(t_element **lst, t_element *new);
@@ -92,6 +86,7 @@ void		ft_lstadd_back_mini(t_element **lst, t_element *new);
 void	manage_pipe(t_cmd *cmd, char *line, size_t *idx);
 void	manage_quotation(t_cmd *cmd, char *line, size_t *idx);
 void	manage_chunk(t_cmd *cmd, char *line, size_t *idx);
+void	pipe_in_chunk(t_cmd *cmd, char *line, size_t *start, size_t *idx);
 
 //syntax check
 void	syntex_check(t_cmd *cmd);
@@ -113,6 +108,6 @@ t_macro	is_whitespace(char tmp);
 t_macro is_everything_whitespace(char *tmp);
 
 //test
-void print_list(t_list *head);
+void print_list(t_element *head);
 
 #endif
