@@ -12,7 +12,7 @@
 #include "minishell.h"
 #include <stdio.h>
 
-void	manage_pipe(t_cmd *cmd, char *line, size_t *idx, size_t *quote)
+void	manage_pipe(t_cmd *cmd, char *line, size_t *idx)
 {
 	if (cmd->chunk_head == 0)
 		ft_exit_with_error("syntax error near unexpected token : ", " | ");
@@ -22,7 +22,7 @@ void	manage_pipe(t_cmd *cmd, char *line, size_t *idx, size_t *quote)
 			ft_exit_with_error("syntax error", "||");
 		if (line[*idx + 1] == '\0')
 			ft_exit_with_error("syntax error for pipe", 0);
-		insert_node("|", cmd);
+		insert_node("|", cmd, PIPE, NONE);
 		(*idx)++;
 	}
 }
@@ -39,5 +39,5 @@ void	manage_chunk(t_cmd *cmd, char *line, size_t *idx)
 		(*idx)++;
 	end_idx = *idx - 1;
 	data = strchop(line, start_idx, end_idx);
-	insert_node(data, cmd);
+	insert_node(data, cmd, CMD, NONE);
 }

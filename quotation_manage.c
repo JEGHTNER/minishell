@@ -68,9 +68,14 @@ static char	*check_remain(char *line, size_t *idx, char *data)
 void	manage_quotation(t_cmd *cmd, char *line, size_t *idx)
 {
     char	*data;
+	char	quote;
 
+	quote = line[*idx];
 	data = 0;
     data = quotation_to_string(line, idx, data);
 	data = check_remain(line, idx, data);
-	insert_node(data, cmd);
+	if (quote == '\'')
+		insert_node(data, cmd, CMD, SINGLE);
+	else
+		insert_node(data, cmd, CMD, DOUBLE);
 }

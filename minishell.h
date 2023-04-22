@@ -23,13 +23,18 @@
 #include <term.h>
 #include "libft/libft.h"
 
+typedef enum e_quote
+{
+	NONE,
+	SINGLE,
+	DOUBLE
+}	t_quote;
+
 typedef enum e_type
 {
 	CMD,
 	REDIR,
-	PIPE,
-	SEP,
-	CTR_OP
+	PIPE
 }	t_type;
 
 typedef enum e_macro
@@ -46,6 +51,14 @@ typedef struct s_env_lst
 	char				*value;
 }	t_env_lst;
 
+typedef struct s_element
+{	
+	enum e_quote		q_flag;
+	enum e_type			t_flag;
+	char				*content;
+	struct s_element	*next;
+}	t_element;
+
 typedef struct s_token
 {
 	enum e_type		type;
@@ -61,20 +74,22 @@ typedef struct s_token
 
 typedef struct s_cmd
 {
-	struct s_list	*chunk_head;
-	struct s_token	*tree_head;
+	struct s_element	*chunk_head;
+	struct s_token		*tree_head;
 }	t_cmd;
 
 //manage signal(SIGINT, SIGQUIT)
 void	signal_init(void);
 
 //split line & make list
-void	line_parse(t_cmd *cmd, char *line);
-void    insert_node(char *data, t_cmd *cmd);
-size_t	find_node(char *to_find, t_cmd *cmd);
+void		line_parse(t_cmd *cmd, char *line);
+void    	insert_node(char *data, t_cmd *cmd, t_type type, t_quote qoute);
+size_t		find_node(char *to_find, t_cmd *cmd);
+t_element	*ft_lstnew_mini(char *content);
+void		ft_lstadd_back_mini(t_element **lst, t_element *new);
 
 //split line utils
-void	manage_pipe(t_cmd *cmd, char *line, size_t *idx, size_t *quote);
+void	manage_pipe(t_cmd *cmd, char *line, size_t *idx);
 void	manage_quotation(t_cmd *cmd, char *line, size_t *idx);
 void	manage_chunk(t_cmd *cmd, char *line, size_t *idx);
 
@@ -83,7 +98,6 @@ void	syntex_check(t_cmd *cmd);
 void	pipe_syntax_check(t_list *cur);
 void	redir_syntax_check(t_list *cur);
 void	cmd_syntax_check(t_list *cur);
-
 
 //syntax check utils
 
