@@ -10,41 +10,24 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
-#include <stdio.h>
 
 void	put_in_tree(t_cmd *cmd, t_token *to_put)
 {
 	t_token *cur;
-	t_token	*tmp;
 
 	cur = cmd->tree_head;
 	if (cmd->tree_head == 0)
-	{
-		cmd->tree_head = to_put;
-		if (cmd->tree_head->type == PIPE)
-			cmd->tree_head->right = to_put;
-		return ;
-	}
+		insert_cmd(&(cmd->tree_head), to_put);
 	else
 	{
-		if (cur->type == PIPE)
-		{
-			while (cur->right != 0)
-				cur = cur->right;
-			if (cur->left == 0)
-				cur->left = to_put;
-			else if (cur->right == 0)
-				cur->right = to_put;
-		}
-		else if (cur->type == CMD)
-		{
-			tmp = cur;
-			cmd->tree_head = to_put;
-			cmd->tree_head->left = tmp;
-		}
+		if (to_put->cat == PIPE)
+			insert_pipe(&(cmd->tree_head), to_put);
+		else if (to_put->cat == SIMPLE_CMD)
+			insert_cmd(&(cmd->tree_head), to_put);
+		else
+			insert_redir(&(cmd->tree_head), to_put);
 	}
 }
-
 
 void	convert_tree(t_cmd *cmd)
 {

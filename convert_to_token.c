@@ -1,5 +1,4 @@
 #include "minishell.h"
-#include <stdio.h>
 
 t_token	*make_word_token(t_element *tmp)
 {
@@ -18,7 +17,7 @@ t_token	*make_word_token(t_element *tmp)
 		idx++;
 		tmp = tmp->next;
 	}
-	to_ret->type = CMD;
+	to_ret->cat = SIMPLE_CMD;
 	to_ret->argc = idx;
 	to_ret->argv = (char **)malloc(sizeof(char *) * idx);
 	idx = 0;
@@ -37,7 +36,7 @@ t_token	*make_redir_token(t_element *tmp)
 	to_ret = init_token();
 	if (!to_ret)
 		return (0);
-	to_ret->type = REDIR;
+	to_ret->cat = REDIR;
 	to_ret->argc = 2;
 	to_ret->argv = (char **)malloc(sizeof(char *) * 2);
 	to_ret->argv[0] = tmp->content;
@@ -52,7 +51,7 @@ t_token	*make_pipe_token(t_element *tmp)
 	to_ret = init_token();
 	if (!to_ret)
 		return (0);
-	to_ret->type = PIPE;
+	to_ret->cat = PIPE;
 	to_ret->is_pipe = YES;
 	to_ret->argc = 1;
 	to_ret->argv = (char **)malloc(sizeof(char *) * 1);

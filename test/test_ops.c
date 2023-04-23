@@ -18,6 +18,7 @@ void print_tree(t_token *head)
 	if (head == 0)
 		return ;
 	print_tree(head->left);
+	printf("type: %d", head->type);
 	for (int i = 0; i < head->argc; i++)
 		printf(" %s ", head->argv[i]);
 	printf("\n");

@@ -29,9 +29,18 @@ typedef enum e_type
 	W_SINGLE,
 	W_DOUBLE,
 	REDIR,
-	PIPE,
-	CMD
+	PIPE
 }	t_type;
+
+typedef enum e_cat
+{
+	CMD,
+	SIMPLE_CMD,
+	REDIRS,
+	REDIR,
+	PIPE
+}	t_cat;
+
 
 typedef enum e_macro
 {
@@ -56,7 +65,7 @@ typedef struct s_element
 
 typedef struct s_token
 {
-	enum e_type		type;
+	enum e_cat		cat;
 	char 			**argv;
 	int				argc;
 	enum e_macro	is_env;
@@ -107,6 +116,9 @@ void	convert_tree(t_cmd *cmd);
 
 //parse tree utils
 t_token *init_token(void);
+void	insert_cmd(t_token **head, t_token *to_put);
+void	insert_pipe(t_token **head, t_token *to_put);
+void	insert_redir(t_token **head, t_token *to_put);
 
 //general utils
 void	ft_exit_with_error(char *message, char *specifier);
