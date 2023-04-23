@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   manage_quotation.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: joon-lee <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/23 13:05:53 by joon-lee          #+#    #+#             */
+/*   Updated: 2023/04/23 13:05:57 by joon-lee         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "minishell.h"
 
 static size_t	check_side_quotation(char *line, size_t start)
@@ -22,7 +33,7 @@ static size_t	check_side_quotation(char *line, size_t start)
 	return (idx);
 }
 
-static char	*quotation_to_string(char *line, size_t *idx, char *data)
+char	*quotation_to_string(char *line, size_t *idx, char *data)
 {
 	char	*tmp;
 	char	*before;
@@ -40,7 +51,7 @@ static char	*quotation_to_string(char *line, size_t *idx, char *data)
 }
 
 
-static char *pipe_after_quote(t_cmd *cmd, char *data, char *line, size_t *idx)
+char	*pipe_after_quote(t_cmd *cmd, char *data, char *line, size_t *idx)
 {
 	size_t	start_idx;
 	size_t	end_idx;
@@ -62,7 +73,7 @@ static char *pipe_after_quote(t_cmd *cmd, char *data, char *line, size_t *idx)
 	}
 }
 
-static char	*check_remain(char *line, size_t *idx, t_cmd *cmd, char *data)
+char	*check_remain(char *line, size_t *idx, t_cmd *cmd, char *data)
 {
 	size_t	start_idx;
 	char	*tmp;

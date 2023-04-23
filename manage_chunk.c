@@ -33,10 +33,18 @@ static void	redir_in_chunk(t_cmd *cmd, char *line, size_t *start, size_t *idx)
 
 static void	quote_in_chunk(t_cmd *cmd, char *line, size_t *start, size_t *idx)
 {
-	char *tmp;
+	char	*tmp;
+	char	*data;
+	char	quote;
 
+	quote = line[*idx];
 	tmp = strchop(line, *start, *idx - 1);
-
+	data = quotation_to_string(line, idx, tmp);
+	data = check_remain(line, idx, cmd, data);
+	if (quote == '\'')
+		insert_node(data, cmd, W_SINGLE);
+	else
+		insert_node(data, cmd, W_DOUBLE);
 }
 
 void	manage_chunk(t_cmd *cmd, char *line, size_t *idx)
@@ -52,7 +60,10 @@ void	manage_chunk(t_cmd *cmd, char *line, size_t *idx)
 		else if (line[*idx] == '<' || line[*idx] == '>')
 			redir_in_chunk(cmd, line, &start_idx, idx);
 		else if (line[*idx] == '\'' || line[*idx] == '\"')
+		{
 			quote_in_chunk(cmd, line, &start_idx, idx);
+			return ;
+		}
 		(*idx)++;
 		if (is_whitespace(line[*idx]) == YES || *idx == ft_strlen(line))
 		{

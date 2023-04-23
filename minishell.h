@@ -82,18 +82,26 @@ size_t		find_node(char *to_find, t_cmd *cmd);
 t_element	*ft_lstnew_mini(char *content);
 void		ft_lstadd_back_mini(t_element **lst, t_element *new);
 
-//split line utils
-void	manage_pipe(t_cmd *cmd, char *line, size_t *idx);
+//manage quotation
 void	manage_quotation(t_cmd *cmd, char *line, size_t *idx);
+char	*quotation_to_string(char *line, size_t *idx, char *data);
+char	*pipe_after_quote(t_cmd *cmd, char *data, char *line, size_t *idx);
+char	*check_remain(char *line, size_t *idx, t_cmd *cmd, char *data);
+
+//manage pipe
+void	manage_pipe(t_cmd *cmd, char *line, size_t *idx);
+
+//manage redir
 void	manage_redir(t_cmd *cmd, char *line, size_t *idx);
+
+//manage chunk
 void	manage_chunk(t_cmd *cmd, char *line, size_t *idx);
-void	pipe_in_chunk(t_cmd *cmd, char *line, size_t *start, size_t *idx);
 
 //syntax check
 void	syntex_check(t_cmd *cmd);
 void	pipe_syntax_check(t_list *cur);
 void	redir_syntax_check(t_list *cur);
-void	cmd_syntax_check(t_list *cur);
+void	word_syntax_check(t_list *cur);
 
 //syntax check utils
 
