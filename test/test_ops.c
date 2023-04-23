@@ -12,3 +12,14 @@ void print_list(t_element *head)
 		idx++;
 	}
 }
+
+void print_tree(t_token *head)
+{
+	if (head == 0)
+		return ;
+	print_tree(head->left);
+	for (int i = 0; i < head->argc; i++)
+		printf(" %s ", head->argv[i]);
+	printf("\n");
+	print_tree(head->right);
+}

@@ -97,10 +97,10 @@ void	manage_chunk(t_cmd *cmd, char *line, size_t *idx);
 void	syntex_check(t_cmd *cmd);
 
 //convert list to token
-t_token	*change_element_token(t_element **tmp);
-t_token	*make_word_token(t_element **tmp);
-t_token	*make_redir_token(t_element **tmp);
-t_token	*make_pipe_token(t_element **tmp);
+t_token	*change_element_token(t_element *tmp);
+t_token	*make_word_token(t_element *tmp);
+t_token	*make_redir_token(t_element *tmp);
+t_token	*make_pipe_token(t_element *tmp);
 
 //put token into tree
 void	convert_tree(t_cmd *cmd);
@@ -116,5 +116,6 @@ t_macro is_everything_whitespace(char *tmp);
 
 //test
 void print_list(t_element *head);
+void print_tree(t_token *head);
 
 #endif

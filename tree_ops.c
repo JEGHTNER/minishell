@@ -10,7 +10,7 @@ t_token *init_token(void)
     to_ret->argv = 0;
     to_ret->argc = 0;
     to_ret->is_env = NO;
-    to_ret->is_pipe = YES;
+    to_ret->is_pipe = NO;
     to_ret->cmd_path = 0;
     to_ret->left = 0;
     to_ret->right = 0;
