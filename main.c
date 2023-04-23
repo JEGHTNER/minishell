@@ -26,8 +26,8 @@ static void	parse_n_execute(t_cmd *cmd, char *line)
 {
 	line_parse(cmd, line);
 	print_list(cmd->chunk_head);
-	// syntax_check(cmd);
-	// convert_tree(cmd);
+	syntax_check(cmd);
+	convert_tree(cmd);
 	//execute cmd with parse tree
 }
 

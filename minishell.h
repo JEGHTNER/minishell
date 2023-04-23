@@ -30,6 +30,7 @@ typedef enum e_type
 	W_DOUBLE,
 	REDIR,
 	PIPE,
+	CMD
 }	t_type;
 
 typedef enum e_macro
@@ -56,11 +57,10 @@ typedef struct s_element
 typedef struct s_token
 {
 	enum e_type		type;
-	char 			*data;
-	//output
-	//input
-	//is_env
-	//is_pipe
+	char 			**argv;
+	int				argc;
+	enum e_macro	is_env;
+	enum e_macro	is_pipe;
 	char			*cmd_path;
 	struct s_token	*left;
 	struct s_token	*right;
@@ -88,27 +88,25 @@ char	*quotation_to_string(char *line, size_t *idx, char *data);
 char	*pipe_after_quote(t_cmd *cmd, char *data, char *line, size_t *idx);
 char	*check_remain(char *line, size_t *idx, t_cmd *cmd, char *data);
 
-//manage pipe
+//manage pipe, redir & chunk
 void	manage_pipe(t_cmd *cmd, char *line, size_t *idx);
-
-//manage redir
 void	manage_redir(t_cmd *cmd, char *line, size_t *idx);
-
-//manage chunk
 void	manage_chunk(t_cmd *cmd, char *line, size_t *idx);
 
 //syntax check
 void	syntex_check(t_cmd *cmd);
-void	pipe_syntax_check(t_list *cur);
-void	redir_syntax_check(t_list *cur);
-void	word_syntax_check(t_list *cur);
 
-//syntax check utils
+//convert list to token
+t_token	*change_element_token(t_element **tmp);
+t_token	*make_word_token(t_element **tmp);
+t_token	*make_redir_token(t_element **tmp);
+t_token	*make_pipe_token(t_element **tmp);
 
-//convert list to parse tree
+//put token into tree
 void	convert_tree(t_cmd *cmd);
 
 //parse tree utils
+t_token *init_token(void);
 
 //general utils
 void	ft_exit_with_error(char *message, char *specifier);
