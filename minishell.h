@@ -85,6 +85,7 @@ void		ft_lstadd_back_mini(t_element **lst, t_element *new);
 //split line utils
 void	manage_pipe(t_cmd *cmd, char *line, size_t *idx);
 void	manage_quotation(t_cmd *cmd, char *line, size_t *idx);
+void	manage_redir(t_cmd *cmd, char *line, size_t *idx);
 void	manage_chunk(t_cmd *cmd, char *line, size_t *idx);
 void	pipe_in_chunk(t_cmd *cmd, char *line, size_t *start, size_t *idx);
 
