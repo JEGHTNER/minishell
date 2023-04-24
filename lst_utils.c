@@ -12,12 +12,12 @@
 
 #include "minishell.h"
 
-void    insert_node(char *data, t_cmd *cmd, t_type type)
+void    insert_node(char *data, t_cmd *cmd, t_cat type)
 {
 	t_element	*to_add;
 
 	to_add = ft_lstnew_mini(data);
-	to_add->t_flag = type;
+	to_add->c_flag = type;
 	if (!to_add)
 		ft_exit_with_error("malloc error", 0);
 	ft_lstadd_back_mini(&(cmd->chunk_head), to_add);

@@ -36,7 +36,6 @@ static size_t	check_side_quotation(char *line, size_t start)
 char	*quotation_to_string(char *line, size_t *idx, char *data)
 {
 	char	*tmp;
-	char	*before;
 	size_t	start_idx;
 	size_t	end_idx;
 
@@ -51,7 +50,7 @@ char	*quotation_to_string(char *line, size_t *idx, char *data)
 }
 
 
-char	*pipe_after_quote(t_cmd *cmd, char *data, char *line, size_t *idx)
+char	*pipe_after_quote(char *data, char *line, size_t *idx)
 {
 	size_t	start_idx;
 	size_t	end_idx;
@@ -73,7 +72,7 @@ char	*pipe_after_quote(t_cmd *cmd, char *data, char *line, size_t *idx)
 	}
 }
 
-char	*check_remain(char *line, size_t *idx, t_cmd *cmd, char *data)
+char	*check_remain(char *line, size_t *idx, char *data)
 {
 	size_t	start_idx;
 	char	*tmp;
@@ -84,7 +83,7 @@ char	*check_remain(char *line, size_t *idx, t_cmd *cmd, char *data)
 	while (line[*idx] && is_whitespace(line[*idx]) == NO)
 	{
 		if (line[*idx] == '|')
-			return (pipe_after_quote(cmd, data, line, idx));
+			return (pipe_after_quote(data, line, idx));
 		else if (line[*idx] == '\'' || line[*idx] == '\"')
 		{
 			tmp = strchop(line, start_idx, *idx - 1);
@@ -110,7 +109,7 @@ void	manage_quotation(t_cmd *cmd, char *line, size_t *idx)
 	quote = line[*idx];
 	data = 0;
     data = quotation_to_string(line, idx, data);
-	data = check_remain(line, idx, cmd, data);
+	data = check_remain(line, idx, data);
 	if (quote == '\'')
 		insert_node(data, cmd, W_SINGLE);
 	else

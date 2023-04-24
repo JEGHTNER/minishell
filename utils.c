@@ -33,6 +33,7 @@ t_macro	is_whitespace(char tmp)
 void	ft_exit_with_error(char *message, char *specifier)
 {
 	ft_putstr_fd(message, STDERR_FILENO);
+	ft_putstr_fd(specifier, STDERR_FILENO);
 	exit(EXIT_FAILURE);
 	return ;
 }

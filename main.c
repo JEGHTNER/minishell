@@ -11,10 +11,14 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
-static void	init_main(int ac, char **av, char **envp, t_env_lst **env_list)
+static void	init_main(void)
 {
 	struct termios	term;
 
+	// (int)ac;
+	// (char **)av;
+	// (char **)envp;
+	// (t_env_lst **)env_list;
 	tcgetattr(STDIN_FILENO, &term);
 	term.c_lflag &= ~(ECHOCTL);
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
@@ -37,12 +41,16 @@ int main(int ac, char **av, char **envp)
 	struct termios	term;
 	char			*line;
 	t_cmd			cmd;
-	t_env_lst		**env_lst;
+	// t_env_lst		**env_lst;
 
+
+	envp = 0;
+	av = 0;
 	if (ac != 1)
 		ft_exit_with_error("wrong number of argument", 0);
 	tcgetattr(STDIN_FILENO, &term);
-	init_main(ac, av, envp, env_lst);
+	init_main();
+	/*ac, av, envp, env_lst */
 	while (1)
 	{
 		line = readline("MINISHELL $");

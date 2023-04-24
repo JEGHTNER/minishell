@@ -41,7 +41,7 @@ void	convert_tree(t_cmd *cmd)
 		idx = 0;
 		to_put = change_element_token(cur);
 		put_in_tree(cmd, to_put);
-		while (idx < to_put->argc)
+		while (idx < (size_t)to_put->argc)
 		{
 			cur = cur->next;
 			idx++;

@@ -11,8 +11,8 @@ t_token	*make_word_token(t_element *tmp)
 		return (0);
 	idx = 0;
 	start = tmp;
-	while (tmp && (tmp->t_flag == WORD
-        || tmp->t_flag == W_SINGLE || tmp->t_flag == W_DOUBLE))
+	while (tmp && (tmp->c_flag == WORD
+        || tmp->c_flag == W_SINGLE || tmp->c_flag == W_DOUBLE))
 	{
 		idx++;
 		tmp = tmp->next;
@@ -21,7 +21,7 @@ t_token	*make_word_token(t_element *tmp)
 	to_ret->argc = idx;
 	to_ret->argv = (char **)malloc(sizeof(char *) * idx);
 	idx = 0;
-	while (idx < to_ret->argc)
+	while (idx < (size_t)to_ret->argc)
 	{
 		to_ret->argv[idx++] = start->content;
 		start = start->next;
@@ -30,7 +30,7 @@ t_token	*make_word_token(t_element *tmp)
 }
 
 t_token	*make_redir_token(t_element *tmp)
-{    
+{
 	t_token *to_ret;
 
 	to_ret = init_token();
@@ -44,7 +44,7 @@ t_token	*make_redir_token(t_element *tmp)
 	return (to_ret);
 }
 
-t_token	*make_pipe_token(t_element *tmp)
+t_token	*make_pipe_token(void)
 {
 	t_token *to_ret;
 
@@ -63,11 +63,11 @@ t_token	*change_element_token(t_element *tmp)
 {
 	t_token *to_ret;
 
-	if (tmp->t_flag == WORD
-		|| tmp->t_flag == W_SINGLE || tmp->t_flag == W_DOUBLE)
+	if (tmp->c_flag == WORD
+		|| tmp->c_flag == W_SINGLE || tmp->c_flag == W_DOUBLE)
 		to_ret = make_word_token(tmp);
-	else if (tmp->t_flag == PIPE)
-		to_ret = make_pipe_token(tmp);
+	else if (tmp->c_flag == PIPE)
+		to_ret = make_pipe_token();
 	else
 		to_ret = make_redir_token(tmp);
 	if (!to_ret)

@@ -23,17 +23,11 @@
 #include <term.h>
 #include "libft/libft.h"
 
-typedef enum e_type
+typedef enum e_cat
 {
 	WORD,
 	W_SINGLE,
 	W_DOUBLE,
-	REDIR,
-	PIPE
-}	t_type;
-
-typedef enum e_cat
-{
 	CMD,
 	SIMPLE_CMD,
 	REDIRS,
@@ -58,7 +52,7 @@ typedef struct s_env_lst
 
 typedef struct s_element
 {
-	enum e_type			t_flag;
+	enum e_cat			c_flag;
 	char				*content;
 	struct s_element	*next;
 }	t_element;
@@ -86,7 +80,7 @@ void	signal_init(void);
 
 //split line & make list
 void		line_parse(t_cmd *cmd, char *line);
-void    	insert_node(char *data, t_cmd *cmd, t_type type);
+void    	insert_node(char *data, t_cmd *cmd, t_cat type);
 size_t		find_node(char *to_find, t_cmd *cmd);
 t_element	*ft_lstnew_mini(char *content);
 void		ft_lstadd_back_mini(t_element **lst, t_element *new);
@@ -94,8 +88,8 @@ void		ft_lstadd_back_mini(t_element **lst, t_element *new);
 //manage quotation
 void	manage_quotation(t_cmd *cmd, char *line, size_t *idx);
 char	*quotation_to_string(char *line, size_t *idx, char *data);
-char	*pipe_after_quote(t_cmd *cmd, char *data, char *line, size_t *idx);
-char	*check_remain(char *line, size_t *idx, t_cmd *cmd, char *data);
+char	*pipe_after_quote(char *data, char *line, size_t *idx);
+char	*check_remain(char *line, size_t *idx, char *data);
 
 //manage pipe, redir & chunk
 void	manage_pipe(t_cmd *cmd, char *line, size_t *idx);
@@ -109,7 +103,7 @@ void	syntex_check(t_cmd *cmd);
 t_token	*change_element_token(t_element *tmp);
 t_token	*make_word_token(t_element *tmp);
 t_token	*make_redir_token(t_element *tmp);
-t_token	*make_pipe_token(t_element *tmp);
+t_token	*make_pipe_token(void);
 
 //put token into tree
 void	convert_tree(t_cmd *cmd);

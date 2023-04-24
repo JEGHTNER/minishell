@@ -23,13 +23,14 @@ void	insert_cmd(t_token **head, t_token *to_put)
 	t_token *cur;
 	t_token	*pipe;
 
+	cur = *head;
 	tmp = init_token();
 	if (!tmp)
 		ft_exit_with_error("malloc error", 0);
 	tmp->cat = CMD;
 	tmp->right = to_put;
-	if ((*head) == 0)
-		(*head) = tmp;
+	if ((*head) == (t_token *)0)
+		*head = tmp;
 	else
 	{
 		pipe = init_token();

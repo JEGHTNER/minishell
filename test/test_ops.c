@@ -18,9 +18,10 @@ void print_tree(t_token *head)
 	if (head == 0)
 		return ;
 	print_tree(head->left);
-	printf("type: %d", head->type);
-	for (int i = 0; i < head->argc; i++)
-		printf(" %s ", head->argv[i]);
+	printf("type: %d", head->cat);
+	if (head->argc >= 1)
+		for (int i = 0; i < head->argc; i++)
+			printf(" %s ", head->argv[i]);
 	printf("\n");
 	print_tree(head->right);
 }
