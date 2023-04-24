@@ -1,4 +1,5 @@
 #include "minishell.h"
+#include <stdio.h>
 
 t_token	*make_word_token(t_element *tmp)
 {
@@ -68,7 +69,7 @@ t_token	*change_element_token(t_element *tmp)
 		to_ret = make_word_token(tmp);
 	else if (tmp->c_flag == PIPE)
 		to_ret = make_pipe_token();
-	else
+	else if
 		to_ret = make_redir_token(tmp);
 	if (!to_ret)
 			ft_exit_with_error("malloc error", 0);

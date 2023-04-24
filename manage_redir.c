@@ -31,7 +31,7 @@ static void	manage_append_output_redir(t_cmd *cmd, char *line, size_t *idx)
 	(*idx) += 2;
 	if(line[*idx] == '\0' || is_everything_whitespace(line + *idx) == YES
 		|| is_it_adequate_for_filename(line[*idx]) == NO)
-		ft_exit_with_error("syntax error near unexpected token", 0);
+		ft_exit_with_error("syntax error near unexpected token", ">>, <<");
 	else
 	{
 		if (mark == '>')
@@ -43,13 +43,13 @@ static void	manage_append_output_redir(t_cmd *cmd, char *line, size_t *idx)
 
 static void	manage_std_output_redir(t_cmd *cmd, char *line, size_t *idx)
 {
-		char	mark;
+	char	mark;
 
 	mark = line[*idx];
 	(*idx)++;
 	if(line[*idx] == '\0' || is_everything_whitespace(line + *idx) == YES
 		|| is_it_adequate_for_filename(line[*idx]) == NO)
-		ft_exit_with_error("syntax error near unexpected token", 0);
+		ft_exit_with_error("syntax error near unexpected token", ">, <");
 	else
 	{
 		if (mark == '>')
@@ -65,7 +65,7 @@ void	manage_redir(t_cmd *cmd, char *line, size_t *idx)
 		ft_exit_with_error("syntax error near unexpected token : ", " > | <");
 	else
 	{
-		if (ft_strncmp(line, ">>", 2) == 0 || ft_strncmp(line, "<<", 2) == 0)
+		if (ft_strncmp(line + *idx, ">>", 2) == 0 || ft_strncmp(line + *idx, "<<", 2) == 0)
 			manage_append_output_redir(cmd, line, idx);
 		else
 			manage_std_output_redir(cmd, line, idx);
