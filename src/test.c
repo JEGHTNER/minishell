@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 19:02:23 by jehelee           #+#    #+#             */
-/*   Updated: 2023/04/21 19:58:49 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/04/22 21:15:33 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ int init_token(t_token *token, char* str, t_list **my_env)
 	token->right = NULL;
 	token->pipe_fd = NULL;
 	token->last_flag = 0;
-	token->redirect_flag = malloc(sizeof (int *));
+	token->redirect_flag = malloc(sizeof(int *));
 	*(token->redirect_flag) = 0;
 }
 
@@ -219,15 +219,53 @@ int	execute_tree(t_token *node, t_list **my_env)
 		exec_scmd(node, my_env);
 }
 
+int	exec_redirs(t_token *node)
+{
+	if (node->left)
+	{
+		node->left->pipe_fd = node->pipe_fd;
+		node->left->last_flag = node->last_flag;
+		node->left->redirect_flag = node->redirect_flag;
+	}
+	if (node->right)
+	{
+		node->right->pipe_fd = node->pipe_fd;
+		node->right->last_flag = node->last_flag;
+		node->right->redirect_flag = node->redirect_flag;
+	}
+}
+
 int	exec_redir(t_token *node)
 {
-	if (node->pipe_fd)
-		node->left->pipe_fd = node->pipe_fd;
+	char 	**red_args;
+	int		fd;
+
 	*(node->redirect_flag) = 1;
-	int fd = open("a", O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	perror("open error");
-	printf("fd = %d\n");
-	dup2(fd, STDOUT_FILENO);
+	red_args = ft_split(node->data, ' ');
+	if (ft_strlen(red_args[0]) == 2 && ft_strncmp(red_args[0], ">>", 2))
+	{
+		fd = open(red_args[1], O_WRONLY | O_CREAT | O_APPEND, 0644);
+		perror("open error");
+		printf("fd = %d\n");
+		dup2(fd, STDOUT_FILENO);
+		close(fd);
+	}
+	else if (ft_strlen(red_args[0]) == 1 && ft_strncmp(red_args[0], ">", ft_strlen(red_args[0])))
+	{
+		fd = open(red_args[1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		perror("open error");
+		printf("fd = %d\n");
+		dup2(fd, STDOUT_FILENO);
+		close(fd);
+	}
+	else if (ft_strncmp(red_args[0], "<", ft_strlen(red_args[0])))
+	{
+		fd = open(red_args[1], O_RDONLY);
+		perror("open error");
+		printf("fd = %d\n");
+		dup2(fd, STDIN_FILENO);
+		close(fd);
+	}
 	close(fd);
 }
 
@@ -241,7 +279,7 @@ int	exec_pipe(t_token *node)
 	if (node->right)
 		node->right->pipe_fd = node->pipe_fd;
 	if (node->right == NULL)
-		node->last_flag = 1;
+		node->left->last_flag = 1;
 }
 
 int exec_cmd(t_token *node)
@@ -266,12 +304,13 @@ int	exec_scmd(t_token *node, t_list **my_env)
 	path_args = get_path_args(my_env);
 	path = get_path(cmd_args[0], path_args);
 	printf("path = %s\n", path);
+
 	pid = fork();
 	if (pid < 0)
 		perror("pipe");
 	if (pid == 0) // child
 	{
-		if (node->redirect_flag)
+		if (*node->redirect_flag)
 		{
 			close(node->pipe_fd[READ]);
 			close(node->pipe_fd[WRITE]);
