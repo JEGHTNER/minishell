@@ -36,6 +36,11 @@ static void	parse_n_execute(t_cmd *cmd, char *line)
 	//execute cmd with parse tree
 }
 
+void	aaa(void)
+{
+	system("leaks minishell | grep leaked");
+}
+
 int main(int ac, char **av, char **envp)
 {
 	struct termios	term;
@@ -62,6 +67,8 @@ int main(int ac, char **av, char **envp)
 		if (*line != '\0' && is_everything_whitespace(line) == NO)
 			parse_n_execute(&cmd, line);
 		// ft_free(&cmd, line);
+		free(line);
+		aaa();
 	}
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	return (EXIT_SUCCESS);

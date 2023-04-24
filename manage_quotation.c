@@ -42,6 +42,11 @@ char	*quotation_to_string(char *line, size_t *idx, char *data)
 	if (data == 0)
 		data = ft_strdup("");
 	end_idx = check_side_quotation(line, *idx);
+	if (*idx + 1 == end_idx)
+	{
+		*idx = end_idx + 1;
+		return (data);
+	}
 	start_idx = *idx + 1;
 	tmp = strchop(line, start_idx, end_idx - 1);
 	data = ft_strjoin(data, tmp);

@@ -90,6 +90,6 @@ void	insert_redir(t_token **head, t_token *to_put)
 		cur = cur->left;
 		while (cur->right)
 			cur = cur->right;
-		cur->left = tmp;
+		cur->right = tmp;
 	}
 }
