@@ -43,9 +43,10 @@ int main(int ac, char **av, char **envp)
 	t_cmd			cmd;
 	// t_env_lst		**env_lst;
 
-
-	envp = 0;
-	av = 0;
+	if (envp == 0)
+		envp = 0;
+	if (av == 0)
+		av = 0;
 	if (ac != 1)
 		ft_exit_with_error("wrong number of argument", 0);
 	tcgetattr(STDIN_FILENO, &term);

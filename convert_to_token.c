@@ -20,13 +20,14 @@ t_token	*make_word_token(t_element *tmp)
 	}
 	to_ret->cat = SIMPLE_CMD;
 	to_ret->argc = idx;
-	to_ret->argv = (char **)malloc(sizeof(char *) * idx);
+	to_ret->argv = (char **)malloc(sizeof(char *) * (idx + 1));
 	idx = 0;
 	while (idx < (size_t)to_ret->argc)
 	{
 		to_ret->argv[idx++] = start->content;
 		start = start->next;
 	}
+	to_ret->argv[idx] = 0;
 	return (to_ret);
 }
 
@@ -39,9 +40,10 @@ t_token	*make_redir_token(t_element *tmp)
 		return (0);
 	to_ret->cat = REDIR;
 	to_ret->argc = 2;
-	to_ret->argv = (char **)malloc(sizeof(char *) * 2);
+	to_ret->argv = (char **)malloc(sizeof(char *) * 3);
 	to_ret->argv[0] = tmp->content;
 	to_ret->argv[1] = tmp->next->content;
+	to_ret->argv[2] = 0;
 	return (to_ret);
 }
 
@@ -55,8 +57,9 @@ t_token	*make_pipe_token(void)
 	to_ret->cat = PIPE;
 	to_ret->is_pipe = YES;
 	to_ret->argc = 1;
-	to_ret->argv = (char **)malloc(sizeof(char *) * 1);
+	to_ret->argv = (char **)malloc(sizeof(char *) * 2);
 	to_ret->argv[0] = "|";
+	to_ret->argv[1] = 0;
 	return (to_ret);
 }
 
@@ -69,7 +72,7 @@ t_token	*change_element_token(t_element *tmp)
 		to_ret = make_word_token(tmp);
 	else if (tmp->c_flag == PIPE)
 		to_ret = make_pipe_token();
-	else if
+	else
 		to_ret = make_redir_token(tmp);
 	if (!to_ret)
 			ft_exit_with_error("malloc error", 0);

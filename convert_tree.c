@@ -13,9 +13,6 @@
 
 void	put_in_tree(t_cmd *cmd, t_token *to_put)
 {
-	t_token *cur;
-
-	cur = cmd->tree_head;
 	if (cmd->tree_head == 0)
 		insert_cmd(&(cmd->tree_head), to_put);
 	else

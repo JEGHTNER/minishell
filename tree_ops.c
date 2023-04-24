@@ -40,7 +40,7 @@ void	insert_cmd(t_token **head, t_token *to_put)
 		pipe->left = tmp;
 		while (cur->right)
 			cur = cur->right;
-		cur->right = tmp;
+		cur->right = pipe;
 	}
 }
 
@@ -90,6 +90,6 @@ void	insert_redir(t_token **head, t_token *to_put)
 		cur = cur->left;
 		while (cur->right)
 			cur = cur->right;
-		cur->right = tmp;
+		cur->left = tmp;
 	}
 }

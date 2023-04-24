@@ -19,13 +19,9 @@ static void	cmd_init(t_cmd *cmd)
 
 void	line_parse(t_cmd *cmd, char *line)
 {
-	size_t	pipe;
-	size_t	quote;
 	size_t	idx;
 
 	cmd_init(cmd);
-	pipe = 0;
-	quote = 0;
 	idx = 0;
 	while (line[idx])
 	{
