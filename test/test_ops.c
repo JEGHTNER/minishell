@@ -25,3 +25,15 @@ void print_tree(t_token *head)
 	printf("\n");
 	print_tree(head->right);
 }
+
+void    search_tree(t_token *node)
+{
+    printf("node->address = %p\n", node);
+    printf("node->cat: %d\nnode->right->address = %p\n", node->cat, node->right);
+    printf("node->right: %p\n", node->right);
+    // execute_tree(node, my_env);
+    if (node->left != NULL)
+        search_tree(node->left);
+    if (node->right != NULL)
+        search_tree(node->right);
+}

@@ -126,5 +126,6 @@ void	free_all(t_cmd *cmd, char *line);
 //test
 void print_list(t_element *head);
 void print_tree(t_token *head);
+void    search_tree(t_token *node);
 
 #endif

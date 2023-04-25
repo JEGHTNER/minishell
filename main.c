@@ -32,7 +32,7 @@ static void	parse_n_execute(t_cmd *cmd, char *line)
 	// print_list(cmd->chunk_head);
 	syntex_check(cmd);
 	convert_tree(cmd);
-	print_tree(cmd->tree_head);
+	search_tree(cmd->tree_head);
 	//execute cmd with parse tree
 }
 
