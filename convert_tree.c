@@ -41,8 +41,6 @@ void	convert_tree(t_cmd *cmd)
 		while (idx < (size_t)to_put->argc)
 		{
 			cur = cur->next;
-			if (!cur)
-				break ;
 			idx++;
 		}
 	}

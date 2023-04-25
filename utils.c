@@ -55,3 +55,10 @@ char	*strchop(char *src, size_t start, size_t end)
 	ret[end - start + 1] = '\0';
 	return (ret);
 }
+
+void	free_all(t_cmd *cmd, char *line)
+{
+	free(line);
+	ft_free_list(&(cmd->chunk_head));
+	ft_free_tree(&(cmd->tree_head));
+}

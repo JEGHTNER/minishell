@@ -84,6 +84,7 @@ void    	insert_node(char *data, t_cmd *cmd, t_cat type);
 size_t		find_node(char *to_find, t_cmd *cmd);
 t_element	*ft_lstnew_mini(char *content);
 void		ft_lstadd_back_mini(t_element **lst, t_element *new);
+void		ft_free_list(t_element **head);
 
 //manage quotation
 void	manage_quotation(t_cmd *cmd, char *line, size_t *idx);
@@ -110,6 +111,7 @@ void	convert_tree(t_cmd *cmd);
 
 //parse tree utils
 t_token *init_token(void);
+void	ft_free_tree(t_token **head);
 void	insert_cmd(t_token **head, t_token *to_put);
 void	insert_pipe(t_token **head, t_token *to_put);
 void	insert_redir(t_token **head, t_token *to_put);
@@ -119,6 +121,7 @@ void	ft_exit_with_error(char *message, char *specifier);
 char	*strchop(char *src, size_t start, size_t end);
 t_macro	is_whitespace(char tmp);
 t_macro is_everything_whitespace(char *tmp);
+void	free_all(t_cmd *cmd, char *line);
 
 //test
 void print_list(t_element *head);

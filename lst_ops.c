@@ -9,7 +9,6 @@
 /*   Updated: 2023/04/23 12:23:12 by joon-lee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "minishell.h"
 
 void	ft_lstadd_back_mini(t_element **lst, t_element *new)
@@ -41,4 +40,19 @@ t_element	*ft_lstnew_mini(char *content)
 	temp->content = content;
 	temp->next = 0;
 	return (temp);
+}
+
+void	ft_free_list(t_element **head)
+{
+	t_element	*cur;
+	t_element	*tmp;
+
+	cur = *head;
+	while (cur)
+	{
+		tmp = cur->next;
+		free(cur);
+		cur = tmp;
+	}
+	return ;
 }

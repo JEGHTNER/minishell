@@ -67,7 +67,7 @@ int main(int ac, char **av, char **envp)
 		if (*line != '\0' && is_everything_whitespace(line) == NO)
 			parse_n_execute(&cmd, line);
 		// ft_free(&cmd, line);
-		free(line);
+		free_all(&cmd, line);
 		aaa();
 	}
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
