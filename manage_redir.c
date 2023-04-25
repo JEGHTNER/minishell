@@ -61,13 +61,8 @@ static void	manage_std_output_redir(t_cmd *cmd, char *line, size_t *idx)
 
 void	manage_redir(t_cmd *cmd, char *line, size_t *idx)
 {
-	if (cmd->chunk_head == 0)
-		ft_exit_with_error("syntax error near unexpected token : ", " > | <");
+	if (ft_strncmp(line + *idx, ">>", 2) == 0 || ft_strncmp(line + *idx, "<<", 2) == 0)
+		manage_append_output_redir(cmd, line, idx);
 	else
-	{
-		if (ft_strncmp(line + *idx, ">>", 2) == 0 || ft_strncmp(line + *idx, "<<", 2) == 0)
-			manage_append_output_redir(cmd, line, idx);
-		else
-			manage_std_output_redir(cmd, line, idx);
-	}
+		manage_std_output_redir(cmd, line, idx);
 }
