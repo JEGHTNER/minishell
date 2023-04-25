@@ -18,16 +18,18 @@ SRCS = main.c \
 		manage_redir.c \
 		lst_utils.c
 
-HEAD = minishell.h
 OBJS = $(SRCS:.c=.o)
 LIBFT_A = libft/libft.a
 
-.c.o :
-	$(CC) $(CFLAGS) -I. -c $< -o ${<:.c=.o}
+OBJS_FLAGS_IN_HOME = -I/opt/homebrew/opt/readline/include
+COMP_FLAGS_IN_HOME = -lreadline -L/opt/homebrew/opt/readline/lib
+
+%.o : %.c
+	$(CC) $(CFLAGS) $(OBJS_FLAGS_IN_HOME) -c $< -o ${<:.c=.o}
 
 $(NAME) : $(OBJS)
 	$(MAKE) -C libft
-	$(CC) $(CFLAGS) -lreadline $(OBJS) $(LIBFT_A) -o $(NAME)
+	$(CC) $(CFLAGS) $(COMP_FLAGS_IN_HOME) $(OBJS) $(LIBFT_A) -o $(NAME)
 
 all : $(NAME)
 

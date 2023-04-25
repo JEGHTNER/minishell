@@ -21,7 +21,7 @@ t_token	*make_word_token(t_element *tmp)
 	to_ret->cat = SIMPLE_CMD;
 	to_ret->argc = idx;
 	to_ret->argv = (char **)malloc(sizeof(char *) * (idx + 1));
-	if (to_ret->argv)
+	if (!to_ret->argv)
 		return (0);
 	idx = 0;
 	while (idx < (size_t)to_ret->argc)

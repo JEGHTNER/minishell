@@ -12,6 +12,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <readline/readline.h>
@@ -76,7 +77,7 @@ typedef struct s_cmd
 }	t_cmd;
 
 //manage signal(SIGINT, SIGQUIT)
-void	signal_init(void);
+void    signal_init(int sig_int, int sig_quit);
 
 //split line & make list
 void		line_parse(t_cmd *cmd, char *line);

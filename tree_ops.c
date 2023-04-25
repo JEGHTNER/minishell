@@ -19,13 +19,11 @@ t_token *init_token(void)
 
 void	ft_free_tree(t_token **head)
 {
-	size_t	idx;
 	t_token	*tmp_left;
 	t_token	*tmp_right;
 
 	if (*head == 0)
 		return ;
-	idx = 0;
 	tmp_left = (*head)->left;
 	tmp_right = (*head)->right;
 	ft_free_tree(&tmp_left);
