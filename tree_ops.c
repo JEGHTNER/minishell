@@ -65,12 +65,8 @@ void	insert_cmd(t_token **head, t_token *to_put)
 void	insert_pipe(t_token **head, t_token *to_put)
 {
 	t_token *cur;
-	t_token *tmp;
 
 	cur = (*head);
-	tmp = init_token();
-	if (!tmp)
-		ft_exit_with_error("malloc error", 0);
 	if (cur->cat == CMD)
 	{
 		to_put->left = cur;

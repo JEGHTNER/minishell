@@ -29,7 +29,7 @@ static void	init_main(void)
 static void	parse_n_execute(t_cmd *cmd, char *line)
 {
 	line_parse(cmd, line);
-	print_list(cmd->chunk_head);
+	// print_list(cmd->chunk_head);
 	syntex_check(cmd);
 	convert_tree(cmd);
 	print_tree(cmd->tree_head);
