@@ -45,10 +45,9 @@ typedef enum e_macro
 
 typedef struct s_env_lst
 {
-	struct s_env_lst	*next;
-	struct s_env_lst	*prev;
 	char				*key;
 	char				*value;
+	struct s_env_lst	*next;
 }	t_env_lst;
 
 typedef struct s_element

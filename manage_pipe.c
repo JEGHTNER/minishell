@@ -9,7 +9,6 @@
 /*   Updated: 2023/04/23 12:24:07 by joon-lee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "minishell.h"
 
 void	manage_pipe(t_cmd *cmd, char *line, size_t *idx)
