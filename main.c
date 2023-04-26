@@ -70,6 +70,7 @@ int main(int ac, char **av, char **envp)
 		// free_all(&cmd, line);
 		aaa();
 	}
+	signal_init(1, 1);
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	return (EXIT_SUCCESS);
 }
