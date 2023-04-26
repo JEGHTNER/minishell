@@ -16,7 +16,8 @@ SRCS = main.c \
 		utils.c \
 		lst_ops.c \
 		manage_redir.c \
-		lst_utils.c
+		lst_utils.c \
+		manage_env.c
 
 OBJS = $(SRCS:.c=.o)
 LIBFT_A = libft/libft.a
