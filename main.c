@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
-static void	init_main(void)
+static void	init_main(t_cmd *cmd)
 {
 	struct termios	term;
 
@@ -19,6 +19,7 @@ static void	init_main(void)
 	// (char **)av;
 	// (char **)envp;
 	// (t_env_lst **)env_list;
+	cmd_init(cmd);
 	tcgetattr(STDIN_FILENO, &term);
 	term.c_lflag &= ~(ECHOCTL);
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
@@ -56,7 +57,7 @@ int main(int ac, char **av, char **envp)
 	if (ac != 1)
 		ft_exit_with_error("wrong number of argument", 0);
 	tcgetattr(STDIN_FILENO, &term);
-	init_main();
+	init_main(&cmd);
 	/*ac, av, envp, env_lst */
 	while (1)
 	{

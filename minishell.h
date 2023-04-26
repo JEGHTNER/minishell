@@ -71,9 +71,16 @@ typedef struct s_token
 
 typedef struct s_cmd
 {
+	struct s_env_lst	*env_head;
 	struct s_element	*chunk_head;
 	struct s_token		*tree_head;
 }	t_cmd;
+
+//manage environment variable
+void    add_env_list(t_cmd *cmd, char *key, char *value);
+void	rm_env_list(t_cmd *cmd, char *key);
+void    init_env_lst(t_cmd *cmd, char **envp);
+char    *find_value_with_key(t_env_lst *head, char *to_find);
 
 //manage signal(SIGINT, SIGQUIT)
 void    signal_init(int sig_int, int sig_quit);
@@ -117,6 +124,7 @@ void	insert_pipe(t_token **head, t_token *to_put);
 void	insert_redir(t_token **head, t_token *to_put);
 
 //general utils
+void	cmd_init(t_cmd *cmd);
 void	ft_exit_with_error(char *message, char *specifier);
 char	*strchop(char *src, size_t start, size_t end);
 t_macro	is_whitespace(char tmp);

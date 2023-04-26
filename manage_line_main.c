@@ -11,17 +11,10 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
-static void	cmd_init(t_cmd *cmd)
-{
-	cmd->chunk_head = 0;
-	cmd->tree_head = 0;
-}
-
 void	line_parse(t_cmd *cmd, char *line)
 {
 	size_t	idx;
 
-	cmd_init(cmd);
 	idx = 0;
 	while (line[idx])
 	{
