@@ -54,5 +54,6 @@ void	ft_free_list(t_element **head)
 		free(cur);
 		cur = tmp;
 	}
+	*head = 0;
 	return ;
 }

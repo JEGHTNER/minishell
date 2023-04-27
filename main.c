@@ -61,7 +61,7 @@ int main(int ac, char **av, char **envp)
 			add_history(line);
 		if (*line != '\0' && is_everything_whitespace(line) == NO)
 			parse_n_execute(&cmd, line);
-		// free_all(&cmd, line);
+		free_all(&cmd, line);
 		aaa();
 	}
 	signal_init(1, 1);

@@ -64,7 +64,7 @@ void	manage_chunk(t_cmd *cmd, char *line, size_t *idx)
 			quote_in_chunk(cmd, line, &start_idx, idx);
 			return ;
 		}
-		if  (is_whitespace(line[*idx]) == YES)
+		if (is_whitespace(line[*idx]) == YES)
 			return ;
 		(*idx)++;
 		if (is_whitespace(line[*idx]) == YES || *idx == ft_strlen(line))

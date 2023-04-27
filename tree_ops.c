@@ -38,9 +38,8 @@ void	ft_free_tree(t_token **head)
 	tmp_left = (*head)->left;
 	tmp_right = (*head)->right;
 	ft_free_tree(&tmp_left);
-	if ((*head)->argc >= 1)
-		free((*head)->argv);
 	free(*head);
+	*head = 0;
 	ft_free_tree(&tmp_right);
 }
 
