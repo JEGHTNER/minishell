@@ -26,6 +26,8 @@ void	line_parse(t_cmd *cmd, char *line)
 			ft_exit_with_error("syntax error near unexpected token\n", line);
 		else if (line[idx] == '>' || line[idx] == '<')
 			manage_redir(cmd, line, &idx);
+		else if (line[idx] == '$')
+			manage_env(cmd, line, &idx);
 		else if (is_whitespace(line[idx]) == YES)
 			idx++;
 		else

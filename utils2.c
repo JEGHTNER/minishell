@@ -17,3 +17,11 @@ void	cmd_init(t_cmd *cmd)
 	cmd->chunk_head = 0;
 	cmd->tree_head = 0;
 }
+
+// char	*chop_n_trim(char *line, size_t *start_idx, size_t *idx, char *data)
+// {
+// 	char	*tmp;
+
+// 	tmp = strchop(line, start_idx, *idx - 1);
+// 	data =
+// }

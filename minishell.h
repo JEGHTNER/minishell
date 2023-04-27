@@ -81,6 +81,7 @@ void	add_env_list(t_cmd *cmd, char *key, char *value);
 void	rm_env_list(t_cmd *cmd, char *key);
 void	init_env_lst(t_cmd *cmd, char **envp);
 char	*find_value_with_key(t_env_lst *head, char *to_find);
+void	manage_env(t_cmd *cmd, char *line, size_t *idx);
 
 //manage signal(SIGINT, SIGQUIT)
 void	signal_init(int sig_int, int sig_quit);

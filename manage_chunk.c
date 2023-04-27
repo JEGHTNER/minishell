@@ -31,6 +31,16 @@ static void	redir_in_chunk(t_cmd *cmd, char *line, size_t *start, size_t *idx)
 	*start = *idx;
 }
 
+// static void	env_in_chunk(t_cmd *cmd, char *line, size_t *start, size_t *idx)
+// {
+// 	char	*tmp;
+// 	char	*key_to_find;
+
+// 	tmp = strchop(line, *start, *idx - 1);
+// 	insert_node(tmp, cmd, WORD);
+// 	key_to_find =
+// }
+
 static void	quote_in_chunk(t_cmd *cmd, char *line, size_t *start, size_t *idx)
 {
 	char	*tmp;
@@ -59,11 +69,10 @@ void	manage_chunk(t_cmd *cmd, char *line, size_t *idx)
 			pipe_in_chunk(cmd, line, &start_idx, idx);
 		else if (line[*idx] == '<' || line[*idx] == '>')
 			redir_in_chunk(cmd, line, &start_idx, idx);
+		// else if (line[*idx] == '$')
+		// 	env_in_chunk(cmd, line, &start_idx, idx);
 		else if (line[*idx] == '\'' || line[*idx] == '\"')
-		{
 			quote_in_chunk(cmd, line, &start_idx, idx);
-			return ;
-		}
 		if (is_whitespace(line[*idx]) == YES)
 			return ;
 		(*idx)++;

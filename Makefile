@@ -30,6 +30,7 @@ SRCS = main.c \
 		manage_redir.c \
 		lst_utils.c \
 		manage_env.c \
+		manage_env_utils.c \
 		utils2.c
 
 OBJS = $(SRCS:.c=.o)

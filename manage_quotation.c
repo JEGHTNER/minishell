@@ -54,7 +54,6 @@ char	*quotation_to_string(char *line, size_t *idx, char *data)
     return (data);
 }
 
-
 char	*pipe_after_quote(char *data, char *line, size_t *idx)
 {
 	size_t	start_idx;
@@ -77,6 +76,8 @@ char	*pipe_after_quote(char *data, char *line, size_t *idx)
 	}
 }
 
+
+
 char	*check_remain(char *line, size_t *idx, char *data)
 {
 	size_t	start_idx;
@@ -94,6 +95,11 @@ char	*check_remain(char *line, size_t *idx, char *data)
 			tmp = strchop(line, start_idx, *idx - 1);
 			data = ft_strjoin(tmp, quotation_to_string(line, idx, data));
 			start_idx = *idx;
+		}
+		else if (line[*idx]== '$')
+		{
+			tmp = strchop(line, start_idx, *idx - 1);
+			data = ft_strjoin(data, tmp)
 		}
 		else
 			(*idx)++;
