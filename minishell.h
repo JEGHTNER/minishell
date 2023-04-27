@@ -96,7 +96,7 @@ void		ft_free_list(t_element **head);
 
 //manage quotation
 void	manage_quotation(t_cmd *cmd, char *line, size_t *idx);
-char	*quotation_to_string(char *line, size_t *idx, char *data);
+char	*quotation_to_string(char *line, size_t *idx);
 char	*pipe_after_quote(char *data, char *line, size_t *idx);
 char	*check_remain(char *line, size_t *idx, char *data);
 

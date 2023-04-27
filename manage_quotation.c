@@ -33,25 +33,25 @@ static size_t	check_side_quotation(char *line, size_t start)
 	return (idx);
 }
 
-char	*quotation_to_string(char *line, size_t *idx, char *data)
+char	*quotation_to_string(char *line, size_t *idx)
 {
 	char	*tmp;
+	char	*to_ret;
 	size_t	start_idx;
 	size_t	end_idx;
 
-	if (data == 0)
-		data = ft_strdup("");
+	to_ret = ft_strdup("");
 	end_idx = check_side_quotation(line, *idx);
 	if (*idx + 1 == end_idx)
 	{
 		*idx = end_idx + 1;
-		return (data);
+		return (to_ret);
 	}
 	start_idx = *idx + 1;
 	tmp = strchop(line, start_idx, end_idx - 1);
-	data = ft_strjoin(data, tmp);
+	to_ret = ft_strjoin(to_ret, tmp);
 	*idx = end_idx + 1;
-    return (data);
+    return (to_ret);
 }
 
 char	*pipe_after_quote(char *data, char *line, size_t *idx)
@@ -76,9 +76,7 @@ char	*pipe_after_quote(char *data, char *line, size_t *idx)
 	}
 }
 
-
-
-char	*check_remain(char *line, size_t *idx, char *data)
+char	*check_remain(t_cmd *cmd, char *line, size_t *idx, char *data)
 {
 	size_t	start_idx;
 	char	*tmp;
@@ -93,13 +91,12 @@ char	*check_remain(char *line, size_t *idx, char *data)
 		else if (line[*idx] == '\'' || line[*idx] == '\"')
 		{
 			tmp = strchop(line, start_idx, *idx - 1);
-			data = ft_strjoin(tmp, quotation_to_string(line, idx, data));
+			data = ft_strjoin(tmp, quotation_to_string(line, idx));
 			start_idx = *idx;
 		}
 		else if (line[*idx]== '$')
 		{
-			tmp = strchop(line, start_idx, *idx - 1);
-			data = ft_strjoin(data, tmp)
+			tmp = find_n_convert(cmd, line, idx);
 		}
 		else
 			(*idx)++;
@@ -118,9 +115,8 @@ void	manage_quotation(t_cmd *cmd, char *line, size_t *idx)
 	char	quote;
 
 	quote = line[*idx];
-	data = 0;
-    data = quotation_to_string(line, idx, data);
-	data = check_remain(line, idx, data);
+    data = quotation_to_string(line, idx);
+	data = check_remain(cmd, line, idx, data);
 	if (quote == '\'')
 		insert_node(data, cmd, W_SINGLE);
 	else
