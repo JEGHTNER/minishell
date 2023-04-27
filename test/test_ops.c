@@ -13,6 +13,16 @@ void print_list(t_element *head)
 	}
 }
 
+void	print_env(t_env_lst *head)
+{
+	while (head)
+	{
+		printf("key: %s\n", head->key);
+		printf("value: %s\n\n", head->value);
+		head = head->next;
+	}
+}
+
 void print_tree(t_token *head)
 {
 	if (head == 0)

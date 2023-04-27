@@ -15,17 +15,12 @@ static void	init_main(t_cmd *cmd, char **envp)
 {
 	struct termios	term;
 
-	// (int)ac;
-	// (char **)av;
-	// (char **)envp;
-	// (t_env_lst **)env_list;
 	cmd_init(cmd);
 	init_env_lst(cmd, envp);
 	tcgetattr(STDIN_FILENO, &term);
 	term.c_lflag &= ~(ECHOCTL);
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	signal_init(2, 2);
-	// initiate env list
 }
 
 static void	parse_n_execute(t_cmd *cmd, char *line)
@@ -35,6 +30,7 @@ static void	parse_n_execute(t_cmd *cmd, char *line)
 	syntex_check(cmd);
 	convert_tree(cmd);
 	print_tree(cmd->tree_head);
+	// print_env(cmd->env_head);
 	// search_tree(cmd->tree_head);
 	//execute cmd with parse tree
 }
@@ -50,8 +46,6 @@ int main(int ac, char **av, char **envp)
 	char			*line;
 	t_cmd			cmd;
 
-	if (envp == 0)
-		envp = 0;
 	if (av == 0)
 		av = 0;
 	if (ac != 1)

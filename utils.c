@@ -44,6 +44,8 @@ char	*strchop(char *src, size_t start, size_t end)
 	char *	ret;
 
 	idx = 0;
+	if (end < start)
+		return (0);
 	ret = (char *)malloc(end - start + 1);
 	if (!ret)
 		return ((char *)0);

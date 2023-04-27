@@ -60,7 +60,7 @@ typedef struct s_element
 typedef struct s_token
 {
 	enum e_cat		cat;
-	char 			**argv;
+	char			**argv;
 	int				argc;
 	enum e_macro	is_env;
 	enum e_macro	is_pipe;
@@ -77,17 +77,17 @@ typedef struct s_cmd
 }	t_cmd;
 
 //manage environment variable
-void    add_env_list(t_cmd *cmd, char *key, char *value);
+void	add_env_list(t_cmd *cmd, char *key, char *value);
 void	rm_env_list(t_cmd *cmd, char *key);
-void    init_env_lst(t_cmd *cmd, char **envp);
-char    *find_value_with_key(t_env_lst *head, char *to_find);
+void	init_env_lst(t_cmd *cmd, char **envp);
+char	*find_value_with_key(t_env_lst *head, char *to_find);
 
 //manage signal(SIGINT, SIGQUIT)
-void    signal_init(int sig_int, int sig_quit);
+void	signal_init(int sig_int, int sig_quit);
 
 //split line & make list
 void		line_parse(t_cmd *cmd, char *line);
-void    	insert_node(char *data, t_cmd *cmd, t_cat type);
+void		insert_node(char *data, t_cmd *cmd, t_cat type);
 size_t		find_node(char *to_find, t_cmd *cmd);
 t_element	*ft_lstnew_mini(char *content);
 void		ft_lstadd_back_mini(t_element **lst, t_element *new);
@@ -128,12 +128,13 @@ void	cmd_init(t_cmd *cmd);
 void	ft_exit_with_error(char *message, char *specifier);
 char	*strchop(char *src, size_t start, size_t end);
 t_macro	is_whitespace(char tmp);
-t_macro is_everything_whitespace(char *tmp);
+t_macro	is_everything_whitespace(char *tmp);
 void	free_all(t_cmd *cmd, char *line);
 
 //test
-void print_list(t_element *head);
-void print_tree(t_token *head);
-void    search_tree(t_token *node);
+void	print_list(t_element *head);
+void	print_env(t_env_lst *head);
+void	print_tree(t_token *head);
+void	search_tree(t_token *node);
 
 #endif

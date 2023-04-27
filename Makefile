@@ -12,7 +12,8 @@
 NAME = minishell
 
 CC = CC
-CFLAGS = -Wall -Wextra -Werror
+# CFLAGS = -fsanitize=address
+# -Wall -Wextra -Werror
 SRCS = main.c \
 		signal_manage.c \
 		convert_to_token.c \
@@ -34,15 +35,15 @@ SRCS = main.c \
 OBJS = $(SRCS:.c=.o)
 LIBFT_A = libft/libft.a
 
-OBJS_FLAGS_IN_HOME = -I/opt/homebrew/opt/readline/include
-COMP_FLAGS_IN_HOME = -lreadline -L/opt/homebrew/opt/readline/lib
+# OBJS_FLAGS_IN_HOME = -I/opt/homebrew/opt/readline/include
+# COMP_FLAGS_IN_HOME = -lreadline -L/opt/homebrew/opt/readline/lib
 
 %.o : %.c
-	$(CC) $(CFLAGS) $(OBJS_FLAGS_IN_HOME) -c $< -o ${<:.c=.o}
+	$(CC) $(CFLAGS) -c $< -o ${<:.c=.o}
 
 $(NAME) : $(OBJS)
 	$(MAKE) -C libft
-	$(CC) $(CFLAGS) $(COMP_FLAGS_IN_HOME) $(OBJS) $(LIBFT_A) -o $(NAME)
+	$(CC) $(CFLAGS) -lreadline $(OBJS) $(LIBFT_A) -o $(NAME)
 
 all : $(NAME)
 

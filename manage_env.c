@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
+#include <stdio.h>
 
 void	rm_env_list(t_cmd *cmd, char *key)
 {
@@ -38,16 +39,16 @@ void	rm_env_list(t_cmd *cmd, char *key)
 	}
 }
 
-void    add_env_list(t_cmd *cmd, char *key, char *value)
+void	add_env_list(t_cmd *cmd, char *for_key, char *for_value)
 {
-	t_env_lst   *to_put;
-	t_env_lst   *cur;
+	t_env_lst	*to_put;
+	t_env_lst	*cur;
 
 	to_put = (t_env_lst *)malloc(sizeof(t_env_lst));
 	if (!to_put)
 		ft_exit_with_error("malloc error", 0);
-	to_put->key = key;
-	to_put->value = value;
+	to_put->key = for_key;
+	to_put->value = for_value;
 	to_put->next = 0;
 	if (cmd->env_head == 0)
 		cmd->env_head = to_put;
@@ -55,36 +56,43 @@ void    add_env_list(t_cmd *cmd, char *key, char *value)
 	{
 		cur = cmd->env_head;
 		while (cur->next)
+		{
+			if (ft_strncmp(cur->key, for_key, ft_strlen(for_key)) == 0)
+			{
+				cur->value = for_value;
+				return ;
+			}
 			cur = cur->next;
+		}
 		cur->next = to_put;
 	}
 }
 
-void    init_env_lst(t_cmd *cmd, char **envp)
+void	init_env_lst(t_cmd *cmd, char **envp)
 {
-	size_t  idx;
-	char    *key;
-	char    *value;
+	size_t	idx;
+	char	*key;
+	char	*value;
 
 	while (*envp)
 	{
 		idx = 0;
-		while (*envp[idx] != '=')
+		while ((*envp)[idx] && (*envp)[idx] != '=')
 			idx++;
 		key = strchop(*envp, 0, idx - 1);
 		if (!key)
 			ft_exit_with_error("malloc error", 0);
-		value = strchop(*envp, idx + 1, ft_strlen(*envp));
+		value = strchop(*envp, idx + 1, ft_strlen(*envp) - 1);
 		if (!value)
 			ft_exit_with_error("malloc error", 0);
 		add_env_list(cmd, key, value);
-		(*envp)++;
+		envp++;
 	}
 }
 
-char    *find_value_with_key(t_env_lst *head, char *to_find)
+char	*find_value_with_key(t_env_lst *head, char *to_find)
 {
-	t_env_lst   *cur;
+	t_env_lst	*cur;
 
 	cur = head;
 	while (cur)

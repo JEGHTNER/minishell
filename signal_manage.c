@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   signal_manage.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: joon-lee <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/27 13:01:34 by joon-lee          #+#    #+#             */
+/*   Updated: 2023/04/27 13:01:35 by joon-lee         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "minishell.h"
 
 static void    signal_handler(int signo)
@@ -6,7 +17,7 @@ static void    signal_handler(int signo)
     {
         write(1, "\n", 1);
 		rl_on_new_line();
-        rl_replace_line("", 1);
+        // rl_replace_line("", 1);
 		rl_redisplay();
     }
     if (signo == SIGQUIT)
