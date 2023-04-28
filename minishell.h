@@ -76,12 +76,12 @@ typedef struct s_cmd
 	struct s_token		*tree_head;
 }	t_cmd;
 
-//manage environment variable
+//manage environment variable utils
 void	add_env_list(t_cmd *cmd, char *key, char *value);
 void	rm_env_list(t_cmd *cmd, char *key);
 void	init_env_lst(t_cmd *cmd, char **envp);
 char	*find_value_with_key(t_env_lst *head, char *to_find);
-void	manage_env(t_cmd *cmd, char *line, size_t *idx);
+t_macro	is_it_env_key(char check);
 
 //manage signal(SIGINT, SIGQUIT)
 void	signal_init(int sig_int, int sig_quit);
@@ -98,12 +98,16 @@ void		ft_free_list(t_element **head);
 void	manage_quotation(t_cmd *cmd, char *line, size_t *idx);
 char	*quotation_to_string(char *line, size_t *idx);
 char	*pipe_after_quote(char *data, char *line, size_t *idx);
-char	*check_remain(char *line, size_t *idx, char *data);
+char	*check_remain(t_cmd *cmd, char *line, size_t *idx, char *data);
 
 //manage pipe, redir & chunk
 void	manage_pipe(t_cmd *cmd, char *line, size_t *idx);
 void	manage_redir(t_cmd *cmd, char *line, size_t *idx);
 void	manage_chunk(t_cmd *cmd, char *line, size_t *idx);
+
+//manage env variable
+void	manage_env(t_cmd *cmd, char *line, size_t *idx);
+char	*find_n_convert(t_cmd *cmd, char *line, size_t *idx);
 
 //syntax check
 void	syntex_check(t_cmd *cmd);

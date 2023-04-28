@@ -91,12 +91,15 @@ char	*check_remain(t_cmd *cmd, char *line, size_t *idx, char *data)
 		else if (line[*idx] == '\'' || line[*idx] == '\"')
 		{
 			tmp = strchop(line, start_idx, *idx - 1);
-			data = ft_strjoin(tmp, quotation_to_string(line, idx));
+			data = ft_strjoin(data, tmp);
+			data = ft_strjoin(data, quotation_to_string(line, idx));
 			start_idx = *idx;
 		}
 		else if (line[*idx]== '$')
 		{
 			tmp = find_n_convert(cmd, line, idx);
+			data = ft_strjoin(data, tmp);
+			start_idx = *idx;
 		}
 		else
 			(*idx)++;

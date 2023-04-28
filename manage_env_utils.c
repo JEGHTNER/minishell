@@ -11,6 +11,15 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
+t_macro	is_it_env_key(char check)
+{
+	if (check && is_whitespace(check) == NO && check != '\"' && check != '\''
+		&& check != '|' && check != '>'&& check != '<')
+		return (YES);
+	else
+		return (NO);
+}
+
 void	add_env_list(t_cmd *cmd, char *for_key, char *for_value)
 {
 	t_env_lst	*to_put;

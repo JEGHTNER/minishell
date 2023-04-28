@@ -21,12 +21,10 @@ char	*find_n_convert(t_cmd *cmd, char *line, size_t *idx)
 	end_idx = *idx;
 	if (*idx == ft_strlen(line) || is_whitespace(line[*idx]) == YES)
 		return ("$");
-	while (line[end_idx] && is_whitespace(line[end_idx]) == NO
-			&& !(line[end_idx] == '\"' || line[end_idx] == '\''
-			|| line[end_idx] == '|' || line[end_idx] == '>'
-			|| line[end_idx] == '<'))
+	while (is_it_env_key(line[end_idx]) == YES)
 		end_idx++;
-	key = strchop(line, *idx, end_idx);
+	key = strchop(line, *idx, end_idx - 1);
+	printf("%s\n", key);
 	to_ret = find_value_with_key(cmd->env_head, key);
 	*idx = end_idx;
 	return (to_ret);

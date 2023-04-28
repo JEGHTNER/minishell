@@ -49,8 +49,8 @@ static void	quote_in_chunk(t_cmd *cmd, char *line, size_t *start, size_t *idx)
 
 	quote = line[*idx];
 	tmp = strchop(line, *start, *idx - 1);
-	data = quotation_to_string(line, idx, tmp);
-	data = check_remain(line, idx, data);
+	data = quotation_to_string(line, idx);
+	data = check_remain(cmd, line, idx, data);
 	if (quote == '\'')
 		insert_node(data, cmd, W_SINGLE);
 	else
