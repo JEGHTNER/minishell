@@ -18,10 +18,14 @@ void	cmd_init(t_cmd *cmd)
 	cmd->tree_head = 0;
 }
 
-// char	*chop_n_trim(char *line, size_t *start_idx, size_t *idx, char *data)
-// {
-// 	char	*tmp;
+char	*chop_n_trim(char *data, char *line, size_t *start_idx, size_t *idx)
+{
+	char	*to_free;
+	char	*to_ret;
 
-// 	tmp = strchop(line, start_idx, *idx - 1);
-// 	data =
-// }
+	to_free  = data;
+	to_ret = ft_strjoin(data, strchop(line, *start_idx, *idx - 1));
+	free(to_free);
+	*start_idx = *idx;
+	return (to_ret);
+}

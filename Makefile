@@ -12,26 +12,27 @@
 NAME = minishell
 
 CC = CC
-# CFLAGS = -fsanitize=address
+CFLAGS = -fsanitize=address
 # -Wall -Wextra -Werror
 SRCS = main.c \
 		signal_manage.c \
-		convert_to_token.c \
-		manage_chunk.c \
-		syntex_check.c \
-		convert_tree.c \
 		manage_line_main.c \
-		test/test_ops.c \
-		manage_pipe.c \
-		tree_ops.c \
+		manage_chunk.c \
 		manage_quotation.c \
-		utils.c \
-		lst_ops.c \
+		manage_quotation_utils.c \
 		manage_redir.c \
-		lst_utils.c \
 		manage_env.c \
 		manage_env_utils.c \
-		utils2.c
+		manage_pipe.c \
+		tree_ops.c \
+		lst_ops.c \
+		lst_utils.c \
+		convert_to_token.c \
+		syntex_check.c \
+		convert_tree.c \
+		test/test_ops.c \
+		utils.c \
+		utils2.c \
 
 OBJS = $(SRCS:.c=.o)
 LIBFT_A = libft/libft.a

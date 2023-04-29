@@ -78,7 +78,6 @@ typedef struct s_cmd
 
 //manage environment variable utils
 void	add_env_list(t_cmd *cmd, char *key, char *value);
-void	rm_env_list(t_cmd *cmd, char *key);
 void	init_env_lst(t_cmd *cmd, char **envp);
 char	*find_value_with_key(t_env_lst *head, char *to_find);
 t_macro	is_it_env_key(char check);
@@ -96,9 +95,13 @@ void		ft_free_list(t_element **head);
 
 //manage quotation
 void	manage_quotation(t_cmd *cmd, char *line, size_t *idx);
-char	*quotation_to_string(char *line, size_t *idx);
-char	*pipe_after_quote(char *data, char *line, size_t *idx);
-char	*check_remain(t_cmd *cmd, char *line, size_t *idx, char *data);
+char	*double_quote_to_string(t_cmd *cmd, char *line, size_t *idx, size_t *st);
+char	*single_quote_to_string(char *line, size_t *idx, size_t *st);
+
+//manage quotation utils
+size_t	check_side_quotation(char *line, size_t start);
+char	*quote_to_string(t_cmd *cmd, char *line, size_t *idx, size_t *st);
+t_macro	nothing_to_ret(char **tmp, size_t *idx, size_t end_idx);
 
 //manage pipe, redir & chunk
 void	manage_pipe(t_cmd *cmd, char *line, size_t *idx);
@@ -135,6 +138,8 @@ char	*strchop(char *src, size_t start, size_t end);
 t_macro	is_whitespace(char tmp);
 t_macro	is_everything_whitespace(char *tmp);
 void	free_all(t_cmd *cmd, char *line);
+char	*chop_n_trim(char *data, char *line, size_t *start_idx, size_t *idx);
+
 
 //test
 void	print_list(t_element *head);

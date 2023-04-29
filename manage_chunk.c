@@ -11,75 +11,51 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
-static void	pipe_in_chunk(t_cmd *cmd, char *line, size_t *start, size_t *idx)
-{
-	char *tmp;
-
-	tmp = strchop(line, *start, *idx - 1);
-	insert_node(tmp, cmd, WORD);
-	manage_pipe(cmd, line, idx);
-	*start = *idx;
-}
-
-static void	redir_in_chunk(t_cmd *cmd, char *line, size_t *start, size_t *idx)
-{
-	char *tmp;
-
-	tmp = strchop(line, *start, *idx - 1);
-	insert_node(tmp, cmd, WORD);
-	manage_redir(cmd, line, idx);
-	*start = *idx;
-}
-
-// static void	env_in_chunk(t_cmd *cmd, char *line, size_t *start, size_t *idx)
-// {
-// 	char	*tmp;
-// 	char	*key_to_find;
-
-// 	tmp = strchop(line, *start, *idx - 1);
-// 	insert_node(tmp, cmd, WORD);
-// 	key_to_find =
-// }
-
-static void	quote_in_chunk(t_cmd *cmd, char *line, size_t *start, size_t *idx)
+char	*chunk_to_string(char *line, size_t *idx)
 {
 	char	*tmp;
-	char	*data;
-	char	quote;
+	size_t	start_idx;
+	size_t	end_idx;
 
-	quote = line[*idx];
-	tmp = strchop(line, *start, *idx - 1);
-	data = quotation_to_string(line, idx);
-	data = check_remain(cmd, line, idx, data);
-	if (quote == '\'')
-		insert_node(data, cmd, W_SINGLE);
-	else
-		insert_node(data, cmd, W_DOUBLE);
+	tmp  = ft_strdup("");
+	start_idx = *idx;
+	while (is_it_env_key(line[*idx]) == YES)
+		(*idx)++;
+	return (chop_n_trim(tmp, line, &start_idx, idx));
+}
+
+char	*check_remain_chunk(t_cmd *cmd, char *line, size_t *idx)
+{
+	size_t	start_idx;
+	char	*remain;
+
+	start_idx = *idx;
+	remain = ft_strdup("");
+	if (*idx == ft_strlen(line) || is_whitespace(line[*idx]) == YES)
+		return (remain);
+	while (line[*idx] && is_whitespace(line[*idx]) == NO)
+	{
+		if (line[*idx] == '|' || line[*idx] == '>' || line[*idx] == '<')
+			return (remain);
+		else if (line[*idx] == '\'' || line[*idx] == '\"')
+			remain = ft_strjoin(chop_n_trim(remain, line, &start_idx, idx), \
+				quote_to_string(cmd, line, idx, &start_idx));
+		else if (line[*idx]== '$')
+			remain = ft_strjoin(chop_n_trim(remain, line, &start_idx, idx), \
+				find_n_convert(cmd, line, idx));
+		else
+			(*idx)++;
+		if (is_whitespace(line[*idx]) == YES || *idx == ft_strlen(line))
+			remain = chop_n_trim(remain, line, &start_idx, idx);
+	}
+	return (remain);	
 }
 
 void	manage_chunk(t_cmd *cmd, char *line, size_t *idx)
 {
 	char	*data;
-	size_t	start_idx;
 
-	start_idx = *idx;
-	while ((is_whitespace(line[*idx]) == NO && line[*idx]))
-	{
-		if (line[*idx] == '|')
-			pipe_in_chunk(cmd, line, &start_idx, idx);
-		else if (line[*idx] == '<' || line[*idx] == '>')
-			redir_in_chunk(cmd, line, &start_idx, idx);
-		// else if (line[*idx] == '$')
-		// 	env_in_chunk(cmd, line, &start_idx, idx);
-		else if (line[*idx] == '\'' || line[*idx] == '\"')
-			quote_in_chunk(cmd, line, &start_idx, idx);
-		if (is_whitespace(line[*idx]) == YES)
-			return ;
-		(*idx)++;
-		if (is_whitespace(line[*idx]) == YES || *idx == ft_strlen(line))
-		{
-			data = strchop(line, start_idx, *idx - 1);
-			insert_node(data, cmd, WORD);
-		}
-	}
+	data = chunk_to_string(line, idx);
+	data = ft_strjoin(data, check_remain_chunk(cmd, line, idx));
+	insert_node(data, cmd, WORD);
 }
