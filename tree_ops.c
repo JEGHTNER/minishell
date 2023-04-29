@@ -28,24 +28,6 @@ t_token *init_token(void)
 	return (to_ret);
 }
 
-void	ft_free_tree(t_token **head)
-{
-	t_token	*tmp_left;
-	t_token	*tmp_right;
-
-	if (*head == 0)
-	{
-		free(*head);
-		return ;
-	}
-	tmp_left = (*head)->left;
-	tmp_right = (*head)->right;
-	ft_free_tree(&tmp_left);
-	free(*head);
-	*head = 0;
-	ft_free_tree(&tmp_right);
-}
-
 void	insert_cmd(t_token **head, t_token *to_put)
 {
 	t_token *tmp;

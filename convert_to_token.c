@@ -70,7 +70,7 @@ t_token	*make_pipe_token(void)
 	to_ret->is_pipe = YES;
 	to_ret->argc = 1;
 	to_ret->argv = (char **)malloc(sizeof(char *) * 2);
-	to_ret->argv[0] = "|";
+	to_ret->argv[0] = ft_strdup("|");
 	to_ret->argv[1] = 0;
 	return (to_ret);
 }

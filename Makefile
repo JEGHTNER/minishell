@@ -33,7 +33,7 @@ SRCS = main.c \
 		test/test_ops.c \
 		utils.c \
 		utils2.c \
-
+		free_func.c
 OBJS = $(SRCS:.c=.o)
 LIBFT_A = libft/libft.a
 

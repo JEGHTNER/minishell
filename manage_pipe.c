@@ -21,7 +21,7 @@ void	manage_pipe(t_cmd *cmd, char *line, size_t *idx)
 			ft_exit_with_error("syntax error", "||");
 		if (line[*idx + 1] == '\0')
 			ft_exit_with_error("syntax error for pipe", 0);
-		insert_node("|", cmd, PIPE);
+		insert_node(ft_strdup("|"), cmd, PIPE);
 		(*idx)++;
 	}
 }

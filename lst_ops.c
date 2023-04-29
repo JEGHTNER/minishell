@@ -41,19 +41,3 @@ t_element	*ft_lstnew_mini(char *content)
 	temp->next = 0;
 	return (temp);
 }
-
-void	ft_free_list(t_element **head)
-{
-	t_element	*cur;
-	t_element	*tmp;
-
-	cur = *head;
-	while (cur)
-	{
-		tmp = cur->next;
-		free(cur);
-		cur = tmp;
-	}
-	*head = 0;
-	return ;
-}

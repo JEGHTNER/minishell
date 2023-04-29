@@ -34,9 +34,9 @@ static void	manage_append_output_redir(t_cmd *cmd, char *line, size_t *idx)
 	else
 	{
 		if (mark == '>')
-			insert_node(">>", cmd, REDIR);
+			insert_node(ft_strdup(">>"), cmd, REDIR);
 		else
-			insert_node("<<", cmd, REDIR);
+			insert_node(ft_strdup("<<"), cmd, REDIR);
 	}
 }
 
@@ -52,9 +52,9 @@ static void	manage_std_output_redir(t_cmd *cmd, char *line, size_t *idx)
 	else
 	{
 		if (mark == '>')
-			insert_node(">", cmd, REDIR);
+			insert_node(ft_strdup(">"), cmd, REDIR);
 		else
-			insert_node("<", cmd, REDIR);
+			insert_node(ft_strdup("<"), cmd, REDIR);
 	}
 }
 

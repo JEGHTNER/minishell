@@ -29,8 +29,8 @@ void	put_in_tree(t_cmd *cmd, t_token *to_put)
 void	convert_tree(t_cmd *cmd)
 {
 	size_t		idx;
-	t_element   *cur;
-	t_token     *to_put;
+	t_element	*cur;
+	t_token		*to_put;
 
 	cur = cmd->chunk_head;
 	while (cur)

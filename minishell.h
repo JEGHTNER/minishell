@@ -126,7 +126,6 @@ void	convert_tree(t_cmd *cmd);
 
 //parse tree utils
 t_token *init_token(void);
-void	ft_free_tree(t_token **head);
 void	insert_cmd(t_token **head, t_token *to_put);
 void	insert_pipe(t_token **head, t_token *to_put);
 void	insert_redir(t_token **head, t_token *to_put);
@@ -137,9 +136,13 @@ void	ft_exit_with_error(char *message, char *specifier);
 char	*strchop(char *src, size_t start, size_t end);
 t_macro	is_whitespace(char tmp);
 t_macro	is_everything_whitespace(char *tmp);
-void	free_all(t_cmd *cmd, char *line);
 char	*chop_n_trim(char *data, char *line, size_t *start_idx, size_t *idx);
 char	*join_n_free(char *former, char *latter);
+
+//free utils
+void	free_all(t_cmd *cmd, char *line);
+void	ft_free_tree(t_token **head);
+void	ft_free_list(t_element **head);
 
 //test
 void	print_list(t_element *head);
