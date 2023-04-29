@@ -42,9 +42,7 @@ char	*join_n_free(char *former, char *latter)
 	one_to_free = former;
 	two_to_free = latter;
 	to_ret = ft_strjoin(former, latter);
-	if (one_to_free)
-		free(one_to_free);
-	if (two_to_free)
-		free(two_to_free);
+	free(one_to_free);
+	free(two_to_free);
 	return (to_ret);
 }

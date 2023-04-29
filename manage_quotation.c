@@ -28,7 +28,6 @@ char	*double_quote_to_string(t_cmd *cmd, char *line, size_t *idx, size_t *st)
 		{
 			to_ret = chop_n_trim(to_ret, line, &start_idx, idx);
 			to_ret = join_n_free(to_ret, find_n_convert(cmd, line, idx, &start_idx));
-			start_idx = *idx;
 		}
 		else
 			(*idx)++;

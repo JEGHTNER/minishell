@@ -119,7 +119,7 @@ void	syntex_check(t_cmd *cmd);
 t_token	*change_element_token(t_element *tmp);
 t_token	*make_word_token(t_element *tmp);
 t_token	*make_redir_token(t_element *tmp);
-t_token	*make_pipe_token(void);
+t_token	*make_pipe_token(t_element *tmp);
 
 //put token into tree
 void	convert_tree(t_cmd *cmd);

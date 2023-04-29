@@ -59,7 +59,7 @@ t_token	*make_redir_token(t_element *tmp)
 	return (to_ret);
 }
 
-t_token	*make_pipe_token(void)
+t_token	*make_pipe_token(t_element *tmp)
 {
 	t_token *to_ret;
 
@@ -70,7 +70,7 @@ t_token	*make_pipe_token(void)
 	to_ret->is_pipe = YES;
 	to_ret->argc = 1;
 	to_ret->argv = (char **)malloc(sizeof(char *) * 2);
-	to_ret->argv[0] = ft_strdup("|");
+	to_ret->argv[0] = tmp->content;
 	to_ret->argv[1] = 0;
 	return (to_ret);
 }
@@ -83,7 +83,7 @@ t_token	*change_element_token(t_element *tmp)
 		|| tmp->c_flag == W_SINGLE || tmp->c_flag == W_DOUBLE)
 		to_ret = make_word_token(tmp);
 	else if (tmp->c_flag == PIPE)
-		to_ret = make_pipe_token();
+		to_ret = make_pipe_token(tmp);
 	else
 		to_ret = make_redir_token(tmp);
 	if (!to_ret)
