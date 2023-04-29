@@ -74,7 +74,7 @@ char	*find_value_with_key(t_env_lst *head, char *to_find)
 	while (cur)
 	{
 		if (ft_strncmp(cur->key, to_find, ft_strlen(cur->key) + 1) == 0)
-			return (cur->value);
+			return (ft_strdup(cur->value));
 		cur = cur->next;
 	}
 	return (0);

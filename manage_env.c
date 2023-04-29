@@ -52,7 +52,7 @@ static char	*check_remain_env(t_cmd *cmd, char *line, size_t *idx)
 				find_n_convert(cmd, line, idx, &start_idx));
 		else
 			(*idx)++;
-		if (is_whitespace(line[*idx]) == YES || *idx == ft_strlen(line))
+		if (*idx == ft_strlen(line) || is_whitespace(line[*idx]) == YES)
 			remain = chop_n_trim(remain, line, &start_idx, idx);
 	}
 	return (remain);
