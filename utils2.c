@@ -23,9 +23,26 @@ char	*chop_n_trim(char *data, char *line, size_t *start_idx, size_t *idx)
 	char	*to_free;
 	char	*to_ret;
 
-	to_free  = data;
-	to_ret = ft_strjoin(data, strchop(line, *start_idx, *idx - 1));
-	free(to_free);
+	to_free = data;
+	if (*start_idx >= *idx)
+		return (data);
+	if (data == 0)
+		return (strchop(line, *start_idx, *idx - 1));
+	to_ret = join_n_free(data, strchop(line, *start_idx, *idx - 1));
 	*start_idx = *idx;
+	return (to_ret);
+}
+
+char	*join_n_free(char *former, char *latter)
+{
+	char	*to_ret;
+	char	*one_to_free;
+	char	*two_to_free;
+
+	one_to_free = former;
+	two_to_free = latter;
+	to_ret = ft_strjoin(former, latter);
+	free(one_to_free);
+	free(two_to_free);
 	return (to_ret);
 }

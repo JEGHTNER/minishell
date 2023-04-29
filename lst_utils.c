@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void    insert_node(char *data, t_cmd *cmd, t_cat type)
+void	insert_node(char *data, t_cmd *cmd, t_cat type)
 {
 	t_element	*to_add;
 

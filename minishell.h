@@ -110,7 +110,7 @@ void	manage_chunk(t_cmd *cmd, char *line, size_t *idx);
 
 //manage env variable
 void	manage_env(t_cmd *cmd, char *line, size_t *idx);
-char	*find_n_convert(t_cmd *cmd, char *line, size_t *idx);
+char	*find_n_convert(t_cmd *cmd, char *line, size_t *idx, size_t *st);
 
 //syntax check
 void	syntex_check(t_cmd *cmd);
@@ -139,12 +139,13 @@ t_macro	is_whitespace(char tmp);
 t_macro	is_everything_whitespace(char *tmp);
 void	free_all(t_cmd *cmd, char *line);
 char	*chop_n_trim(char *data, char *line, size_t *start_idx, size_t *idx);
-
+char	*join_n_free(char *former, char *latter);
 
 //test
 void	print_list(t_element *head);
 void	print_env(t_env_lst *head);
 void	print_tree(t_token *head);
 void	search_tree(t_token *node);
+void	aaa(void);
 
 #endif

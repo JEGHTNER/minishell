@@ -27,7 +27,7 @@ char	*double_quote_to_string(t_cmd *cmd, char *line, size_t *idx, size_t *st)
 		if (line[*idx] == '$')
 		{
 			to_ret = chop_n_trim(to_ret, line, &start_idx, idx);
-			to_ret = ft_strjoin(to_ret, find_n_convert(cmd, line, idx));
+			to_ret = join_n_free(to_ret, find_n_convert(cmd, line, idx, &start_idx));
 			start_idx = *idx;
 		}
 		else
@@ -54,8 +54,8 @@ char	*single_quote_to_string(char *line, size_t *idx, size_t *st)
 		return (to_ret);
 	}
 	start_idx = *idx + 1;
-	to_ret = ft_strjoin(to_ret, strchop(line, start_idx, end_idx - 1));
-    *idx = end_idx + 1;
+	to_ret = join_n_free(to_ret, strchop(line, start_idx, end_idx - 1));
+	*idx = end_idx + 1;
 	*st = *idx;
 	return (to_ret);
 }
@@ -77,7 +77,7 @@ static char	*trim_before_conv(char *data, char *line, size_t *idx)
 			start_idx--;
 		start_idx++;
 		tmp = strchop(line, start_idx, end_idx);
-		data = ft_strjoin(data, tmp);
+		data = join_n_free(data, tmp);
 		return (data);
 	}
 }
@@ -96,11 +96,11 @@ static char	*check_remain_quote(t_cmd *cmd, char *line, size_t *idx)
 		if (line[*idx] == '|' || line[*idx] == '>' || line[*idx] == '<')
 			return (trim_before_conv(remain, line, idx));
 		else if (line[*idx] == '\'' || line[*idx] == '\"')
-			remain = ft_strjoin(chop_n_trim(remain, line, &start_idx, idx), \
+			remain = join_n_free(chop_n_trim(remain, line, &start_idx, idx), \
 				quote_to_string(cmd, line, idx, &start_idx));
 		else if (line[*idx]== '$')
-			remain = ft_strjoin(chop_n_trim(remain, line, &start_idx, idx), \
-				find_n_convert(cmd, line, idx));
+			remain = join_n_free(chop_n_trim(remain, line, &start_idx, idx), \
+				find_n_convert(cmd, line, idx, &start_idx));
 		else
 			(*idx)++;
 		if (*idx == ft_strlen(line) || is_whitespace(line[*idx]) == YES)
@@ -113,13 +113,12 @@ void	manage_quotation(t_cmd *cmd, char *line, size_t *idx)
 {
 	size_t	start_idx;
 	char	*data;
-	char	quote;
 
 	start_idx = *idx;
 	if (line[*idx] == '\"')
-    	data = double_quote_to_string(cmd, line, idx, &start_idx);
+		data = double_quote_to_string(cmd, line, idx, &start_idx);
 	else
 		data = single_quote_to_string(line, idx, &start_idx);
-	data = ft_strjoin(data, check_remain_quote(cmd, line, idx));
+	data = join_n_free(data, check_remain_quote(cmd, line, idx));
 	insert_node(data, cmd, WORD);
 }

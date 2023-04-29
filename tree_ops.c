@@ -34,7 +34,10 @@ void	ft_free_tree(t_token **head)
 	t_token	*tmp_right;
 
 	if (*head == 0)
+	{
+		free(*head);
 		return ;
+	}
 	tmp_left = (*head)->left;
 	tmp_right = (*head)->right;
 	ft_free_tree(&tmp_left);
