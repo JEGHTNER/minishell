@@ -37,7 +37,7 @@ t_element	*ft_lstnew_mini(char *content)
 	temp = (t_element *)malloc(sizeof(t_element));
 	if (!temp)
 		return (0);
-	temp->content = ft_strdup(content);
+	temp->content = content;
 	temp->next = 0;
 	return (temp);
 }

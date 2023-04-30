@@ -11,7 +11,7 @@
 # **************************************************************************** #
 NAME = minishell
 
-CC = CC
+CC = cc
 CFLAGS = -Wall -Wextra -Werror
 # -fsanitize=address
 SRCS = main.c \

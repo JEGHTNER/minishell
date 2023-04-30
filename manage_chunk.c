@@ -14,13 +14,16 @@
 char	*chunk_to_string(char *line, size_t *idx)
 {
 	char	*tmp;
+	char	*to_ret;
 	size_t	start_idx;
 
 	tmp  = ft_strdup("");
 	start_idx = *idx;
 	while (is_it_env_key(line[*idx]) == YES)
 		(*idx)++;
-	return (chop_n_trim(tmp, line, &start_idx, idx));
+	to_ret = chop_n_trim(tmp, line, &start_idx, idx);
+	free(tmp);
+	return (to_ret);
 }
 
 char	*check_remain_chunk(t_cmd *cmd, char *line, size_t *idx)

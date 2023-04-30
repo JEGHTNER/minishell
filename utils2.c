@@ -20,13 +20,13 @@ void	cmd_init(t_cmd *cmd)
 
 char	*chop_n_trim(char *data, char *line, size_t *start_idx, size_t *idx)
 {
-	char	*to_free;
 	char	*to_ret;
 
-	to_free = data;
-	if (*start_idx >= *idx)
+	if (*start_idx == *idx)
 		return (data);
 	if (data == 0)
+		return (strchop(line, *start_idx, *idx - 1));
+	if (ft_strncmp(data, "", 1) == 0)
 		return (strchop(line, *start_idx, *idx - 1));
 	to_ret = join_n_free(data, strchop(line, *start_idx, *idx - 1));
 	*start_idx = *idx;
@@ -43,6 +43,8 @@ char	*join_n_free(char *former, char *latter)
 	two_to_free = latter;
 	to_ret = ft_strjoin(former, latter);
 	free(one_to_free);
+	one_to_free = 0;
 	free(two_to_free);
+	two_to_free = 0;
 	return (to_ret);
 }

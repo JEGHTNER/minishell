@@ -118,6 +118,6 @@ void	manage_quotation(t_cmd *cmd, char *line, size_t *idx)
 		data = double_quote_to_string(cmd, line, idx, &start_idx);
 	else
 		data = single_quote_to_string(line, idx, &start_idx);
-	data = join_n_free(data, check_remain_quote(cmd, line, idx));
+	data = join_n_free(data,check_remain_quote(cmd, line, idx));
 	insert_node(data, cmd, WORD);
 }

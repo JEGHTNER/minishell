@@ -43,12 +43,9 @@ char	*quote_to_string(t_cmd *cmd, char *line, size_t *idx, size_t *st)
 
 t_macro	nothing_to_ret(char **tmp, size_t *idx, size_t end_idx)
 {
-	char	*ret;
-
-	*tmp = 0;
+	*tmp = ft_strdup("");
 	if(*idx == end_idx)
 	{
-		ret = ft_strdup("");
 		(*idx)++;
 		return (YES);
 	}
