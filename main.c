@@ -30,6 +30,7 @@ static void	parse_n_execute(t_cmd *cmd, char *line)
 	syntex_check(cmd);
 	convert_tree(cmd);
 	print_tree(cmd->tree_head);
+	free_all(cmd, line);
 }
 
 void	aaa(void)
@@ -58,7 +59,8 @@ int	main(int ac, char **av, char **envp)
 			add_history(line);
 		if (*line != '\0' && is_everything_whitespace(line) == NO)
 			parse_n_execute(&cmd, line);
-		free_all(&cmd, line);
+		else
+			free(line);
 		aaa();
 	}
 	signal_init(1, 1);
