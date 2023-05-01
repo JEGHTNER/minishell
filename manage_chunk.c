@@ -22,7 +22,6 @@ char	*chunk_to_string(char *line, size_t *idx)
 	while (is_it_env_key(line[*idx]) == YES)
 		(*idx)++;
 	to_ret = chop_n_trim(tmp, line, &start_idx, idx);
-	free(tmp);
 	return (to_ret);
 }
 

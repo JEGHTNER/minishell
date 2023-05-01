@@ -13,9 +13,7 @@
 
 static void	pipe_syntax_check(t_element *cur)
 {
-	if (cur->next->c_flag == WORD
-		|| cur->next->c_flag == W_SINGLE
-		|| cur->next->c_flag == W_DOUBLE)
+	if (cur->next->c_flag == WORD)
 		return ;
 	else
 		ft_exit_with_error("token syntex error : ", "pipe");
@@ -23,9 +21,7 @@ static void	pipe_syntax_check(t_element *cur)
 
 static void	redir_syntax_check(t_element *cur)
 {
-	if (cur->next->c_flag == WORD
-		|| cur->next->c_flag == W_SINGLE
-		|| cur->next->c_flag == W_DOUBLE)
+	if (cur->next->c_flag == WORD)
 		return ;
 	else
 		ft_exit_with_error("token syntex error : ", "io_redirection");

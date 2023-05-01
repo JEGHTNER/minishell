@@ -18,17 +18,16 @@ void	cmd_init(t_cmd *cmd)
 	cmd->tree_head = 0;
 }
 
-char	*chop_n_trim(char *data, char *line, size_t *start_idx, size_t *idx)
+char	*chop_n_trim(char *remain, char *line, size_t *start_idx, size_t *idx)
 {
 	char	*to_ret;
 
 	if (*start_idx == *idx)
-		return (data);
-	if (data == 0)
-		return (strchop(line, *start_idx, *idx - 1));
-	if (ft_strncmp(data, "", 1) == 0)
-		return (strchop(line, *start_idx, *idx - 1));
-	to_ret = join_n_free(data, strchop(line, *start_idx, *idx - 1));
+		return (remain);
+	to_ret = strchop(line, *start_idx, *idx - 1);
+	if (remain == 0)
+		return (to_ret);
+	to_ret = join_n_free(remain, to_ret);
 	*start_idx = *idx;
 	return (to_ret);
 }

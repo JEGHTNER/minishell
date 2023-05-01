@@ -48,7 +48,7 @@ char	*strchop(char *src, size_t start, size_t end)
 		return (0);
 	ret = (char *)malloc(end - start + 2);
 	if (!ret)
-		return ((char *)0);
+		ft_exit_with_error("malloc error", 0);
 	while (idx <= end - start)
 	{
 		ret[idx] = src[start + idx];

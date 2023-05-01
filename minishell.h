@@ -27,8 +27,6 @@
 typedef enum e_cat
 {
 	WORD,
-	W_SINGLE,
-	W_DOUBLE,
 	CMD,
 	SIMPLE_CMD,
 	REDIRS,

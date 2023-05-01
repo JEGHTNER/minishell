@@ -54,11 +54,7 @@ void	init_env_lst(t_cmd *cmd, char **envp)
 		while ((*envp)[idx] && (*envp)[idx] != '=')
 			idx++;
 		key = strchop(*envp, 0, idx - 1);
-		if (!key)
-			ft_exit_with_error("malloc error", 0);
 		value = strchop(*envp, idx + 1, ft_strlen(*envp) - 1);
-		if (!value)
-			ft_exit_with_error("malloc error", 0);
 		add_env_list(cmd, key, value);
 		free(key);
 		free(value);
