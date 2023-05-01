@@ -17,7 +17,7 @@ char	*chunk_to_string(char *line, size_t *idx)
 	char	*to_ret;
 	size_t	start_idx;
 
-	tmp  = ft_strdup("");
+	tmp = ft_strdup("");
 	start_idx = *idx;
 	while (is_it_env_key(line[*idx]) == YES)
 		(*idx)++;
@@ -42,7 +42,7 @@ char	*check_remain_chunk(t_cmd *cmd, char *line, size_t *idx)
 		else if (line[*idx] == '\'' || line[*idx] == '\"')
 			remain = join_n_free(chop_n_trim(remain, line, &start_idx, idx), \
 				quote_to_string(cmd, line, idx, &start_idx));
-		else if (line[*idx]== '$')
+		else if (line[*idx] == '$')
 			remain = join_n_free(chop_n_trim(remain, line, &start_idx, idx), \
 				find_n_convert(cmd, line, idx, &start_idx));
 		else

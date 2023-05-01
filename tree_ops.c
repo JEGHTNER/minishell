@@ -11,13 +11,13 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
-t_token *init_token(void)
+t_token	*init_token(void)
 {
-	t_token *to_ret;
+	t_token	*to_ret;
 
 	to_ret = (t_token *)malloc(sizeof(t_token));
 	if (!to_ret)
-		return (0);
+		ft_exit_with_error("malloc error", 0);
 	to_ret->argv = 0;
 	to_ret->argc = 0;
 	to_ret->is_env = NO;
@@ -30,8 +30,8 @@ t_token *init_token(void)
 
 void	insert_cmd(t_token **head, t_token *to_put)
 {
-	t_token *tmp;
-	t_token *cur;
+	t_token	*tmp;
+	t_token	*cur;
 	t_token	*pipe;
 
 	cur = *head;
@@ -57,7 +57,7 @@ void	insert_cmd(t_token **head, t_token *to_put)
 
 void	insert_pipe(t_token **head, t_token *to_put)
 {
-	t_token *cur;
+	t_token	*cur;
 
 	cur = (*head);
 	if (cur->cat == CMD)
@@ -88,7 +88,7 @@ void	insert_redir(t_token **head, t_token *to_put)
 	{
 		while (cur->right)
 			cur = cur->right;
-		cur = cur->left; //pipe->left == CMD
+		cur = cur->left;
 	}
 	if (cur->left == 0)
 		cur->left = tmp;

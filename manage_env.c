@@ -59,7 +59,7 @@ static char	*check_remain_env(t_cmd *cmd, char *line, size_t *idx)
 		else if (line[*idx] == '\'' || line[*idx] == '\"')
 			remain = join_n_free(chop_n_trim(remain, line, &start_idx, idx), \
 				quote_to_string(cmd, line, idx, &start_idx));
-		else if (line[*idx]== '$')
+		else if (line[*idx] == '$')
 			remain = join_n_free(chop_n_trim(remain, line, &start_idx, idx), \
 				find_n_convert(cmd, line, idx, &start_idx));
 		else

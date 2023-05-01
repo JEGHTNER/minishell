@@ -19,7 +19,6 @@ static void	pipe_syntax_check(t_element *cur)
 		return ;
 	else
 		ft_exit_with_error("token syntex error : ", "pipe");
-
 }
 
 static void	redir_syntax_check(t_element *cur)

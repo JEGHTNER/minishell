@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
-t_macro is_everything_whitespace(char *tmp)
+t_macro	is_everything_whitespace(char *tmp)
 {
 	while (*tmp)
 	{
@@ -41,7 +41,7 @@ void	ft_exit_with_error(char *message, char *specifier)
 char	*strchop(char *src, size_t start, size_t end)
 {
 	size_t	idx;
-	char *	ret;
+	char	*ret;
 
 	idx = 0;
 	if (end < start)

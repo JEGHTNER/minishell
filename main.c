@@ -30,9 +30,6 @@ static void	parse_n_execute(t_cmd *cmd, char *line)
 	syntex_check(cmd);
 	convert_tree(cmd);
 	print_tree(cmd->tree_head);
-	// print_env(cmd->env_head);
-	// search_tree(cmd->tree_head);
-	//execute cmd with parse tree
 }
 
 void	aaa(void)
@@ -40,7 +37,7 @@ void	aaa(void)
 	system("leaks minishell | grep leaked");
 }
 
-int main(int ac, char **av, char **envp)
+int	main(int ac, char **av, char **envp)
 {
 	struct termios	term;
 	char			*line;
