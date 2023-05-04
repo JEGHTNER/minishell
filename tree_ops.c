@@ -3,30 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   tree_ops.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joon-lee <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:38:48 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/04/26 18:38:50 by joon-lee         ###   ########.fr       */
+/*   Updated: 2023/05/04 13:59:46 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
-t_token	*init_token(void)
+t_token *init_token(void)
 {
-	t_token	*to_ret;
+	t_token *to_ret;
 
 	to_ret = (t_token *)malloc(sizeof(t_token));
 	if (!to_ret)
-		ft_exit_with_error("malloc error", 0);
+		return (0);
 	to_ret->argv = 0;
 	to_ret->argc = 0;
+	to_ret->back_up_fd[0] = dup(STDIN_FILENO);
+	to_ret->back_up_fd[1] = dup(STDOUT_FILENO);
 	to_ret->is_env = NO;
 	to_ret->is_pipe = NO;
+	to_ret->pipe_fd = NULL;
 	to_ret->cmd_path = 0;
 	to_ret->left = 0;
 	to_ret->right = 0;
+	to_ret->last_flag = 0;
+	to_ret->hd_index = 0;
+	to_ret->is_hd = 0;
 	return (to_ret);
 }
+
 
 void	insert_cmd(t_token **head, t_token *to_put)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 12:06:54 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/05/04 00:21:10 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/04 13:57:54 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,14 @@ typedef enum s_pipe_fd
 
 typedef enum e_cat
 {
+	WORD,
 	CMD,
 	SIMPLE_CMD,
 	REDIRS,
 	REDIR,
 	PIPE
 }	t_cat;
+
 
 typedef enum e_macro
 {
@@ -182,7 +184,7 @@ int	exec_scmd(t_token *node, t_list **my_env);
 
 //here_doc.c
 void	here_doc_tmp(char *limiter, int index);
-void	here_doc(char *limiter, t_token *node);
+void	here_doc(t_token *node);
 void	search_hd(t_token *node, t_list **my_env, int *hd_cnt);
 
 //lst_to_table

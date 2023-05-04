@@ -3,20 +3,21 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+         #
+#    By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/26 18:38:09 by joon-lee          #+#    #+#              #
-#    Updated: 2023/05/04 13:30:08 by jehelee          ###   ########.fr        #
+#    Updated: 2023/05/04 14:26:28 by jehelee          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
 
 NAME = minishell
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+# CFLAGS = -Wall -Wextra -Werror
 
 # -fsanitize=address
-SRCS = main.c \
+SRCS =  main.c \
 		signal_manage.c \
 		manage_line_main.c \
 		manage_chunk.c \
@@ -32,21 +33,18 @@ SRCS = main.c \
 		convert_to_token.c \
 		syntex_check.c \
 		convert_tree.c \
-		utils.c \
-		utils2.c \
-		free_func.c \
-		here_doc.c \
 		pipe_func.c \
 		tree_func.c \
 		tree_utils.c \
 		built_in_func.c \
 		built_in_func2.c \
 		built_in_utils.c \
-		built_in_utils2.c 
+		built_in_utils2.c \
 		test/test_ops.c \
 		utils.c \
 		utils2.c \
-		free_func.c
+		free_func.c \
+		here_doc.c
 
 OBJS = $(SRCS:.c=.o)
 LIBFT_A = libft/libft.a
@@ -59,10 +57,9 @@ LIBFT_A = libft/libft.a
 
 $(NAME) : $(OBJS)
 	$(MAKE) -C libft
-	$(CC) $(CFLAGS) -lreadline $(OBJS) $(LIBFT_A) -o $(NAME)  -L./inc/lib -l_jehelee -g
-all : $(NAME)
+	$(CC) $(CFLAGS) -lreadline $(OBJS) $(LIBFT_A) -o $(NAME) 
 
-bonus : $(BONUS)
+all : $(NAME)
 
 clean :
 	$(MAKE) -C libft clean
