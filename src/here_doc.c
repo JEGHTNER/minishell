@@ -6,12 +6,11 @@
 /*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 22:10:22 by jehelee           #+#    #+#             */
-/*   Updated: 2023/04/30 17:24:05 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/04 13:20:42 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "inc/lib/include/pipex_bonus.h"
-#include "inc/minishell_jehelee.h"
+#include "minishell.h"
 
 void	here_doc_tmp(char *limiter, int index)
 {
@@ -48,7 +47,6 @@ void	here_doc(char *limiter, t_token *node)
 	char	*file_name;
 	char	*tmp;
 
-	// here_doc_tmp(limiter, node->hd_index);
 	tmp = ft_itoa(node->hd_index);
 	file_name = ft_strjoin("./tmp/tmp_hd", tmp);
 	free(tmp);
@@ -65,14 +63,4 @@ void	here_doc(char *limiter, t_token *node)
 	}
 	close(fd);
 	free(file_name);
-}
-
-int	is_here_doc(t_pipex *pipex, char *argv_i)
-{
-	if (ft_strncmp(argv_i, "here_doc", 8) == 0 && ft_strlen(argv_i) == 8)
-	{
-		pipex->here_doc_flag = 1;
-		return (1);
-	}
-	return (0);
 }

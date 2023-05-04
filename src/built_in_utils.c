@@ -6,13 +6,11 @@
 /*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 14:12:07 by jehelee           #+#    #+#             */
-/*   Updated: 2023/04/18 23:59:25 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/04 13:22:42 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell_jehelee.h"
-
-extern long long	exit_status;
+#include "minishell.h"
 
 t_list	*find_env(t_list **my_env, char *string)
 {
@@ -106,9 +104,11 @@ void	check_exit_arguments(char **arguments)
 	{
 		exit_status = 1;
 		printf("minishell: exit: too many arguments\n");
-		return ;
+		exit(1);
 	}
 	if (exit_status == 255)
+	{
 		printf("minishell: exit: %s: numeric argument required\n", tmp);
+		exit(255);
+	}
 }
-

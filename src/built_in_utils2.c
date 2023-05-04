@@ -6,11 +6,11 @@
 /*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 14:15:09 by jehelee           #+#    #+#             */
-/*   Updated: 2023/04/16 14:19:06 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/04 13:23:08 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell_jehelee.h"
+#include "minishell.h"
 
 void	del_env(t_list **my_env, t_list *find)
 {
@@ -19,8 +19,6 @@ void	del_env(t_list **my_env, t_list *find)
 	if (find == *my_env)
 	{
 		*my_env = find->next;
-		if (*my_env)
-			(*my_env)->prev = NULL;
 		free(find->content);
 		free(find);
 		return ;

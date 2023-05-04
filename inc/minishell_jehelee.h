@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_jehelee.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 18:41:51 by jehelee           #+#    #+#             */
-/*   Updated: 2023/04/21 19:44:58 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/04/24 18:40:20 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,5 +100,16 @@ void	del_env(t_list **my_env, t_list *find);
 
 //pipe functions
 char	**get_path_args(t_list **my_env);
+
+//tree_func.c
+void	search_tree(t_token *node, t_list **my_env);
+int		execute_tree(t_token *node, t_list **my_env);
+
+//tree_utils.c
+int	exec_redirs(t_token *node);
+int	exec_redir(t_token *node);
+int	exec_pipe(t_token *node);
+int exec_cmd(t_token *node);
+int	exec_scmd(t_token *node, t_list **my_env);
 
 #endif

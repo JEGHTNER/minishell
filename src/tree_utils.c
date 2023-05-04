@@ -6,11 +6,11 @@
 /*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:38:21 by jehelee           #+#    #+#             */
-/*   Updated: 2023/04/30 17:20:52 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/04 13:29:27 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./inc/minishell_jehelee.h"
+#include "minishell.h"
 
 int	exec_redirs(t_token *node)
 {
@@ -39,8 +39,6 @@ int	exec_redir(t_token *node)
 	char 	**red_args;
 	int		fd;
 
-	// printf("node->argv[0]: %s\n", node->argv[0]);
-	// *(node->redirect_flag) = 1;
 	red_args = node->argv;
 	if (ft_strlen(red_args[0]) == 2 && !ft_strncmp(red_args[0], "<<", 2))
 	{
@@ -50,7 +48,6 @@ int	exec_redir(t_token *node)
 	else if (ft_strlen(red_args[0]) == 2 && !ft_strncmp(red_args[0], ">>", 2))
 	{
 		*(node->redirect_flag) = 1;
-		// printf("node->fail_flag: %d\n", *node->fail_flag);
 		if (*node->fail_flag)
 			return (1);
 		fd = open(red_args[1], O_WRONLY | O_CREAT | O_APPEND, 0644);
@@ -60,7 +57,6 @@ int	exec_redir(t_token *node)
 	else if (ft_strlen(red_args[0]) == 1 && !ft_strncmp(red_args[0], ">", ft_strlen(red_args[0])))
 	{
 		*(node->redirect_flag) = 1;
-		// printf("node->fail_flag: %d\n", *node->fail_flag);
 		if (*node->fail_flag)
 			return (1);
 		fd = open(red_args[1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
@@ -97,7 +93,7 @@ int	exec_pipe(t_token *node)
 		node->left->last_flag = 1;
 }
 
-int exec_cmd(t_token *node)
+int	exec_cmd(t_token *node)
 {
 	node->redirect_flag = malloc(sizeof(int));
 	*(node->redirect_flag) = 0;
@@ -124,7 +120,7 @@ int exec_cmd(t_token *node)
 
 int	exec_scmd(t_token *node, t_list **my_env)
 {
-	char	**cmd_arr;
+	char	**env_table;
 	int		i;
 	int		pid;
 	char	**path_args;
@@ -135,16 +131,30 @@ int	exec_scmd(t_token *node, t_list **my_env)
 		perror("pipe");
 	if (pid == 0) // child
 	{
-		char **cmd_args = node->argv;
+		if (ft_strlen(node->argv[0]) == 4 && !ft_strncmp(node->argv[0], "echo", 4))
+			exit(0);
+		else if (ft_strlen(node->argv[0]) == 2 && !ft_strncmp(node->argv[0], "cd", 2))
+			exit(0);
+		else if (ft_strlen(node->argv[0]) == 3 && !ft_strncmp(node->argv[0], "pwd", 3))
+			exit(0);
+		else if (ft_strlen(node->argv[0]) == 6 && !ft_strncmp(node->argv[0], "export", 6))
+			exit(0);
+		else if (ft_strlen(node->argv[0]) == 5 && !ft_strncmp(node->argv[0], "unset", 5))
+			exit(0);
+		else if (ft_strlen(node->argv[0]) == 3 && !ft_strncmp(node->argv[0], "env", 3))
+			exit(0);
+		else if (ft_strlen(node->argv[0]) == 4 && !ft_strncmp(node->argv[0], "exit", 4))
+			exit(0);
+
+		env_table = lst_to_table(my_env);
 		path_args = get_path_args(my_env);
-		path = get_path(cmd_args[0], path_args);
-		// printf("path = %s\n", path);
+		path = get_path(node->argv[0], path_args);
 		if (*node->fail_flag)
 			exit(1);
 		if (!path)
 		{
 			ft_putstr_fd("minishell: ", 2);
-			ft_putstr_fd(cmd_args[0], 2);
+			ft_putstr_fd(node->argv[0], 2);
 			ft_putstr_fd(": command not found\n", 2);
 			exit(127);
 		}
@@ -155,7 +165,7 @@ int	exec_scmd(t_token *node, t_list **my_env)
 				close(node->pipe_fd[WRITE]);
 				close(node->pipe_fd[READ]);
 			}
-			if (execve(path, cmd_args, my_env) < 0)
+			if (execve(path, node->argv, env_table) < 0)
 			{
 				perror("execve");
 				exit(127);
@@ -166,15 +176,14 @@ int	exec_scmd(t_token *node, t_list **my_env)
 			close(node->pipe_fd[READ]);
 			dup2(node->pipe_fd[WRITE], STDOUT_FILENO);
 			close(node->pipe_fd[WRITE]);
-			if (execve(path, cmd_args, my_env) < 0)
+			if (execve(path, node->argv, env_table) < 0)
 			{
 				perror("execve");
 				exit(127);
 			}
 		}
 		dup2(node->back_up_fd[WRITE], STDOUT_FILENO);
-		printf("node->lastflag = %d\n", node->last_flag);
-		if (execve(path, cmd_args, my_env) < 0)
+		if (execve(path, node->argv, env_table) < 0)
 		{
 			perror("execve");
 			exit(127);
@@ -182,7 +191,74 @@ int	exec_scmd(t_token *node, t_list **my_env)
 	}
 	else // parent
 	{
-		wait(NULL);
+		int	status;
+		int	is_builtin;
+
+		is_builtin = 0;
+		if (ft_strlen(node->argv[0]) == 4 && !ft_strncmp(node->argv[0], "echo", 4))
+		{
+			if (*node->fail_flag)
+				exit_status = 1;
+			if (*node->redirect_flag)
+			{
+				if (node->pipe_fd)
+				{
+					close(node->pipe_fd[WRITE]);
+					close(node->pipe_fd[READ]);
+				}
+			}
+			if (node->pipe_fd && node->last_flag == 0)
+			{
+				// close(node->pipe_fd[READ]);
+				dup2(node->pipe_fd[WRITE], STDOUT_FILENO);
+				close(node->pipe_fd[WRITE]);
+			}
+			if (node->last_flag && *node->redirect_flag == 0)
+				dup2(node->back_up_fd[WRITE], STDOUT_FILENO);
+			echo(node->argv, 0);
+			is_builtin = 1;
+		}
+		else if (ft_strlen(node->argv[0]) == 2 && !ft_strncmp(node->argv[0], "cd", 2))
+		{
+			cd(my_env, node->argv);
+			is_builtin = 1;
+		}
+		else if (ft_strlen(node->argv[0]) == 3 && !ft_strncmp(node->argv[0], "pwd", 3))
+		{
+			pwd();
+			is_builtin = 1;
+		}
+		else if (ft_strlen(node->argv[0]) == 6 && !ft_strncmp(node->argv[0], "export", 6))
+		{
+			export(my_env, node->argv);
+			is_builtin = 1;
+		}
+		else if (ft_strlen(node->argv[0]) == 5 && !ft_strncmp(node->argv[0], "unset", 5))
+		{
+			unset(my_env, node->argv);
+			is_builtin = 1;
+		}
+		else if (ft_strlen(node->argv[0]) == 3 && !ft_strncmp(node->argv[0], "env", 3))
+		{
+			env(my_env);
+			is_builtin = 1;
+		}
+		else if (ft_strlen(node->argv[0]) == 4 && !ft_strncmp(node->argv[0], "exit", 4))
+		{
+			ft_exit(node->argv);
+			is_builtin = 1;
+		}
+
+		if (node->last_flag == 1 || !node->pipe_fd)
+		{
+			if (!is_builtin)
+				waitpid(pid, &status, 0);
+			while (wait(NULL) > 0)
+				;
+			if (WIFEXITED(status))
+				exit_status = WEXITSTATUS(status);
+			printf("exit_status = %d\n", exit_status);
+		}
 		if (node->pipe_fd && node->last_flag == 0)
 		{
 			close(node->pipe_fd[WRITE]);
