@@ -3,16 +3,18 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: joon-lee <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/26 18:38:09 by joon-lee          #+#    #+#              #
-#    Updated: 2023/04/26 18:38:10 by joon-lee         ###   ########.fr        #
+#    Updated: 2023/05/04 13:30:08 by jehelee          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
 NAME = minishell
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
+
 # -fsanitize=address
 SRCS = main.c \
 		signal_manage.c \
@@ -30,10 +32,22 @@ SRCS = main.c \
 		convert_to_token.c \
 		syntex_check.c \
 		convert_tree.c \
+		utils.c \
+		utils2.c \
+		free_func.c \
+		here_doc.c \
+		pipe_func.c \
+		tree_func.c \
+		tree_utils.c \
+		built_in_func.c \
+		built_in_func2.c \
+		built_in_utils.c \
+		built_in_utils2.c 
 		test/test_ops.c \
 		utils.c \
 		utils2.c \
 		free_func.c
+
 OBJS = $(SRCS:.c=.o)
 LIBFT_A = libft/libft.a
 
@@ -41,12 +55,11 @@ LIBFT_A = libft/libft.a
 # COMP_FLAGS_IN_HOME = -lreadline -L/opt/homebrew/opt/readline/lib
 
 %.o : %.c
-	$(CC) $(CFLAGS) -c $< -o ${<:.c=.o}
+	$(CC) $(CFLAGS) -c $< -o ${<:.c=.o} -g
 
 $(NAME) : $(OBJS)
 	$(MAKE) -C libft
-	$(CC) $(CFLAGS) -lreadline $(OBJS) $(LIBFT_A) -o $(NAME)
-
+	$(CC) $(CFLAGS) -lreadline $(OBJS) $(LIBFT_A) -o $(NAME)  -L./inc/lib -l_jehelee -g
 all : $(NAME)
 
 bonus : $(BONUS)
