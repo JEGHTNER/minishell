@@ -11,8 +11,10 @@
 # **************************************************************************** #
 
 NAME = minishell
+
 CC = cc
-CFLAGS = #-Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
+
 # -fsanitize=address
 SRCS = main.c \
 		signal_manage.c \
@@ -24,7 +26,6 @@ SRCS = main.c \
 		manage_env.c \
 		manage_env_utils.c \
 		manage_pipe.c \
-		test/test_ops.c \
 		tree_ops.c \
 		lst_ops.c \
 		lst_utils.c \
@@ -42,7 +43,11 @@ SRCS = main.c \
 		built_in_func2.c \
 		built_in_utils.c \
 		built_in_utils2.c 
-		
+		test/test_ops.c \
+		utils.c \
+		utils2.c \
+		free_func.c
+
 OBJS = $(SRCS:.c=.o)
 LIBFT_A = libft/libft.a
 
@@ -55,7 +60,6 @@ LIBFT_A = libft/libft.a
 $(NAME) : $(OBJS)
 	$(MAKE) -C libft
 	$(CC) $(CFLAGS) -lreadline $(OBJS) $(LIBFT_A) -o $(NAME)  -L./inc/lib -l_jehelee -g
-
 all : $(NAME)
 
 bonus : $(BONUS)

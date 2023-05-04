@@ -32,19 +32,14 @@ typedef enum s_pipe_fd
 	WRITE
 } t_pipe_fd;
 
-
 typedef enum e_cat
 {
-	WORD,
-	W_SINGLE,
-	W_DOUBLE,
 	CMD,
 	SIMPLE_CMD,
 	REDIRS,
 	REDIR,
 	PIPE
 }	t_cat;
-
 
 typedef enum e_macro
 {
@@ -81,6 +76,7 @@ typedef struct s_token
 	int				*pipe_fd;
 	int				*is_hd;
 	int				hd_index;
+
 	struct s_token	*left;
 	struct s_token	*right;
 }	t_token;
@@ -111,6 +107,7 @@ void		ft_lstadd_back_mini(t_element **lst, t_element *new);
 void		ft_free_list(t_element **head);
 
 //manage quotation
+
 void	manage_quotation(t_cmd *cmd, char *line, size_t *idx);
 char	*double_quote_to_string(t_cmd *cmd, char *line, size_t *idx, size_t *st);
 char	*single_quote_to_string(char *line, size_t *idx, size_t *st);
