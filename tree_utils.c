@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:38:21 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/04 14:00:33 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/04 16:28:12 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ int	exec_scmd(t_token *node, t_list **my_env)
 		perror("pipe");
 	if (pid == 0) // child
 	{
+		check_builtin();
 		if (ft_strlen(node->argv[0]) == 4 && !ft_strncmp(node->argv[0], "echo", 4))
 			exit(0);
 		else if (ft_strlen(node->argv[0]) == 2 && !ft_strncmp(node->argv[0], "cd", 2))
@@ -176,11 +177,14 @@ int	exec_scmd(t_token *node, t_list **my_env)
 			close(node->pipe_fd[READ]);
 			dup2(node->pipe_fd[WRITE], STDOUT_FILENO);
 			close(node->pipe_fd[WRITE]);
-			if (execve(path, node->argv, env_table) < 0)
-			{
-				perror("execve");
-				exit(127);
-			}
+			if (!is_builtin)
+				if (execve(path, node->argv, env_table) < 0)
+				{
+					perror("execve");
+					exit(127);
+				}
+			else
+				exit(do_bulitin(built_num));
 		}
 		dup2(node->back_up_fd[WRITE], STDOUT_FILENO);
 		if (execve(path, node->argv, env_table) < 0)
@@ -208,11 +212,7 @@ int	exec_scmd(t_token *node, t_list **my_env)
 				}
 			}
 			if (node->pipe_fd && node->last_flag == 0)
-			{
-				// close(node->pipe_fd[READ]);
-				dup2(node->pipe_fd[WRITE], STDOUT_FILENO);
-				close(node->pipe_fd[WRITE]);
-			}
+				return (1);
 			if (node->last_flag && *node->redirect_flag == 0)
 				dup2(node->back_up_fd[WRITE], STDOUT_FILENO);
 			echo(node->argv, 0);

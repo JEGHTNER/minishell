@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 14:04:58 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/04 14:36:00 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/04 15:10:59 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,13 @@ void	echo(char **argv, int option)
 	{
 		i = 0;
 		while (argv[++i])
-			printf("%s\n", argv[i]);
+		{
+			if (i > 1)
+				printf(" %s", argv[i]);
+			else
+				printf("%s", argv[i]);
+		}
+		printf("\n");
 	}
 	else
 	{
