@@ -6,7 +6,7 @@
 #    By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/26 18:38:09 by joon-lee          #+#    #+#              #
-#    Updated: 2023/05/04 14:26:28 by jehelee          ###   ########.fr        #
+#    Updated: 2023/05/04 14:48:16 by jehelee          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,7 +57,7 @@ LIBFT_A = libft/libft.a
 
 $(NAME) : $(OBJS)
 	$(MAKE) -C libft
-	$(CC) $(CFLAGS) -lreadline $(OBJS) $(LIBFT_A) -o $(NAME) 
+	$(CC) $(CFLAGS) -lreadline $(OBJS) $(LIBFT_A) -o $(NAME) -g
 
 all : $(NAME)
 
