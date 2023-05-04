@@ -3,23 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   manage_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joon-lee <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:37:38 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/04/26 18:37:39 by joon-lee         ###   ########.fr       */
+/*   Updated: 2023/05/04 14:39:03 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
-// static char	*convert_exit_stat(t_cmd *cmd, size_t *idx, size_t *st)
-// {
-// 	char	*to_ret;
+static char	*convert_exit_stat(t_cmd *cmd, size_t *idx, size_t *st)
+{
+	char	*to_ret;
 
-// 	to_ret = ft_strdup()//exit_status)
-// 	(*idx)++;
-// 	*st = *idx;
-// 	return(to_ret);
-// }
+	to_ret = ft_strdup(ft_itoa(exit_status));//exit_status)
+	(*idx)++;
+	*st = *idx;
+	return(to_ret);
+}
 
 char	*find_n_convert(t_cmd *cmd, char *line, size_t *idx, size_t *st)
 {
@@ -31,8 +32,8 @@ char	*find_n_convert(t_cmd *cmd, char *line, size_t *idx, size_t *st)
 	end_idx = *idx;
 	if (*idx == ft_strlen(line) || is_whitespace(line[*idx]) == YES)
 		return (ft_strdup("$"));
-	// if (line[*idx] == '?')
-	// 	return (convert_exit_stat(cmd, idx, st));
+	if (line[*idx] == '?')
+		return (convert_exit_stat(cmd, idx, st));
 	while (is_it_env_key(line[end_idx]) == YES)
 		end_idx++;
 	key = strchop(line, *idx, end_idx - 1);
