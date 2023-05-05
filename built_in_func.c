@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 14:04:58 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/05 15:18:16 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/05 19:06:28 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,19 @@ void	echo(char **argv)
 	exit_status = 0;
 }
 
-void	env(t_list **my_env)
+void	env(t_cmd *cmd)
 {
-	t_list	*tmp;
+	t_env_lst	*tmp;
 
-	tmp = *my_env;
+	tmp = cmd->env_head;
 	while (tmp)
 	{
-		printf("%s\n", tmp->content);
+		if (tmp->value)
+		{
+			printf("%s", tmp->key);
+			printf("=");
+			printf("%s\n", tmp->value);
+		}
 		tmp = tmp->next;
 	}
 	exit_status = 0;

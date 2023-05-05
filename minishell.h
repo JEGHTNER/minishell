@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 12:06:54 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/05/05 17:27:54 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/05 19:06:54 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,7 +211,7 @@ void	printenv(t_list **my_env);
 //built_in_func.c
 void	ft_exit(char **arguments);
 void	echo(char **argv);
-void	env(t_list **my_env);
+void	env(t_cmd *cmd);
 void	unset(t_list **my_env, char **argv);
 void	pwd(void);
 
