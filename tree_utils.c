@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:38:21 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/05 16:05:24 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/05 17:01:34 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,47 @@ int	check_builtin(char *str)
 	return (NOT);
 }
 
-int	do_builtin(int is_builtin, t_token *node, t_list **my_env)
+// int	do_builtin(int is_builtin, t_token *node, t_list **my_env)
+// {
+// 	if (is_builtin == ECH)
+// 	{
+// 		echo(node->argv);
+// 		return (exit_status);
+// 	}
+// 	else if (is_builtin == CD)
+// 	{
+// 		cd(my_env, node->argv);
+// 		return (exit_status);
+// 	}
+// 	else if (is_builtin == PWD)
+// 	{
+// 		pwd();
+// 		return (exit_status);
+// 	}
+// 	else if (is_builtin == EXPORT)
+// 	{
+// 		export(my_env, node->argv);
+// 		return (exit_status);
+// 	}
+// 	else if (is_builtin == UNSET)
+// 	{
+// 		unset(my_env, node->argv);
+// 		return (exit_status);
+// 	}
+// 	else if (is_builtin == ENV)
+// 	{
+// 		env(my_env);
+// 		return (exit_status);
+// 	}
+// 	else if (is_builtin == EXIT)
+// 	{
+// 		ft_exit(node->argv);
+// 		printf("exit\n");
+// 		exit (exit_status);
+// 	}
+// }
+
+int	do_builtin(int is_builtin, t_token *node, t_cmd *cmd)
 {
 	if (is_builtin == ECH)
 	{
@@ -146,7 +186,7 @@ int	do_builtin(int is_builtin, t_token *node, t_list **my_env)
 	}
 	else if (is_builtin == CD)
 	{
-		cd(my_env, node->argv);
+		cd(cmd, node->argv);
 		return (exit_status);
 	}
 	else if (is_builtin == PWD)
@@ -156,17 +196,17 @@ int	do_builtin(int is_builtin, t_token *node, t_list **my_env)
 	}
 	else if (is_builtin == EXPORT)
 	{
-		export(my_env, node->argv);
+		export(cmd, node->argv);
 		return (exit_status);
 	}
 	else if (is_builtin == UNSET)
 	{
-		unset(my_env, node->argv);
+		unset(cmd, node->argv);
 		return (exit_status);
 	}
 	else if (is_builtin == ENV)
 	{
-		env(my_env);
+		env(cmd);
 		return (exit_status);
 	}
 	else if (is_builtin == EXIT)
@@ -177,7 +217,116 @@ int	do_builtin(int is_builtin, t_token *node, t_list **my_env)
 	}
 }
 
-int	exec_scmd(t_token *node, t_list **my_env)
+// int	exec_scmd(t_token *node, t_list **my_env)
+// {
+// 	char	**env_table;
+// 	int		pid;
+// 	char	**path_args;
+// 	char	*path;
+// 	int		is_builtin;
+
+// 	is_builtin = check_builtin(node->argv[0]);
+// 	pid = fork();
+// 	if (pid < 0)
+// 		perror("pipe");
+// 	if (pid == 0) // child
+// 	{
+// 		env_table = lst_to_table(my_env);
+// 		path_args = get_path_args(my_env);
+// 		path = get_path(node->argv[0], path_args);
+// 		if (*node->fail_flag)
+// 			exit(1);
+// 		if (!path && !is_builtin)
+// 		{
+// 			ft_putstr_fd("minishell: ", 2);
+// 			ft_putstr_fd(node->argv[0], 2);
+// 			ft_putstr_fd(": command not found\n", 2);
+// 			exit(127);
+// 		}
+// 		if (*node->redirect_flag)
+// 		{
+// 			if (node->pipe_fd)
+// 			{
+// 				close(node->pipe_fd[WRITE]);
+// 				close(node->pipe_fd[READ]);
+// 			}
+// 			if (!is_builtin)
+// 			{
+// 				if (execve(path, node->argv, env_table) < 0)
+// 				{
+// 					perror("execve");
+// 					exit(127);
+// 				}
+// 			}
+// 			else
+// 				exit(do_builtin(is_builtin, node, my_env));
+// 		}
+// 		if (node->pipe_fd && node->last_flag == 0)
+// 		{
+// 			close(node->pipe_fd[READ]);
+// 			dup2(node->pipe_fd[WRITE], STDOUT_FILENO);
+// 			close(node->pipe_fd[WRITE]);
+// 			if (!is_builtin)
+// 			{
+// 				if (execve(path, node->argv, env_table) < 0)
+// 				{
+// 					perror("execve");
+// 					exit(127);
+// 				}
+// 			}
+// 			else
+// 				exit(do_builtin(is_builtin, node, my_env));
+// 		}
+// 		dup2(node->back_up_fd[WRITE], STDOUT_FILENO);
+// 		if (!is_builtin)
+// 		{
+// 			if (execve(path, node->argv, env_table) < 0)
+// 			{
+// 				perror("execve");
+// 				exit(127);
+// 			}
+// 		}
+// 		else
+// 			exit(0);
+// 	}
+// 	else // parent
+// 	{
+// 		int	status;
+
+// 		if (node->pipe_fd && node->last_flag == 0)
+// 		{
+// 			close(node->pipe_fd[WRITE]);
+// 			dup2(node->pipe_fd[READ], STDIN_FILENO);
+// 			close(node->pipe_fd[READ]);
+// 		}
+// 		else
+// 		{
+// 			if (*node->redirect_flag && !node->pipe_fd)
+// 				if (is_builtin)
+// 					do_builtin(is_builtin, node, my_env);
+// 			dup2(node->back_up_fd[READ], STDIN_FILENO);
+// 			dup2(node->back_up_fd[WRITE], STDOUT_FILENO);
+// 			close(node->back_up_fd[WRITE]);
+// 			close(node->back_up_fd[READ]);
+// 			if (is_builtin && !*node->redirect_flag && !node->pipe_fd)
+// 				do_builtin(is_builtin, node, my_env);
+// 		}
+// 		if (node->last_flag == 1 || !node->pipe_fd)
+// 		{
+// 			if (!is_builtin)
+// 			{
+// 				waitpid(pid, &status, 0);
+// 				if (WIFEXITED(status))
+// 					exit_status = WEXITSTATUS(status);
+// 			}
+// 			while (wait(NULL) > 0)
+// 				;
+// 			printf("exit_status = %d\n", exit_status);
+// 		}
+// 	}
+// }
+
+int	exec_scmd(t_token *node, t_cmd *cmd)
 {
 	char	**env_table;
 	int		pid;
@@ -191,8 +340,8 @@ int	exec_scmd(t_token *node, t_list **my_env)
 		perror("pipe");
 	if (pid == 0) // child
 	{
-		env_table = lst_to_table(my_env);
-		path_args = get_path_args(my_env);
+		env_table = lst_to_table(cmd);
+		path_args = get_path_args(cmd);
 		path = get_path(node->argv[0], path_args);
 		if (*node->fail_flag)
 			exit(1);
@@ -219,7 +368,7 @@ int	exec_scmd(t_token *node, t_list **my_env)
 				}
 			}
 			else
-				exit(do_builtin(is_builtin, node, my_env));
+				exit(do_builtin(is_builtin, node, cmd));
 		}
 		if (node->pipe_fd && node->last_flag == 0)
 		{
@@ -235,7 +384,7 @@ int	exec_scmd(t_token *node, t_list **my_env)
 				}
 			}
 			else
-				exit(do_builtin(is_builtin, node, my_env));
+				exit(do_builtin(is_builtin, node, cmd));
 		}
 		dup2(node->back_up_fd[WRITE], STDOUT_FILENO);
 		if (!is_builtin)
@@ -263,13 +412,13 @@ int	exec_scmd(t_token *node, t_list **my_env)
 		{
 			if (*node->redirect_flag && !node->pipe_fd)
 				if (is_builtin)
-					do_builtin(is_builtin, node, my_env);
+					do_builtin(is_builtin, node, cmd);
 			dup2(node->back_up_fd[READ], STDIN_FILENO);
 			dup2(node->back_up_fd[WRITE], STDOUT_FILENO);
 			close(node->back_up_fd[WRITE]);
 			close(node->back_up_fd[READ]);
 			if (is_builtin && !*node->redirect_flag && !node->pipe_fd)
-				do_builtin(is_builtin, node, my_env);
+				do_builtin(is_builtin, node, cmd);
 		}
 		if (node->last_flag == 1 || !node->pipe_fd)
 		{

@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 12:06:54 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/05/05 14:51:54 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/05 17:27:54 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,23 +176,27 @@ void	ft_free_list(t_element **head);
 void	print_list(t_element *head);
 void	print_env(t_env_lst *head);
 void	print_tree(t_token *head);
-void	search_tree(t_token *node, t_list **my_env);
+// void	search_tree(t_token *node, t_list **my_env);
 void	aaa(void);
 
 //pipe functions
-char	**get_path_args(t_list **my_env);
+// char	**get_path_args(t_list **my_env);
+char	**get_path_args(t_cmd *cmd);
 char	*get_path(char *cmd, char **path_args);
 
 //tree_func.c
-void	search_tree(t_token *node, t_list **my_env);
-int		execute_tree(t_token *node, t_list **my_env);
+// void	search_tree(t_token *node, t_list **my_env);
+void	search_tree(t_token *node, t_cmd *cmd);
+// int		execute_tree(t_token *node, t_list **my_env);
+int		execute_tree(t_token *node, t_cmd *cmd);
 
 //tree_utils.c
 int	exec_redirs(t_token *node);
 int	exec_redir(t_token *node);
 int	exec_pipe(t_token *node);
 int exec_cmd(t_token *node);
-int	exec_scmd(t_token *node, t_list **my_env);
+// int	exec_scmd(t_token *node, t_list **my_env);
+int	exec_scmd(t_token *node, t_cmd *cmd);
 
 //here_doc.c
 void	here_doc_tmp(char *limiter, int index);
@@ -200,7 +204,8 @@ void	here_doc(t_token *node);
 void	search_hd(t_token *node, t_list **my_env, int *hd_cnt);
 
 //lst_to_table
-char	**lst_to_table(t_list **my_env);
+// char	**lst_to_table(t_list **my_env);
+char	**lst_to_table(t_cmd *cmd);
 void	printenv(t_list **my_env);
 
 //built_in_func.c
@@ -213,10 +218,12 @@ void	pwd(void);
 
 //built_in_func2.c
 void	cd(t_list **my_env, char **argv);
-void	export(t_list **my_env, char **argv);
+// void	export(t_list **my_env, char **argv);
+void	export(t_cmd *cmd, char **argv);
 
 //built_in_utils.c
-t_list	*find_env(t_list **my_env, char *string);
+// t_list	*find_env(t_list **my_env, char *string);
+t_env_lst	*find_env(t_cmd *cmd, char *string);
 int	argument_check(char *string);
 void sort_env(t_list **my_env);
 int	check_isdigit(char *string);
@@ -228,5 +235,7 @@ void	del_env(t_list **my_env, t_list *find);
 t_list	*ft_lstadd_back(t_list **lst, t_list *new);
 t_list	*ft_lstnew(char *content);
 t_list	*ft_lstlast(t_list *lst);
+
+char	**ft_split_export(char const *string, char seperator);
 
 #endif

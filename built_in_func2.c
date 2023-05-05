@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 14:09:45 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/05 14:24:24 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/05 19:03:57 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,16 @@ void	cd(t_list **my_env, char **argv)
 	t_list	*old_pwd;
 	t_list	*pwd;
 
-	if (!argv[1])
-	{
-		if (chdir(find_env(my_env, "HOME")->content + 5) == -1)
-		{
-			exit_status = 1;
-			printf("minishell: cd: HOME not set\n");
-		}
-		exit_status = 0;
-		return ;
-	}
+	// if (!argv[1])
+	// {
+	// 	if (chdir(find_env(my_env, "HOME")->content + 5) == -1)
+	// 	{
+	// 		exit_status = 1;
+	// 		printf("minishell: cd: HOME not set\n");
+	// 	}
+	// 	exit_status = 0;
+	// 	return ;
+	// }
 	if (getcwd(path, 1024) == NULL)
 		perror("getcwd error\n");
 	pwd = find_env(my_env, "PWD");
@@ -56,22 +56,75 @@ void	cd(t_list **my_env, char **argv)
 	exit_status = 0;
 }
 
-void	export(t_list **my_env, char **argv)
+// void	export(t_list **my_env, char **argv)
+// {
+// 	t_list	*find;
+// 	t_list	*tmp;
+// 	char	**split;
+// 	int		i;
+// 	int		fail_flag;
+
+// 	fail_flag = 0;
+// 	if (argv[1] == NULL)
+// 	{
+// 		tmp = *my_env;
+// 		sort_env(my_env);
+// 		while (tmp)
+// 		{
+// 			printf("declare -x %s\n", (char *)tmp->content);
+// 			tmp = tmp->next;
+// 		}
+// 		exit_status = 0;
+// 		return ;
+// 	}
+// 	i = 0;
+// 	while (argv[++i])
+// 	{
+// 		if (argument_check(argv[i]) == 0)
+// 		{
+// 			printf("export: '%s': not a valid identifier\n", argv[i]);
+// 			exit_status = 1;
+// 			fail_flag = 1;
+// 		}
+// 		if (fail_flag == 1)
+// 			continue ;
+// 		split = ft_split(argv[i], '=');
+// 		find = find_env(my_env, split[0]);
+// 		if (find == NULL)
+// 			ft_lstadd_back(my_env, ft_lstnew(argv[i]));
+// 		else
+// 		{
+// 			free(find->content);
+// 			find->content = ft_strdup(argv[i]);
+// 		}
+// 		exit_status = 0;
+// 	}
+// 	if (fail_flag == 1)
+// 		exit_status = 1;
+// }
+
+void	export(t_cmd *cmd, char **argv)
 {
-	t_list	*find;
-	t_list	*tmp;
-	char	**split;
-	int		i;
-	int		fail_flag;
+	t_env_lst	*find;
+	t_env_lst	*tmp;
+	char		**split;
+	int			i;
+	int			fail_flag;
 
 	fail_flag = 0;
 	if (argv[1] == NULL)
 	{
-		tmp = *my_env;
-		sort_env(my_env);
+		tmp = cmd->env_head;
+		// sort_env(cmd);
 		while (tmp)
 		{
-			printf("declare -x %s\n", (char *)tmp->content);
+			printf("declare -x %s", tmp->key);
+			if (tmp->value)
+			{
+				printf("=");
+				printf("\"%s\"", tmp->value);
+			}
+			printf("\n");
 			tmp = tmp->next;
 		}
 		exit_status = 0;
@@ -88,14 +141,16 @@ void	export(t_list **my_env, char **argv)
 		}
 		if (fail_flag == 1)
 			continue ;
-		split = ft_split(argv[i], '=');
-		find = find_env(my_env, split[0]);
+		split = ft_split_export(argv[i], '=');
+		find = find_env(cmd, split[0]);
 		if (find == NULL)
-			ft_lstadd_back(my_env, ft_lstnew(argv[i]));
-		else
+			add_env_list(cmd, split[0], split[1]);
+		else if (split[1])
 		{
-			free(find->content);
-			find->content = ft_strdup(argv[i]);
+			free(find->key);
+			free(find->value);
+			find->key = ft_strdup(split[0]);
+			find->value = ft_strdup(split[1]);
 		}
 		exit_status = 0;
 	}

@@ -6,20 +6,20 @@
 /*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 14:12:07 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/05 14:45:25 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/05 16:43:37 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_list	*find_env(t_list **my_env, char *string)
+t_env_lst	*find_env(t_cmd *cmd, char *string)
 {
-	t_list	*tmp;
+	t_env_lst	*tmp;
 
-	tmp = *my_env;
+	tmp = cmd->env_head;
 	while (tmp)
 	{
-		if (ft_strncmp(tmp->content, string, ft_strlen(string)) == 0)
+		if (ft_strncmp(tmp->key, string, ft_strlen(string)) == 0)
 			return (tmp);
 		tmp = tmp->next;
 	}

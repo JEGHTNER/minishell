@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:26:47 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/05/04 13:51:00 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/05 16:53:36 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static void	parse_n_execute(t_cmd *cmd, char *line, t_list **my_env)
 	// print_tree(cmd->tree_head);
 	// print_env(cmd->env_head);
 	search_hd(cmd->tree_head, my_env, hd_cnt);
-	search_tree(cmd->tree_head, my_env);
+	search_tree(cmd->tree_head, cmd);
 	//execute cmd with parse tree
 }
 
@@ -111,14 +111,15 @@ void	cpy_env(t_list **env, char **envp)
 	return ;
 }
 
-char	**lst_to_table(t_list **my_env)
+char	**lst_to_table(t_cmd *cmd)
 {
 	char	**table;
 	int		env_cnt;
 	int		i;
-	t_list	*tmp;
+	t_env_lst	*tmp;
+	char	*str_tmp;
 
-	tmp = *my_env;
+	tmp = cmd->env_head;
 	env_cnt = 0;
 	while (tmp)
 	{
@@ -127,10 +128,12 @@ char	**lst_to_table(t_list **my_env)
 	}
 	table = malloc(sizeof(char *) * (env_cnt + 1));
 	i = -1;
-	tmp = *my_env;
+	tmp = cmd->env_head;
 	while (++i < env_cnt)
 	{
-		table[i] = ft_strdup(tmp->content);
+		str_tmp = ft_strjoin(tmp->key, "=");
+		table[i] = ft_strjoin(str_tmp, tmp->value);
+		free(str_tmp);
 		tmp = tmp->next;
 	}
 	table[i] = 0;

@@ -6,7 +6,7 @@
 #    By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/26 18:38:09 by joon-lee          #+#    #+#              #
-#    Updated: 2023/05/04 14:48:16 by jehelee          ###   ########.fr        #
+#    Updated: 2023/05/05 17:28:06 by jehelee          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,9 @@ SRCS =  main.c \
 		utils.c \
 		utils2.c \
 		free_func.c \
-		here_doc.c
+		here_doc.c \
+		ft_split_export.c \
+		
 
 OBJS = $(SRCS:.c=.o)
 LIBFT_A = libft/libft.a

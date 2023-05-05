@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:41:10 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/04 14:24:05 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/05 16:41:34 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,19 +38,19 @@ char	*get_path(char *cmd, char **path_args)
 	return (NULL);
 }
 
-char	**get_path_args(t_list **my_env)
+char	**get_path_args(t_cmd *cmd)
 {
-	int		i;
-	char	*path;
-	t_list	*tmp;
+	int			i;
+	char		*path;
+	t_env_lst	*tmp;
 
 	i = 0;
-	tmp = *my_env;
+	tmp = cmd->env_head;
 	while (tmp)
 	{
-		if (ft_strncmp(tmp->content, "PATH=", 5) == 0)
+		if (ft_strncmp(tmp->key, "PATH", 4) == 0)
 		{
-			path = tmp->content + 5;
+			path = tmp->value;
 			return (ft_split(path, ':'));
 		}
 		tmp = tmp->next;
