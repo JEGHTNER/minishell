@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:38:21 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/05 13:52:21 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/05 14:28:02 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,7 +207,7 @@ int	exec_scmd(t_token *node, t_list **my_env)
 		path = get_path(node->argv[0], path_args);
 		if (*node->fail_flag)
 			exit(1);
-		if (!path)
+		if (!path && !is_builtin)
 		{
 			ft_putstr_fd("minishell: ", 2);
 			ft_putstr_fd(node->argv[0], 2);
@@ -285,11 +285,13 @@ int	exec_scmd(t_token *node, t_list **my_env)
 		if (node->last_flag == 1 || !node->pipe_fd)
 		{
 			if (!is_builtin)
+			{
 				waitpid(pid, &status, 0);
+				if (WIFEXITED(status))
+					exit_status = WEXITSTATUS(status);
+			}
 			while (wait(NULL) > 0)
 				;
-			if (WIFEXITED(status))
-				exit_status = WEXITSTATUS(status);
 			printf("exit_status = %d\n", exit_status);
 		}
 	}
