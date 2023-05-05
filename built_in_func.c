@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 14:04:58 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/05 14:37:58 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/05 15:01:05 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,31 @@ void	ft_exit(char **arguments)
 	check_exit_arguments(arguments);
 }
 
-void	echo(char **argv, int option)
+int	get_echo_option(char *str)
+{
+	int	i;
+
+	i = 1;
+	if (!str)
+		return (0);
+	if (str[0] != '-')
+		return (0);
+	while (str[i])
+	{
+		if (str[i] == 'n' || !is_whitespace(str[i]))
+			i++;
+		else
+			return (0);
+	}
+	return (1);
+}
+
+void	echo(char **argv)
 {
 	int		i;
+	int		option;
 
+	option = get_echo_option(argv[1]);
 	if (option == 0)
 	{
 		i = 0;
@@ -45,9 +66,14 @@ void	echo(char **argv, int option)
 	}
 	else
 	{
-		i = 0;
+		i = 1;
 		while (argv[++i])
-			printf("%s%%", argv[i]);
+		{
+			if (i > 2)
+				printf(" %s", argv[i]);
+			else
+				printf("%s", argv[i]);
+		}
 	}
 	exit_status = 0;
 }

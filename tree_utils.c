@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:38:21 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/05 14:39:38 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/05 14:52:13 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ int	do_builtin(int is_builtin, t_token *node, t_list **my_env)
 {
 	if (is_builtin == ECH)
 	{
-		echo(node->argv, 0);
+		echo(node->argv);
 		return (exit_status);
 	}
 	else if (is_builtin == CD)
