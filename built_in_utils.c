@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 14:12:07 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/05 16:43:37 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/05 19:59:28 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,23 +44,27 @@ int	argument_check(char *string)
 	return (1);
 }
 
-void sort_env(t_list **my_env)
+void sort_env(t_cmd *cmd)
 {
-	t_list	*tmp;
-	t_list	*tmp2;
-	char	*tmp_str;
+	t_env_lst	*tmp;
+	t_env_lst	*tmp2;
+	char		*tmp_key;
+	char		*tmp_val;
 
-	tmp = *my_env;
+	tmp = cmd->env_head;
 	while (tmp)
 	{
 		tmp2 = tmp->next;
 		while (tmp2)
 		{
-			if (ft_strncmp(tmp->content, tmp2->content, ft_strlen(tmp->content)) > 0)
+			if (ft_strncmp(tmp->key, tmp2->key, ft_strlen(tmp->key)) > 0)
 			{
-				tmp_str = tmp->content;
-				tmp->content = tmp2->content;
-				tmp2->content = tmp_str;
+				tmp_key = tmp->key;
+				tmp->key = tmp2->key;
+				tmp2->key = tmp_key;
+				tmp_val = tmp->value;
+				tmp->value = tmp2->value;
+				tmp2->value = tmp_val;
 			}
 			tmp2 = tmp2->next;
 		}

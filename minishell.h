@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 12:06:54 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/05/05 19:12:26 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/05 19:59:44 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,7 +218,7 @@ void	pwd(void);
 
 
 //built_in_func2.c
-void	cd(t_list **my_env, char **argv);
+void	cd(t_cmd *cmd, char **argv);
 // void	export(t_list **my_env, char **argv);
 void	export(t_cmd *cmd, char **argv);
 
@@ -226,7 +226,7 @@ void	export(t_cmd *cmd, char **argv);
 // t_list	*find_env(t_list **my_env, char *string);
 t_env_lst	*find_env(t_cmd *cmd, char *string);
 int	argument_check(char *string);
-void sort_env(t_list **my_env);
+void sort_env(t_cmd *cmd);
 int	check_isdigit(char *string);
 void	check_exit_arguments(char **arguments);
 
