@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:38:21 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/05 20:34:28 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/05 20:45:30 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -430,7 +430,7 @@ int	exec_scmd(t_token *node, t_cmd *cmd)
 			}
 			while (wait(NULL) > 0)
 				;
-			printf("exit_status = %d\n", exit_status);
+			// printf("exit_status = %d\n", exit_status);
 		}
 	}
 }
