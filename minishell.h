@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 12:06:54 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/05/05 19:06:54 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/05 19:12:26 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct s_env_lst
 	char				*key;
 	char				*value;
 	struct s_env_lst	*next;
+	struct s_env_lst	*prev;
 }	t_env_lst;
 
 typedef struct s_element
@@ -212,7 +213,7 @@ void	printenv(t_list **my_env);
 void	ft_exit(char **arguments);
 void	echo(char **argv);
 void	env(t_cmd *cmd);
-void	unset(t_list **my_env, char **argv);
+void	unset(t_cmd *cmd, char **argv);
 void	pwd(void);
 
 
@@ -230,7 +231,7 @@ int	check_isdigit(char *string);
 void	check_exit_arguments(char **arguments);
 
 //bulit_in_utils2.c
-void	del_env(t_list **my_env, t_list *find);
+void	del_env(t_cmd *cmd, t_env_lst *find);
 
 t_list	*ft_lstadd_back(t_list **lst, t_list *new);
 t_list	*ft_lstnew(char *content);

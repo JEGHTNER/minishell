@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   lst_ops.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joon-lee <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 12:23:11 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/04/23 12:23:12 by joon-lee         ###   ########.fr       */
+/*   Updated: 2023/05/05 19:13:42 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 void	ft_lstadd_back_mini(t_element **lst, t_element *new)

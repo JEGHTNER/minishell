@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 14:04:58 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/05 19:06:28 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/05 19:09:19 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,9 @@ void	env(t_cmd *cmd)
 	exit_status = 0;
 }
 
-void	unset(t_list **my_env, char **argv)
+void	unset(t_cmd *cmd, char **argv)
 {
-	t_list	*find;
+	t_cmd	*find;
 	int		i;
 
 	if (argv == NULL)
@@ -111,10 +111,10 @@ void	unset(t_list **my_env, char **argv)
 			printf("unset: '%s': not a valid identifier\n", argv[i]);
 			exit_status = 1;
 		}
-		find = find_env(my_env, argv[i]);
+		find = find_env(cmd, argv[i]);
 		if (find == NULL)
 			exit_status = 0;
-		del_env(my_env, find);
+		del_env(cmd, find);
 		exit_status = 0;
 	}
 }

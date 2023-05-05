@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   manage_env_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joon-lee <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:37:38 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/04/26 18:37:39 by joon-lee         ###   ########.fr       */
+/*   Updated: 2023/05/05 19:16:30 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 t_macro	is_it_env_key(char check)
@@ -31,6 +32,7 @@ void	add_env_list(t_cmd *cmd, char *for_key, char *for_value)
 	to_put->key = ft_strdup(for_key);
 	to_put->value = ft_strdup(for_value);
 	to_put->next = 0;
+	to_put->prev = 0;
 	if (cmd->env_head == 0)
 		cmd->env_head = to_put;
 	else
@@ -39,6 +41,7 @@ void	add_env_list(t_cmd *cmd, char *for_key, char *for_value)
 		while (cur->next)
 			cur = cur->next;
 		cur->next = to_put;
+		to_put->prev = cur;
 	}
 }
 
