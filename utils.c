@@ -46,7 +46,7 @@ char	*strchop(char *src, size_t start, size_t end)
 
 	idx = 0;
 	if (end < start)
-		return (0);
+		return (ft_strdup(""));
 	ret = (char *)malloc(end - start + 2);
 	if (!ret)
 		ft_exit_with_error("malloc error", 0);

@@ -41,12 +41,13 @@ char	*quote_to_string(t_cmd *cmd, char *line, size_t *idx, size_t *st)
 		return (single_quote_to_string(line, idx, st));
 }
 
-t_macro	nothing_to_ret(char **tmp, size_t *idx, size_t end_idx)
+t_macro	nothing_to_ret(char **tmp, size_t *idx, size_t end_idx, size_t *st)
 {
 	*tmp = ft_strdup("");
 	if (*idx == end_idx)
 	{
 		(*idx)++;
+		*st = *idx;
 		return (YES);
 	}
 	return (NO);

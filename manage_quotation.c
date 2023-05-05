@@ -20,7 +20,7 @@ char	*double_quote_to_string(t_cmd *cmd, char *line, size_t *idx, size_t *st)
 	end_idx = check_side_quotation(line, *idx);
 	(*idx)++;
 	start = *idx;
-	if (nothing_to_ret(&to_ret, idx, end_idx) == YES)
+	if (nothing_to_ret(&to_ret, idx, end_idx, st) == YES)
 		return (to_ret);
 	while (*idx < end_idx)
 	{
@@ -45,11 +45,8 @@ char	*single_quote_to_string(char *line, size_t *idx, size_t *st)
 
 	to_ret = ft_strdup("");
 	end_idx = check_side_quotation(line, *idx);
-	if (*idx + 1 == end_idx)
-	{
-		*idx = end_idx + 1;
+	if (nothing_to_ret(&to_ret, idx, end_idx, st) == YES)
 		return (to_ret);
-	}
 	start_idx = *idx + 1;
 	to_ret = join_n_free(to_ret, strchop(line, start_idx, end_idx - 1));
 	*idx = end_idx + 1;
@@ -57,23 +54,17 @@ char	*single_quote_to_string(char *line, size_t *idx, size_t *st)
 	return (to_ret);
 }
 
-static char	*trim_before_conv(char *data, char *line, size_t *idx)
+static char	*trim_before_conv(char *data, char *line, size_t *st, size_t *idx)
 {
-	size_t	start_idx;
 	size_t	end_idx;
 	char	*tmp;
 
-	start_idx = *idx - 1;
 	end_idx = *idx - 1;
 	if (line[end_idx] == '\'' || line[end_idx] == '\"')
 		return (data);
 	else
 	{
-		while (line[start_idx]
-			&& !(line[start_idx] == '\'' || line[start_idx] == '\"'))
-			start_idx--;
-		start_idx++;
-		tmp = strchop(line, start_idx, end_idx);
+		tmp = strchop(line, *st, end_idx);
 		data = join_n_free(data, tmp);
 		return (data);
 	}
@@ -91,7 +82,7 @@ static char	*check_remain_quote(t_cmd *cmd, char *line, size_t *idx)
 	while (line[*idx] && is_whitespace(line[*idx]) == NO)
 	{
 		if (line[*idx] == '|' || line[*idx] == '>' || line[*idx] == '<')
-			return (trim_before_conv(remain, line, idx));
+			return (trim_before_conv(remain, line, &start_idx, idx));
 		else if (line[*idx] == '\'' || line[*idx] == '\"')
 			remain = join_n_free(chop_n_trim(remain, line, &start_idx, idx), \
 				quote_to_string(cmd, line, idx, &start_idx));
