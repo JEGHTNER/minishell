@@ -15,8 +15,7 @@ NAME = minishell
 
 CC = cc
 # CFLAGS = -Wall -Wextra -Werror
-
-# -fsanitize=address
+# CFLAGS = -fsanitize=address
 SRCS =  main.c \
 		signal_manage.c \
 		manage_line_main.c \

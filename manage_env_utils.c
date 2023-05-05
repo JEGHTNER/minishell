@@ -76,5 +76,5 @@ char	*find_value_with_key(t_env_lst *head, char *to_find)
 			return (ft_strdup(cur->value));
 		cur = cur->next;
 	}
-	return (0);
+	return (ft_strdup(""));
 }
