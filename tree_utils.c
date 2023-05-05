@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:38:21 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/05 14:52:13 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/05 16:05:24 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,7 +268,7 @@ int	exec_scmd(t_token *node, t_list **my_env)
 			dup2(node->back_up_fd[WRITE], STDOUT_FILENO);
 			close(node->back_up_fd[WRITE]);
 			close(node->back_up_fd[READ]);
-			if (is_builtin && !*node->redirect_flag)
+			if (is_builtin && !*node->redirect_flag && !node->pipe_fd)
 				do_builtin(is_builtin, node, my_env);
 		}
 		if (node->last_flag == 1 || !node->pipe_fd)
