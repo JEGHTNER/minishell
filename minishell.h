@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 12:06:54 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/05/04 13:57:54 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/05 14:28:44 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,18 @@ typedef enum s_pipe_fd
 	READ,
 	WRITE
 } t_pipe_fd;
+
+typedef enum e_is_builtin
+{
+	NOT,
+	ECH,
+	CD,
+	PWD,
+	EXPORT,
+	UNSET,
+	ENV,
+	EXIT
+} t_is_builtin;
 
 typedef enum e_cat
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 14:12:07 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/04 13:22:42 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/05 14:45:25 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,32 +83,31 @@ int	check_isdigit(char *string)
 
 void	check_exit_arguments(char **arguments)
 {
-	char	*tmp;
 	int		cnt;
 	int		i;
 
-	tmp = *arguments;
 	cnt = 0;
 	i = 0;
-	while (tmp[i])
+	while (arguments[++i])
 	{
 		cnt++;
-		if (!check_isdigit(tmp))
+		if (!check_isdigit(arguments[i]))
 		{
 			exit_status = 255;
 			break ;
 		}
-		i++;
 	}
 	if (cnt > 1)
 	{
 		exit_status = 1;
 		printf("minishell: exit: too many arguments\n");
-		exit(1);
+		return ;
 	}
 	if (exit_status == 255)
 	{
-		printf("minishell: exit: %s: numeric argument required\n", tmp);
-		exit(255);
+		exit_status = 255;
+		printf("minishell: exit: numeric argument required\n");
+		return ;
 	}
+	exit_status = ft_atoi(arguments[1]);
 }

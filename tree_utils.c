@@ -6,23 +6,11 @@
 /*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:38:21 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/05 14:28:02 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/05 14:39:38 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-typedef enum e_is_builtin
-{
-	NOT,
-	ECH,
-	CD,
-	PWD,
-	EXPORT,
-	UNSET,
-	ENV,
-	EXIT
-} t_is_builtin;
 
 int	exec_redirs(t_token *node)
 {
@@ -184,7 +172,8 @@ int	do_builtin(int is_builtin, t_token *node, t_list **my_env)
 	else if (is_builtin == EXIT)
 	{
 		ft_exit(node->argv);
-		return (exit_status);
+		printf("exit\n");
+		exit (exit_status);
 	}
 }
 

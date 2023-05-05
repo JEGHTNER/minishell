@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 14:04:58 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/04 15:10:59 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/05 14:37:58 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,15 @@
 void	ft_exit(char **arguments)
 {
 	if (arguments == NULL)
-		exit(0);
-	if (*arguments == NULL)
-		exit(0);
+	{
+		exit_status = 0;
+		return ;
+	}
+	if (arguments[1] == NULL)
+	{
+		exit_status = 0;
+		return ;
+	}
 	check_exit_arguments(arguments);
 }
 
