@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 14:04:58 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/05 15:01:05 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/05 15:18:16 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	get_echo_option(char *str)
 		return (0);
 	while (str[i])
 	{
-		if (str[i] == 'n' || !is_whitespace(str[i]))
+		if (str[i] == 'n')
 			i++;
 		else
 			return (0);
