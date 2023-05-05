@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:41:10 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/05 16:41:34 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/05 20:33:30 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,16 @@ char	*get_path(char *cmd, char **path_args)
 	char	*tmp;
 	char	*tmp2;
 
-	if (!cmd || !path_args)
+	if (!cmd)
 		return (NULL);
 	if (access(cmd, X_OK) == 0)
+	{
+		printf("cmd = %s\n", cmd);
 		return (ft_strdup(cmd));
+	}
 	i = 0;
+	if (!path_args)
+		return (NULL);
 	while (path_args[i])
 	{
 		tmp = ft_strjoin(path_args[i], "/");
