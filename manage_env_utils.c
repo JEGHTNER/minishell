@@ -15,7 +15,7 @@
 t_macro	is_it_env_key(char check)
 {
 	if (check && is_whitespace(check) == NO && check != '\"' && check != '\''
-		&& check != '.' && check != '|' && check != '>'
+		&& check != '.' && check != '|' && check != '>' && check != '?'
 		&& check != '<' && check != '$')
 		return (YES);
 	else
