@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   convert_tree.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joon-lee <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 12:22:56 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/04/23 12:22:57 by joon-lee         ###   ########.fr       */
+/*   Updated: 2023/05/07 17:38:52 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 void	put_in_tree(t_cmd *cmd, t_token *to_put)

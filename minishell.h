@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 12:06:54 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/05/08 00:14:21 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/08 02:06:35 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,12 +192,12 @@ void	search_tree(t_token *node, t_cmd *cmd);
 int		execute_tree(t_token *node, t_cmd *cmd);
 
 //tree_utils.c
-int	exec_redirs(t_token *node);
-int	exec_redir(t_token *node);
-int	exec_pipe(t_token *node);
-int exec_cmd(t_token *node);
+void	exec_redirs(t_token *node);
+void	exec_redir(t_token *node);
+void	exec_pipe(t_token *node);
+void	exec_cmd(t_token *node);
 // int	exec_scmd(t_token *node, t_list **my_env);
-int	exec_scmd(t_token *node, t_cmd *cmd);
+void	exec_scmd(t_token *node, t_cmd *cmd);
 
 //here_doc.c
 void	here_doc_tmp(char *limiter, int index);
