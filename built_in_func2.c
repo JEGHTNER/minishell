@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_func2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 14:09:45 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/05 20:00:31 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/07 19:47:59 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,28 @@ void	cd(t_cmd *cmd, char **argv)
 			exit_status = 1;
 			printf("minishell: cd: HOME not set\n");
 		}
+		exit_status = 0;
+		return ;
+	}
+	if (argv[1][0] == '/')
+	{
+		if (chdir(argv[1]) == -1)
+		{
+			ft_putstr_fd("minishell: cd: ", 2);
+			perror(argv[1]);
+			exit_status = 1;
+			return ;
+		}
+		if (getcwd(path, 1024) == NULL)
+			perror("getcwd error\n");
+		pwd = find_env(cmd, "PWD");
+		old_pwd = find_env(cmd, "OLDPWD");
+		if (old_pwd == NULL)
+			add_env_list(cmd, pwd->key, pwd->value);
+		free(old_pwd->value);
+		old_pwd->value = ft_strdup(pwd->value);
+		free(pwd->value);
+		pwd->value = ft_strdup(path);
 		exit_status = 0;
 		return ;
 	}
