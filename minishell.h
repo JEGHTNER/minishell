@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 12:06:54 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/05/08 02:42:20 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/08 03:04:57 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,7 +240,9 @@ t_list	*ft_lstadd_back(t_list **lst, t_list *new);
 t_list	*ft_lstnew(char *content);
 t_list	*ft_lstlast(t_list *lst);
 
+//ft_split_export.c
 char	**ft_split_export(char const *string, char seperator);
+char	**free_words(char **words);
 
 int	do_builtin(int is_builtin, t_token *node, t_cmd *cmd);
 int	do_builtin2(int is_builtin, t_token *node, t_cmd *cmd);

@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:26:47 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/05/07 18:42:57 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/08 03:30:10 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ static void	parse_n_execute(t_cmd *cmd, char *line)
 	convert_tree(cmd);
 	search_hd(cmd->tree_head, hd_cnt);
 	search_tree(cmd->tree_head, cmd);
+	free(hd_cnt);
 }
 
 void	cpy_env(t_list **env, char **envp)

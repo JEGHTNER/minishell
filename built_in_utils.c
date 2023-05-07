@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 14:12:07 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/08 02:44:47 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/08 03:07:56 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	check_isdigit(char *string)
 	return (1);
 }
 
-void check_exit_arguments_err(int cnt)
+void	check_exit_arguments_err(int cnt)
 {
 	if (cnt > 1)
 	{

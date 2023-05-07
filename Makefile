@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+         #
+#    By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/26 18:38:09 by joon-lee          #+#    #+#              #
-#    Updated: 2023/05/05 17:28:06 by jehelee          ###   ########.fr        #
+#    Updated: 2023/05/08 03:14:54 by jehelee          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,11 +54,11 @@ LIBFT_A = libft/libft.a
 # COMP_FLAGS_IN_HOME = -lreadline -L/opt/homebrew/opt/readline/lib
 
 %.o : %.c
-	$(CC) $(CFLAGS) -c $< -o ${<:.c=.o} -g
+	$(CC) $(CFLAGS) -c $< -o ${<:.c=.o} -g 
 
 $(NAME) : $(OBJS)
 	$(MAKE) -C libft
-	$(CC) $(CFLAGS) -lreadline $(OBJS) $(LIBFT_A) -o $(NAME) -g
+	$(CC) $(CFLAGS) -lreadline $(OBJS) $(LIBFT_A) -o $(NAME) -g 
 
 all : $(NAME)
 

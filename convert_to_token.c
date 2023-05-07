@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   convert_to_token.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joon-lee <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:37:54 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/04/26 18:37:55 by joon-lee         ###   ########.fr       */
+/*   Updated: 2023/05/08 02:47:46 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 t_token	*make_word_token(t_element *tmp)

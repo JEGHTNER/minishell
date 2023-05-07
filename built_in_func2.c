@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 14:09:45 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/08 02:46:22 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/08 03:07:26 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ void	export(t_cmd *cmd, char **argv)
 			find->value = ft_strdup(split[1]);
 		}
 		exit_status = 0;
+		free_words(split);
 	}
 	if (fail_flag == 1)
 		exit_status = 1;
