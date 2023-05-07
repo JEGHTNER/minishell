@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 12:06:54 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/05/08 02:06:35 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/08 02:42:20 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,7 +216,6 @@ void	env(t_cmd *cmd);
 void	unset(t_cmd *cmd, char **argv);
 void	pwd(void);
 
-
 //built_in_func2.c
 void	cd(t_cmd *cmd, char **argv);
 void	export(t_cmd *cmd, char **argv);
@@ -224,12 +223,18 @@ void	export(t_cmd *cmd, char **argv);
 //built_in_utils.c
 t_env_lst	*find_env(t_cmd *cmd, char *string);
 int	argument_check(char *string);
-void sort_env(t_cmd *cmd);
 int	check_isdigit(char *string);
 void	check_exit_arguments(char **arguments);
+void check_exit_arguments_err(int cnt);
 
 //bulit_in_utils2.c
 void	del_env(t_cmd *cmd, t_env_lst *find);
+void	echo_n(char **argv);
+int		get_echo_option(char *str);
+
+//built_in_utils3.c
+void sort_env(t_cmd *cmd);
+
 
 t_list	*ft_lstadd_back(t_list **lst, t_list *new);
 t_list	*ft_lstnew(char *content);

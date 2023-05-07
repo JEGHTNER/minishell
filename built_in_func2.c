@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 14:09:45 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/07 19:47:59 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/08 02:46:22 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	cd(t_cmd *cmd, char **argv)
 {
-	char	path[1024];
-	char	*new_path;
-	char	*tmp;
+	char		path[1024];
+	char		*new_path;
+	char		*tmp;
 	t_env_lst	*old_pwd;
 	t_env_lst	*pwd;
 
