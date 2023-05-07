@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 20:16:51 by jehelee           #+#    #+#             */
-/*   Updated: 2023/04/18 23:44:25 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/08 04:48:49 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void		last_child_process(t_pipex *pipex, char **av, int i, int pipe[2]);
 int			wait_func(t_list *pid_list);
 void		multi_pipe(t_pipex *pipex, int argc, char *argv[], t_list *p_list);
 int			check_heredoc(t_pipex *pipex);
-int			ft_w_exit_status(int status);
+int			ft_w_g_exit_status(int status);
 
 //error_utils
 void		error_handle(t_pipex *pipex, char *argv[], int argc);
@@ -108,6 +108,6 @@ void		error_no_outfile(t_pipex *pipex, char *argv[], int argc);
 void		free_pipex(t_pipex *pipex);
 char		**free_2d_arr(char **words);
 void		ft_lstfree(t_list *lst);
-int			ft_w_exit_status(int status);
+int			ft_w_g_exit_status(int status);
 
 #endif

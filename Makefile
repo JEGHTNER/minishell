@@ -6,7 +6,7 @@
 #    By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/26 18:38:09 by joon-lee          #+#    #+#              #
-#    Updated: 2023/05/08 04:29:29 by jehelee          ###   ########.fr        #
+#    Updated: 2023/05/08 05:00:33 by jehelee          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,10 @@ SRCS =  main.c \
 		pipe_func.c \
 		tree_func.c \
 		tree_utils.c \
+		tree_utils_scmd_parent.c \
+		tree_utils_scmd_child.c \
+		tree_utils_redir.c \
+		tree_utils_builtin.c \
 		built_in_func.c \
 		built_in_func2.c \
 		built_in_utils.c \

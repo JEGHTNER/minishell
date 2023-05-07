@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   manage_quotation.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joon-lee <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 13:05:53 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/04/23 13:05:57 by joon-lee         ###   ########.fr       */
+/*   Updated: 2023/05/08 05:02:50 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 char	*double_quote_to_string(t_cmd *cmd, char *line, size_t *idx, size_t *st)

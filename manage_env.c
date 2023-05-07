@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manage_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:37:38 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/05/05 16:35:14 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/08 05:03:16 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static char	*convert_exit_stat(t_cmd *cmd, size_t *idx, size_t *st)
 {
 	char	*to_ret;
 
-	to_ret = ft_strdup(ft_itoa(exit_status));
+	to_ret = ft_strdup(ft_itoa(g_exit_status));
 	(*idx)++;
 	*st = *idx;
 	return (to_ret);

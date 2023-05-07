@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 14:09:45 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/08 04:39:21 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/08 05:01:56 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	cd(t_cmd *cmd, char **argv)
 		{
 			ft_putstr_fd("minishell: cd: ", 2);
 			perror(argv[1]);
-			exit_status = 1;
+			g_exit_status = 1;
 			return ;
 		}
 		check_a_path(path, cmd);
@@ -59,7 +59,7 @@ void	print_export(t_cmd *cmd, char **argv)
 			printf("\n");
 			tmp = tmp->next;
 		}
-		exit_status = 0;
+		g_exit_status = 0;
 		return ;
 	}
 }
@@ -71,7 +71,7 @@ void	export_err(char **argv, int *i, int *fail_flag)
 		ft_putstr_fd("export: ", 2);
 		ft_putstr_fd(argv[*i], 2);
 		ft_putstr_fd(": not a valid identifier\n", 2);
-		exit_status = 1;
+		g_exit_status = 1;
 		*fail_flag = 1;
 	}
 }
@@ -96,7 +96,7 @@ void	export_loop(t_cmd *cmd, char **argv, int *i, int *fail_flag)
 			find->key = ft_strdup(split[0]);
 			find->value = ft_strdup(split[1]);
 		}
-		exit_status = 0;
+		g_exit_status = 0;
 		free_words(split);
 	}
 }
@@ -114,5 +114,5 @@ void	export(t_cmd *cmd, char **argv)
 	print_export(cmd, argv);
 	export_loop(cmd, argv, &i, &fail_flag);
 	if (fail_flag == 1)
-		exit_status = 1;
+		g_exit_status = 1;
 }

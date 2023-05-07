@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   manage_redir.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joon-lee <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 12:23:57 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/04/23 12:23:59 by joon-lee         ###   ########.fr       */
+/*   Updated: 2023/05/08 05:02:54 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 static t_macro	is_it_adequate_for_filename(char check)

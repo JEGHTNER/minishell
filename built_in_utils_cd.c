@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 04:27:34 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/08 04:30:10 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/08 05:01:57 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ int	cd_home_check(t_cmd *cmd, char **argv)
 	{
 		if (chdir(find_value_with_key(cmd->env_head, "HOME")) == -1)
 		{
-			exit_status = 1;
+			g_exit_status = 1;
 			ft_putstr_fd("minishell: cd: HOME not set\n", 2);
 		}
+		g_exit_status = 0;
 		return (1);
 	}
-	exit_status = 0;
 	return (0);
 }
 
@@ -40,7 +40,7 @@ void	refresh_path(char *path, t_cmd *cmd, char *new_path)
 	pwd->value = ft_strdup(path);
 	chdir(new_path);
 	free(new_path);
-	exit_status = 0;
+	g_exit_status = 0;
 }
 
 void	check_a_path(char *path, t_cmd *cmd)
@@ -58,7 +58,7 @@ void	check_a_path(char *path, t_cmd *cmd)
 	old_pwd->value = ft_strdup(pwd->value);
 	free(pwd->value);
 	pwd->value = ft_strdup(path);
-	exit_status = 0;
+	g_exit_status = 0;
 	return ;
 }
 
@@ -83,7 +83,7 @@ int	check_r_path(char *path, t_cmd *cmd, char **argv, char **new_path)
 	{
 		ft_putstr_fd("minishell: cd: ", 2);
 		perror(argv[1]);
-		exit_status = 1;
+		g_exit_status = 1;
 		return (1);
 	}
 	free(pwd->value);

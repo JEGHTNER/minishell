@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   manage_pipe.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joon-lee <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 12:24:06 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/04/23 12:24:07 by joon-lee         ###   ########.fr       */
+/*   Updated: 2023/05/08 05:06:11 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 void	manage_pipe(t_cmd *cmd, char *line, size_t *idx)

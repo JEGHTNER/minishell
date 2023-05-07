@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:41:10 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/08 02:22:27 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/08 05:02:20 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ char	*get_path_norm(char *cmd, char **path_args)
 	char	*tmp;
 	char	*tmp2;
 
-
 	i = -1;
 	while (path_args[++i])
 	{
@@ -53,7 +52,6 @@ char	*get_path_norm(char *cmd, char **path_args)
 
 char	*get_path(char *cmd, char **path_args)
 {
-
 	if (!cmd)
 		return (NULL);
 	if (!check_dir(cmd))

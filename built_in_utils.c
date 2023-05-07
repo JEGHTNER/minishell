@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 14:12:07 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/08 03:07:56 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/08 05:01:58 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int	argument_check(char *string)
 	return (1);
 }
 
-
 int	check_isdigit(char *string)
 {
 	if (string == NULL)
@@ -62,13 +61,13 @@ void	check_exit_arguments_err(int cnt)
 {
 	if (cnt > 1)
 	{
-		exit_status = 1;
+		g_exit_status = 1;
 		printf("minishell: exit: too many arguments\n");
 		return ;
 	}
-	if (exit_status == 255)
+	if (g_exit_status == 255)
 	{
-		exit_status = 255;
+		g_exit_status = 255;
 		printf("minishell: exit: numeric argument required\n");
 		return ;
 	}
@@ -86,10 +85,10 @@ void	check_exit_arguments(char **arguments)
 		cnt++;
 		if (!check_isdigit(arguments[i]))
 		{
-			exit_status = 255;
+			g_exit_status = 255;
 			break ;
 		}
 	}
 	check_exit_arguments_err(cnt);
-	exit_status = ft_atoi(arguments[1]);
+	g_exit_status = ft_atoi(arguments[1]);
 }

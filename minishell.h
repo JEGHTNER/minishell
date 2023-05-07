@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 12:06:54 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/05/08 04:28:49 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/08 05:01:47 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ typedef struct s_cmd
 	struct s_token		*tree_head;
 }	t_cmd;
 
-extern int exit_status;
+extern int g_exit_status;
 //manage environment variable utils
 void	add_env_list(t_cmd *cmd, char *key, char *value);
 void	init_env_lst(t_cmd *cmd, char **envp);
@@ -196,8 +196,30 @@ void	exec_redirs(t_token *node);
 void	exec_redir(t_token *node);
 void	exec_pipe(t_token *node);
 void	exec_cmd(t_token *node);
-// int	exec_scmd(t_token *node, t_list **my_env);
 void	exec_scmd(t_token *node, t_cmd *cmd);
+
+//tree_utils_redir.c
+void	exec_redir_case_dr(t_token *node);
+void	exec_redir_case_r(t_token *node);
+void	exec_redir_case_l(t_token *node);
+
+//tree_utils_scmd_parent.c
+void	parent_pipe(t_token *node);
+void	parent_process(t_token *node, t_cmd *cmd, int is_builtin, int pid);
+void	parent_wait(t_token *node, int is_builtin, int pid);
+void	parent_redir_last(t_token *node, t_cmd *cmd, int is_builtin);
+
+//tree_utils_scmd_child.c
+void	child_redir(t_token *node, int is_builtin, t_cmd *cmd);
+void	child_pipe(t_token *node, int is_builtin, t_cmd *cmd);
+void	child_last(t_token *node, int is_builtin, t_cmd *cmd);
+void	child_process(t_token *node, t_cmd *cmd, int is_builtin);
+void	ft_execute(char *path, char **argv, char **env_table);
+
+//tree_uilts_builtin.c
+int		do_builtin(int is_builtin, t_token *node, t_cmd *cmd);
+int		do_builtin2(int is_builtin, t_token *node, t_cmd *cmd);
+int		check_builtin(char *str);
 
 //here_doc.c
 void	here_doc_tmp(char *limiter, int index);

@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   manage_quotation_utils.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joon-lee <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 11:16:07 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/04/29 11:16:08 by joon-lee         ###   ########.fr       */
+/*   Updated: 2023/05/08 05:02:47 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 size_t	check_side_quotation(char *line, size_t start)

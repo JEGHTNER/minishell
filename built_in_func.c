@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 14:04:58 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/08 02:45:18 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/08 05:01:56 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ void	ft_exit(char **arguments)
 {
 	if (arguments == NULL)
 	{
-		exit_status = 0;
+		g_exit_status = 0;
 		return ;
 	}
 	if (arguments[1] == NULL)
 	{
-		exit_status = 0;
+		g_exit_status = 0;
 		return ;
 	}
 	check_exit_arguments(arguments);
@@ -47,7 +47,7 @@ void	echo(char **argv)
 	}
 	else
 		echo_n(argv);
-	exit_status = 0;
+	g_exit_status = 0;
 }
 
 void	env(t_cmd *cmd)
@@ -65,7 +65,7 @@ void	env(t_cmd *cmd)
 		}
 		tmp = tmp->next;
 	}
-	exit_status = 0;
+	g_exit_status = 0;
 }
 
 void	unset(t_cmd *cmd, char **argv)
@@ -81,13 +81,13 @@ void	unset(t_cmd *cmd, char **argv)
 		if (argument_check(argv[i]) == 0)
 		{
 			printf("unset: '%s': not a valid identifier\n", argv[i]);
-			exit_status = 1;
+			g_exit_status = 1;
 		}
 		find = find_env(cmd, argv[i]);
 		if (find == NULL)
-			exit_status = 0;
+			g_exit_status = 0;
 		del_env(cmd, find);
-		exit_status = 0;
+		g_exit_status = 0;
 	}
 }
 
@@ -98,6 +98,6 @@ void	pwd(void)
 	if (getcwd(path, 1024) == NULL)
 		perror("getcwd error\n");
 	printf("%s\n", path);
-	exit_status = 0;
+	g_exit_status = 0;
 	return ;
 }
