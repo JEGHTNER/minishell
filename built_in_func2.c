@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 14:09:45 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/08 04:08:21 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/08 04:26:05 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	check_a_path(char *path, t_cmd *cmd)
 	return ;
 }
 
-int	check_r_path(char *path, t_cmd *cmd, char **argv, char *new_path)
+int	check_r_path(char *path, t_cmd *cmd, char **argv, char **new_path)
 {
 	char		*tmp;
 	t_env_lst	*old_pwd;
@@ -76,9 +76,9 @@ int	check_r_path(char *path, t_cmd *cmd, char **argv, char *new_path)
 	free(old_pwd->value);
 	old_pwd->value = ft_strdup(pwd->value);
 	tmp = ft_strjoin(path, "/");
-	new_path = ft_strjoin(tmp, argv[1]);
+	*new_path = ft_strjoin(tmp, argv[1]);
 	free(tmp);
-	if (chdir(new_path) == -1)
+	if (chdir(*new_path) == -1)
 	{
 		ft_putstr_fd("minishell: cd: ", 2);
 		perror(argv[1]);
@@ -86,7 +86,7 @@ int	check_r_path(char *path, t_cmd *cmd, char **argv, char *new_path)
 		return (1);
 	}
 	free(pwd->value);
-	pwd->value = ft_strdup(new_path);
+	pwd->value = ft_strdup(*new_path);
 	return (0);
 }
 
@@ -112,20 +112,16 @@ void	cd(t_cmd *cmd, char **argv)
 		check_a_path(path, cmd);
 		return ;
 	}
-	if (check_r_path(path, cmd, argv, new_path))
+	if (check_r_path(path, cmd, argv, &new_path))
 		return ;
 	refresh_path(path, cmd, new_path);
 }
 
-void	export(t_cmd *cmd, char **argv)
+void	print_export(t_cmd *cmd, char **argv)
 {
-	t_env_lst	*find;
 	t_env_lst	*tmp;
 	char		**split;
-	int			i;
-	int			fail_flag;
 
-	fail_flag = 0;
 	if (argv[1] == NULL)
 	{
 		tmp = cmd->env_head;
@@ -144,18 +140,32 @@ void	export(t_cmd *cmd, char **argv)
 		exit_status = 0;
 		return ;
 	}
-	i = 0;
-	while (argv[++i])
+}
+
+void	export_err(char **argv, int *i, int *fail_flag)
+{
+	if (argument_check(argv[*i]) == 0)
 	{
-		if (argument_check(argv[i]) == 0)
-		{
-			printf("export: '%s': not a valid identifier\n", argv[i]);
-			exit_status = 1;
-			fail_flag = 1;
-		}
-		if (fail_flag == 1)
+		ft_putstr_fd("export: ", 2);
+		ft_putstr_fd(argv[*i], 2);
+		ft_putstr_fd(": not a valid identifier\n", 2);
+		exit_status = 1;
+		*fail_flag = 1;
+	}
+}
+
+void	export_loop(t_cmd *cmd, char **argv, int *i, int *fail_flag)
+{
+	t_env_lst	*find;
+	t_env_lst	*tmp;
+	char		**split;
+
+	while (argv[++(*i)])
+	{
+		export_err(argv, i, fail_flag);
+		if (*fail_flag == 1)
 			continue ;
-		split = ft_split_export(argv[i], '=');
+		split = ft_split_export(argv[*i], '=');
 		find = find_env(cmd, split[0]);
 		if (find == NULL)
 			add_env_list(cmd, split[0], split[1]);
@@ -169,6 +179,20 @@ void	export(t_cmd *cmd, char **argv)
 		exit_status = 0;
 		free_words(split);
 	}
+}
+
+void	export(t_cmd *cmd, char **argv)
+{
+	t_env_lst	*find;
+	t_env_lst	*tmp;
+	char		**split;
+	int			i;
+	int			fail_flag;
+
+	i = 0;
+	fail_flag = 0;
+	print_export(cmd, argv);
+	export_loop(cmd, argv, &i, &fail_flag);
 	if (fail_flag == 1)
 		exit_status = 1;
 }
