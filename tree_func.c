@@ -3,23 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   tree_func.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:37:38 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/05 16:46:13 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/07 18:30:32 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// void	search_tree(t_token *node, t_list **my_env)
-// {
-// 	execute_tree(node, my_env);
-// 	if (node->left != NULL)
-// 		search_tree(node->left, my_env);
-// 	if (node->right != NULL)
-// 		search_tree(node->right, my_env);
-// }
 
 void	search_tree(t_token *node, t_cmd *cmd)
 {
@@ -30,7 +21,7 @@ void	search_tree(t_token *node, t_cmd *cmd)
 		search_tree(node->right, cmd);
 }
 
-void	search_hd(t_token *node, t_list **my_env, int *hd_cnt)
+void	search_hd(t_token *node, int *hd_cnt)
 {
 	if (node->cat == REDIR)
 	{
@@ -42,25 +33,10 @@ void	search_hd(t_token *node, t_list **my_env, int *hd_cnt)
 		}
 	}
 	if (node->left != NULL)
-		search_hd(node->left, my_env, hd_cnt);
+		search_hd(node->left, hd_cnt);
 	if (node->right != NULL)
-		search_hd(node->right, my_env, hd_cnt);
+		search_hd(node->right, hd_cnt);
 }
-
-// int	execute_tree(t_token *node, t_list **my_env)
-// {
-// 	if (node->cat == PIPE)
-// 		exec_pipe(node);
-// 	else if (node->cat == REDIRS)
-// 		exec_redirs(node);
-// 	else if (node->cat == REDIR)
-// 		exec_redir(node);
-// 	else if (node->cat == CMD)
-// 		exec_cmd(node);
-// 	else if (node->cat == SIMPLE_CMD)
-// 		exec_scmd(node, my_env);
-// 	return (0);
-// }
 
 int	execute_tree(t_token *node, t_cmd *cmd)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 12:06:54 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/05/05 19:59:44 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/08 00:14:21 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,14 @@
 #include <unistd.h>
 #include <readline/readline.h>
 #include <sys/stat.h>
+#include <sys/types.h>
 #include <sys/wait.h>
 #include <sys/ioctl.h>
 #include <dirent.h>
 #include <termios.h>
 #include <term.h>
 #include <fcntl.h>
+#include <dirent.h>
 #include "libft/libft.h"
 
 typedef enum s_pipe_fd
@@ -186,9 +188,7 @@ char	**get_path_args(t_cmd *cmd);
 char	*get_path(char *cmd, char **path_args);
 
 //tree_func.c
-// void	search_tree(t_token *node, t_list **my_env);
 void	search_tree(t_token *node, t_cmd *cmd);
-// int		execute_tree(t_token *node, t_list **my_env);
 int		execute_tree(t_token *node, t_cmd *cmd);
 
 //tree_utils.c
@@ -202,7 +202,7 @@ int	exec_scmd(t_token *node, t_cmd *cmd);
 //here_doc.c
 void	here_doc_tmp(char *limiter, int index);
 void	here_doc(t_token *node);
-void	search_hd(t_token *node, t_list **my_env, int *hd_cnt);
+void	search_hd(t_token *node, int *hd_cnt);
 
 //lst_to_table
 // char	**lst_to_table(t_list **my_env);
@@ -219,11 +219,9 @@ void	pwd(void);
 
 //built_in_func2.c
 void	cd(t_cmd *cmd, char **argv);
-// void	export(t_list **my_env, char **argv);
 void	export(t_cmd *cmd, char **argv);
 
 //built_in_utils.c
-// t_list	*find_env(t_list **my_env, char *string);
 t_env_lst	*find_env(t_cmd *cmd, char *string);
 int	argument_check(char *string);
 void sort_env(t_cmd *cmd);
@@ -238,5 +236,8 @@ t_list	*ft_lstnew(char *content);
 t_list	*ft_lstlast(t_list *lst);
 
 char	**ft_split_export(char const *string, char seperator);
+
+int	do_builtin(int is_builtin, t_token *node, t_cmd *cmd);
+int	do_builtin2(int is_builtin, t_token *node, t_cmd *cmd);
 
 #endif

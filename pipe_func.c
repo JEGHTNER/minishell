@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_func.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:41:10 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/05 20:44:15 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/07 22:50:31 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,25 @@
 
 char	*get_path(char *cmd, char **path_args)
 {
-	int		i;
-	char	*tmp;
-	char	*tmp2;
+	int			i;
+	char		*tmp;
+	char		*tmp2;
+	DIR			*is_dir;
 
 	if (!cmd)
 		return (NULL);
+	is_dir = opendir(cmd);
+	if (is_dir != NULL)
+	{
+		if (ft_strchr(cmd, '/') != NULL)
+		{
+			printf("minishell: %s: is a directory\n", cmd);
+			exit(126);
+		}
+		return (NULL);
+	}
+	if (ft_strchr(cmd, '/') != NULL)
+		return (ft_strdup(cmd));
 	if (access(cmd, X_OK) == 0)
 		return (ft_strdup(cmd));
 	i = 0;

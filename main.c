@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:26:47 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/05/05 16:53:36 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/07 18:42:57 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,21 +75,17 @@ static void	init_main(t_cmd *cmd, char **envp)
 	signal_init(2, 2);
 }
 
-static void	parse_n_execute(t_cmd *cmd, char *line, t_list **my_env)
+static void	parse_n_execute(t_cmd *cmd, char *line)
 {
 	int	*hd_cnt;
 
 	hd_cnt = malloc(sizeof(int));
 	*hd_cnt = 0;
 	line_parse(cmd, line);
-	// print_list(cmd->chunk_head);
 	syntex_check(cmd);
 	convert_tree(cmd);
-	// print_tree(cmd->tree_head);
-	// print_env(cmd->env_head);
-	search_hd(cmd->tree_head, my_env, hd_cnt);
+	search_hd(cmd->tree_head, hd_cnt);
 	search_tree(cmd->tree_head, cmd);
-	//execute cmd with parse tree
 }
 
 void	cpy_env(t_list **env, char **envp)
@@ -156,20 +152,18 @@ int main(int ac, char **av, char **envp)
 	if (ac != 1)
 		ft_exit_with_error("wrong number of argument", 0);
 
-	t_list **my_env = malloc(sizeof(t_list **));
-	cpy_env(my_env, envp);
 	tcgetattr(STDIN_FILENO, &term);
 	init_main(&cmd, envp);
 	while (1)
 	{
-		line = readline("MINISHELL $");
+		line = readline("MINISHELL $ ");
 		if (!line)
 			break ;
 		if (*line != '\0')
 			add_history(line);
 		if (*line != '\0' && is_everything_whitespace(line) == NO)
 		{
-			parse_n_execute(&cmd, line, my_env);
+			parse_n_execute(&cmd, line);
 			free_all(&cmd, line);
 		}
 		else
