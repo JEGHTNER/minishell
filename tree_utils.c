@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:38:21 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/05 20:45:30 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/07 18:20:52 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -417,7 +417,7 @@ int	exec_scmd(t_token *node, t_cmd *cmd)
 			dup2(node->back_up_fd[WRITE], STDOUT_FILENO);
 			close(node->back_up_fd[WRITE]);
 			close(node->back_up_fd[READ]);
-			if (is_builtin && !*node->redirect_flag && !node->pipe_fd)
+			if (is_builtin && !*node->redirect_flag && (node->last_flag == 1 || !node->pipe_fd))
 				do_builtin(is_builtin, node, cmd);
 		}
 		if (node->last_flag == 1 || !node->pipe_fd)
