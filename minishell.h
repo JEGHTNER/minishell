@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 12:06:54 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/05/08 03:04:57 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/08 04:28:49 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,10 +231,13 @@ void check_exit_arguments_err(int cnt);
 void	del_env(t_cmd *cmd, t_env_lst *find);
 void	echo_n(char **argv);
 int		get_echo_option(char *str);
-
-//built_in_utils3.c
 void sort_env(t_cmd *cmd);
 
+//built_in_utils_cd.c
+int	cd_home_check(t_cmd *cmd, char **argv);
+void	refresh_path(char *path, t_cmd *cmd, char *new_path);
+void	check_a_path(char *path, t_cmd *cmd);
+int	check_r_path(char *path, t_cmd *cmd, char **argv, char **new_path);
 
 t_list	*ft_lstadd_back(t_list **lst, t_list *new);
 t_list	*ft_lstnew(char *content);
