@@ -6,21 +6,16 @@
 /*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:41:10 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/07 22:50:31 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/08 02:22:27 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_path(char *cmd, char **path_args)
+char	*check_dir(char *cmd)
 {
-	int			i;
-	char		*tmp;
-	char		*tmp2;
-	DIR			*is_dir;
+	DIR	*is_dir;
 
-	if (!cmd)
-		return (NULL);
 	is_dir = opendir(cmd);
 	if (is_dir != NULL)
 	{
@@ -31,14 +26,18 @@ char	*get_path(char *cmd, char **path_args)
 		}
 		return (NULL);
 	}
-	if (ft_strchr(cmd, '/') != NULL)
-		return (ft_strdup(cmd));
-	if (access(cmd, X_OK) == 0)
-		return (ft_strdup(cmd));
-	i = 0;
-	if (!path_args)
-		return (NULL);
-	while (path_args[i])
+	return ("not dir");
+}
+
+char	*get_path_norm(char *cmd, char **path_args)
+{
+	int		i;
+	char	*tmp;
+	char	*tmp2;
+
+
+	i = -1;
+	while (path_args[++i])
 	{
 		tmp = ft_strjoin(path_args[i], "/");
 		if (!tmp)
@@ -48,9 +47,24 @@ char	*get_path(char *cmd, char **path_args)
 		if (access(tmp2, X_OK) == 0)
 			return (tmp2);
 		free(tmp2);
-		i++;
 	}
 	return (NULL);
+}
+
+char	*get_path(char *cmd, char **path_args)
+{
+
+	if (!cmd)
+		return (NULL);
+	if (!check_dir(cmd))
+		return (NULL);
+	if (ft_strchr(cmd, '/') != NULL)
+		return (ft_strdup(cmd));
+	if (access(cmd, X_OK) == 0)
+		return (ft_strdup(cmd));
+	if (!path_args)
+		return (NULL);
+	return (get_path_norm(cmd, path_args));
 }
 
 char	**get_path_args(t_cmd *cmd)

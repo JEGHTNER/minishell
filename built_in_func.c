@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_func.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 14:04:58 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/05 19:09:19 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/08 02:15:18 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,8 @@ void	env(t_cmd *cmd)
 
 void	unset(t_cmd *cmd, char **argv)
 {
-	t_cmd	*find;
-	int		i;
+	t_env_lst	*find;
+	int			i;
 
 	if (argv == NULL)
 		return ;
