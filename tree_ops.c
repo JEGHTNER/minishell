@@ -3,28 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   tree_ops.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joon-lee <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:38:48 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/04/26 18:38:50 by joon-lee         ###   ########.fr       */
+/*   Updated: 2023/05/08 05:02:23 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
 
-t_token	*init_token(void)
+t_token	*init_token(t_cat type)
 {
 	t_token	*to_ret;
 
 	to_ret = (t_token *)malloc(sizeof(t_token));
 	if (!to_ret)
-		ft_exit_with_error("malloc error", 0);
+		ft_exit_with_error("malloc error\n", 0);
 	to_ret->argv = 0;
 	to_ret->argc = 0;
+	to_ret->cat = type;
+	to_ret->back_up_fd[0] = dup(STDIN_FILENO);
+	to_ret->back_up_fd[1] = dup(STDOUT_FILENO);
 	to_ret->is_env = NO;
 	to_ret->is_pipe = NO;
+	to_ret->pipe_fd = NULL;
 	to_ret->cmd_path = 0;
 	to_ret->left = 0;
 	to_ret->right = 0;
+	to_ret->last_flag = 0;
+	to_ret->hd_index = 0;
+	to_ret->is_hd = 0;
 	return (to_ret);
 }
 
@@ -35,22 +42,18 @@ void	insert_cmd(t_token **head, t_token *to_put)
 	t_token	*pipe;
 
 	cur = *head;
-	tmp = init_token();
-	if (!tmp)
-		ft_exit_with_error("malloc error", 0);
-	tmp->cat = CMD;
+	tmp = init_token(CMD);
 	tmp->right = to_put;
 	if ((*head) == (t_token *)0)
 		*head = tmp;
+	else if (cur->cat == CMD)
+			cur->right = to_put;
 	else
 	{
-		pipe = init_token();
-		if (!pipe)
-			ft_exit_with_error("malloc error", 0);
-		pipe->cat = PIPE;
-		pipe->left = tmp;
 		while (cur->right)
 			cur = cur->right;
+		pipe = init_token(PIPE);
+		pipe->left = tmp;
 		cur->right = pipe;
 	}
 }
@@ -76,27 +79,24 @@ void	insert_pipe(t_token **head, t_token *to_put)
 void	insert_redir(t_token **head, t_token *to_put)
 {
 	t_token	*cur;
-	t_token	*tmp;
+	t_token	*tmp_head;
 
 	cur = (*head);
-	tmp = init_token();
-	if (!tmp)
-		ft_exit_with_error("malloc error", 0);
-	tmp->cat = REDIRS;
-	tmp->left = to_put;
-	if (cur->cat == PIPE)
+	tmp_head = (*head);
+	if ((*head) == (t_token *)0)
+		*head = init_redir_token(to_put, 0);
+	else if (cur->cat == CMD)
 	{
-		while (cur->right)
-			cur = cur->right;
-		cur = cur->left;
+		div_redir_token(&cur, to_put);
+		*head = tmp_head;
 	}
-	if (cur->left == 0)
-		cur->left = tmp;
 	else
 	{
-		cur = cur->left;
 		while (cur->right)
 			cur = cur->right;
-		cur->right = tmp;
+		if (cur->right == 0)
+			(*head)->right = init_redir_token(to_put, 2);
+
+		*head = tmp_head;
 	}
 }

@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   free_func.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joon-lee <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 11:15:33 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/05/01 11:15:34 by joon-lee         ###   ########.fr       */
+/*   Updated: 2023/05/08 22:28:20 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 void	free_all(t_cmd *cmd, char *line)
@@ -33,6 +34,14 @@ void	ft_free_tree(t_token **head)
 			free(((*head)->argv)[idx++]);
 		free((*head)->argv);
 	}
+	if ((*head)->cat == CMD)
+	{
+		free((*head)->fail_flag);
+		free((*head)->redirect_flag);
+		free((*head)->is_hd);
+	}
+	if ((*head)->cat == PIPE)
+		free((*head)->pipe_fd);
 	free(*head);
 	*head = 0;
 }

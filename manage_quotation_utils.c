@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   manage_quotation_utils.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joon-lee <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 11:16:07 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/04/29 11:16:08 by joon-lee         ###   ########.fr       */
+/*   Updated: 2023/05/08 05:02:47 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 size_t	check_side_quotation(char *line, size_t start)
@@ -41,12 +42,13 @@ char	*quote_to_string(t_cmd *cmd, char *line, size_t *idx, size_t *st)
 		return (single_quote_to_string(line, idx, st));
 }
 
-t_macro	nothing_to_ret(char **tmp, size_t *idx, size_t end_idx)
+t_macro	nothing_to_ret(char **tmp, size_t *idx, size_t end_idx, size_t *st)
 {
 	*tmp = ft_strdup("");
 	if (*idx == end_idx)
 	{
 		(*idx)++;
+		*st = *idx;
 		return (YES);
 	}
 	return (NO);

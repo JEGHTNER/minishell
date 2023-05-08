@@ -3,18 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   manage_env_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joon-lee <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:37:38 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/04/26 18:37:39 by joon-lee         ###   ########.fr       */
+/*   Updated: 2023/05/08 05:02:13 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 t_macro	is_it_env_key(char check)
 {
 	if (check && is_whitespace(check) == NO && check != '\"' && check != '\''
-		&& check != '|' && check != '>' && check != '<' && check != '$')
+		&& check != '.' && check != '|' && check != '>' && check != '?'
+		&& check != '<' && check != '$' && check != ':')
 		return (YES);
 	else
 		return (NO);
@@ -31,6 +33,7 @@ void	add_env_list(t_cmd *cmd, char *for_key, char *for_value)
 	to_put->key = ft_strdup(for_key);
 	to_put->value = ft_strdup(for_value);
 	to_put->next = 0;
+	to_put->prev = 0;
 	if (cmd->env_head == 0)
 		cmd->env_head = to_put;
 	else
@@ -39,6 +42,7 @@ void	add_env_list(t_cmd *cmd, char *for_key, char *for_value)
 		while (cur->next)
 			cur = cur->next;
 		cur->next = to_put;
+		to_put->prev = cur;
 	}
 }
 
@@ -73,5 +77,5 @@ char	*find_value_with_key(t_env_lst *head, char *to_find)
 			return (ft_strdup(cur->value));
 		cur = cur->next;
 	}
-	return (0);
+	return (ft_strdup(""));
 }

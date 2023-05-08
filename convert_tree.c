@@ -3,27 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   convert_tree.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joon-lee <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 12:22:56 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/04/23 12:22:57 by joon-lee         ###   ########.fr       */
+/*   Updated: 2023/05/08 05:02:01 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 void	put_in_tree(t_cmd *cmd, t_token *to_put)
 {
-	if (cmd->tree_head == 0)
+	if (to_put->cat == PIPE)
+		insert_pipe(&(cmd->tree_head), to_put);
+	else if (to_put->cat == SIMPLE_CMD)
 		insert_cmd(&(cmd->tree_head), to_put);
 	else
-	{
-		if (to_put->cat == PIPE)
-			insert_pipe(&(cmd->tree_head), to_put);
-		else if (to_put->cat == SIMPLE_CMD)
-			insert_cmd(&(cmd->tree_head), to_put);
-		else
-			insert_redir(&(cmd->tree_head), to_put);
-	}
+		insert_redir(&(cmd->tree_head), to_put);
 }
 
 void	convert_tree(t_cmd *cmd)
