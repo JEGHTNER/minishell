@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 11:15:33 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/05/08 05:02:02 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/08 22:28:20 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void	ft_free_tree(t_token **head)
 		free((*head)->redirect_flag);
 		free((*head)->is_hd);
 	}
+	if ((*head)->cat == PIPE)
+		free((*head)->pipe_fd);
 	free(*head);
 	*head = 0;
 }
