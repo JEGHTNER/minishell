@@ -9,7 +9,6 @@
 /*   Updated: 2023/05/08 05:02:23 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "minishell.h"
 
 t_token	*init_token(void)
@@ -34,7 +33,6 @@ t_token	*init_token(void)
 	to_ret->is_hd = 0;
 	return (to_ret);
 }
-
 
 void	insert_cmd(t_token **head, t_token *to_put)
 {
@@ -77,28 +75,90 @@ void	insert_pipe(t_token **head, t_token *to_put)
 	}
 }
 
+t_token	*init_redir_token(t_token *to_put, t_macro flag)
+{
+	t_token	*to_ret;
+	t_token *tmp_redir;
+	t_token	*tmp_cmd;
+
+	tmp_redir = init_token();
+	tmp_redir->cat = REDIRS;
+	tmp_redir->left = to_put;
+	if (flag == YES)
+	{
+		tmp_cmd = init_token();
+		tmp_cmd->cat = CMD;
+		tmp_cmd->left = tmp_redir;
+		return (tmp_cmd);
+	}
+	else
+		return (tmp_redir);
+}
+
 void	insert_redir(t_token **head, t_token *to_put)
 {
 	t_token	*cur;
-	t_token	*tmp;
 
 	cur = (*head);
-	tmp = init_token();
-	tmp->cat = REDIRS;
-	tmp->left = to_put;
-	if (cur->cat == PIPE)
+	if ((*head) == (t_token *)0)
+		*head = init_redir_token(to_put, YES);
+	else if (cur->cat == CMD)
 	{
-		while (cur->right)
-			cur = cur->right;
-		cur = cur->left;
+		if (cur->left == 0)
+			cur->left = init_redir_token(to_put, NO);
+		else
+		{
+			cur = cur->left;
+			while (cur->right)
+				cur = cur->right;
+			cur->right = init_redir_token(to_put, NO);
+		}
 	}
-	if (cur->left == 0)
-		cur->left = tmp;
 	else
 	{
-		cur = cur->left;
 		while (cur->right)
 			cur = cur->right;
-		cur->right = tmp;
+		if (cur->left)
+		{
+			cur = cur->left;
+			if (cur->left == 0)
+			cur->left = init_redir_token(to_put, NO);
+			else
+			{
+				cur = cur->left;
+				while (cur->right)
+					cur = cur->right;
+				cur->right = init_redir_token(to_put, NO);
+			}
+		}
+		else
+			cur->left = init_redir_token(to_put, YES);
 	}
 }
+
+// void	insert_redir(t_token **head, t_token *to_put)
+// {
+// 	t_token	*cur;
+// 	t_token	*tmp;
+// 	t_token	*tmp_cmd;
+
+// 	cur = (*head);
+// 	tmp = init_token();
+// 	tmp->cat = REDIRS;
+// 	tmp->left = to_put;
+// 	if (cur->cat == PIPE)
+// 	{
+// 		while (cur->right)
+// 			cur = cur->right;
+// 		cur = cur->left;
+// 	}
+// 	if (cur->left == 0)
+// 		cur->left = tmp;
+// 	else
+// 	{
+// 		cur = cur->left;
+// 		while (cur->right)
+// 			cur = cur->right;
+// 		cur->right = tmp;
+// 	}
+// }
