@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 14:04:58 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/08 05:01:56 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/09 00:19:27 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,23 +72,29 @@ void	unset(t_cmd *cmd, char **argv)
 {
 	t_env_lst	*find;
 	int			i;
+	int			fail_flag;
 
 	if (argv == NULL)
 		return ;
 	i = 0;
+	fail_flag = 0;
 	while (argv[++i])
 	{
 		if (argument_check(argv[i]) == 0)
 		{
 			printf("unset: '%s': not a valid identifier\n", argv[i]);
-			g_exit_status = 1;
+			fail_flag = 1;
+			continue ;
 		}
 		find = find_env(cmd, argv[i]);
 		if (find == NULL)
-			g_exit_status = 0;
+			continue ;
 		del_env(cmd, find);
-		g_exit_status = 0;
 	}
+	if (fail_flag == 1)
+		g_exit_status = 1;
+	else
+		g_exit_status = 0;
 }
 
 void	pwd(void)
