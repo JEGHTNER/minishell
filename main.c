@@ -9,8 +9,12 @@
 /*   Updated: 2023/05/08 05:03:38 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "minishell.h"
+
+void aaa(void)
+{
+	system("leaks minishell | grep leaked");
+}
 
 int	g_exit_status;
 
@@ -31,6 +35,8 @@ static void	parse_n_execute(t_cmd *cmd, char *line)
 	int	*hd_cnt;
 
 	hd_cnt = malloc(sizeof(int));
+	if (!hd_cnt)
+		ft_exit_with_error("malloc error", 0);
 	*hd_cnt = 0;
 	line_parse(cmd, line);
 	syntex_check(cmd);
@@ -85,6 +91,7 @@ void	read_line_loop(char *line, t_cmd *cmd)
 		}
 		else
 			free(line);
+		aaa();
 	}
 }
 

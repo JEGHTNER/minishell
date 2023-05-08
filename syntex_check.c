@@ -14,7 +14,7 @@
 
 static void	pipe_syntax_check(t_element *cur)
 {
-	if (cur->next->c_flag == WORD)
+	if (cur->next != 0)
 		return ;
 	else
 		ft_exit_with_error("token syntex error : ", "pipe");

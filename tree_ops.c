@@ -44,8 +44,6 @@ void	insert_cmd(t_token **head, t_token *to_put)
 
 	cur = *head;
 	tmp = init_token();
-	if (!tmp)
-		ft_exit_with_error("malloc error", 0);
 	tmp->cat = CMD;
 	tmp->right = to_put;
 	if ((*head) == (t_token *)0)
@@ -53,8 +51,6 @@ void	insert_cmd(t_token **head, t_token *to_put)
 	else
 	{
 		pipe = init_token();
-		if (!pipe)
-			ft_exit_with_error("malloc error", 0);
 		pipe->cat = PIPE;
 		pipe->left = tmp;
 		while (cur->right)
@@ -88,8 +84,6 @@ void	insert_redir(t_token **head, t_token *to_put)
 
 	cur = (*head);
 	tmp = init_token();
-	if (!tmp)
-		ft_exit_with_error("malloc error", 0);
 	tmp->cat = REDIRS;
 	tmp->left = to_put;
 	if (cur->cat == PIPE)

@@ -52,15 +52,15 @@ SRCS =  main.c \
 OBJS = $(SRCS:.c=.o)
 LIBFT_A = libft/libft.a
 
-# OBJS_FLAGS_IN_HOME = -I/opt/homebrew/opt/readline/include
-# COMP_FLAGS_IN_HOME = -lreadline -L/opt/homebrew/opt/readline/lib
+OBJS_FLAGS_IN_CLUSTER = -I/Users/joon-lee/.brew/opt/readline/include/readline
+COMP_FLAGS_IN_CLUSTER = -lreadline -L/Users/joon-lee/.brew/opt/readline/lib
 
 %.o : %.c
-	$(CC) $(CFLAGS) -c $< -o ${<:.c=.o} -g
+	$(CC) $(CFLAGS) $(OBJS_FLAGS_IN_CLUSTER) -c $< -o ${<:.c=.o} -g
 
 $(NAME) : $(OBJS)
 	$(MAKE) -C libft
-	$(CC) $(CFLAGS) -lreadline $(OBJS) $(LIBFT_A) -o $(NAME) -g
+	$(CC) $(CFLAGS) $(COMP_FLAGS_IN_CLUSTER) $(OBJS) $(LIBFT_A) -o $(NAME) -g
 
 all : $(NAME)
 
