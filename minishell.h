@@ -272,4 +272,6 @@ char	**free_words(char **words);
 int	do_builtin(int is_builtin, t_token *node, t_cmd *cmd);
 int	do_builtin2(int is_builtin, t_token *node, t_cmd *cmd);
 
+void print_tree(t_token *head);
+
 #endif

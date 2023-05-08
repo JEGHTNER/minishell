@@ -41,6 +41,7 @@ static void	parse_n_execute(t_cmd *cmd, char *line)
 	line_parse(cmd, line);
 	syntex_check(cmd);
 	convert_tree(cmd);
+	print_tree(cmd->tree_head);
 	search_hd(cmd->tree_head, hd_cnt);
 	search_tree(cmd->tree_head, cmd);
 	free(hd_cnt);

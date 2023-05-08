@@ -80,6 +80,7 @@ t_token	*init_redir_token(t_token *to_put, t_macro flag)
 	t_token	*to_ret;
 	t_token *tmp_redir;
 	t_token	*tmp_cmd;
+	t_token	*tmp_sim_cmd;
 
 	tmp_redir = init_token();
 	tmp_redir->cat = REDIRS;
@@ -87,8 +88,11 @@ t_token	*init_redir_token(t_token *to_put, t_macro flag)
 	if (flag == YES)
 	{
 		tmp_cmd = init_token();
+		tmp_sim_cmd = init_token();
 		tmp_cmd->cat = CMD;
+		tmp_sim_cmd->cat = SIMPLE_CMD;
 		tmp_cmd->left = tmp_redir;
+		tmp_cmd->right = tmp_sim_cmd;
 		return (tmp_cmd);
 	}
 	else

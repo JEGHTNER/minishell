@@ -47,7 +47,7 @@ SRCS =  main.c \
 		free_func.c \
 		here_doc.c \
 		ft_split_export.c \
-
+		test/test_ops.c
 
 OBJS = $(SRCS:.c=.o)
 LIBFT_A = libft/libft.a
