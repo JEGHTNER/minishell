@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 14:09:45 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/08 05:01:56 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/09 00:10:38 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,10 @@ void	export_loop(t_cmd *cmd, char **argv, int *i, int *fail_flag)
 
 	while (argv[++(*i)])
 	{
+		*fail_flag = 0;
 		export_err(argv, i, fail_flag);
+		if (*fail_flag == 1)
+			continue ;
 		split = ft_split_export(argv[*i], '=');
 		find = find_env(cmd, split[0]);
 		if (find == NULL)
