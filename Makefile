@@ -9,8 +9,6 @@
 #    Updated: 2023/05/08 05:00:33 by jehelee          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
-
 NAME = minishell
 
 CC = cc
@@ -44,13 +42,12 @@ SRCS =  main.c \
 		built_in_utils.c \
 		built_in_utils2.c \
 		built_in_utils_cd.c \
-		test/test_ops.c \
 		utils.c \
 		utils2.c \
 		free_func.c \
 		here_doc.c \
 		ft_split_export.c \
-		
+
 
 OBJS = $(SRCS:.c=.o)
 LIBFT_A = libft/libft.a
@@ -59,11 +56,11 @@ LIBFT_A = libft/libft.a
 # COMP_FLAGS_IN_HOME = -lreadline -L/opt/homebrew/opt/readline/lib
 
 %.o : %.c
-	$(CC) $(CFLAGS) -c $< -o ${<:.c=.o} -g 
+	$(CC) $(CFLAGS) -c $< -o ${<:.c=.o} -g
 
 $(NAME) : $(OBJS)
 	$(MAKE) -C libft
-	$(CC) $(CFLAGS) -lreadline $(OBJS) $(LIBFT_A) -o $(NAME) -g 
+	$(CC) $(CFLAGS) -lreadline $(OBJS) $(LIBFT_A) -o $(NAME) -g
 
 all : $(NAME)
 

@@ -12,13 +12,13 @@
 
 #include "minishell.h"
 
-t_token *init_token(void)
+t_token	*init_token(void)
 {
-	t_token *to_ret;
+	t_token	*to_ret;
 
 	to_ret = (t_token *)malloc(sizeof(t_token));
 	if (!to_ret)
-		return (0);
+		ft_exit_with_error("malloc error", 0);
 	to_ret->argv = 0;
 	to_ret->argc = 0;
 	to_ret->back_up_fd[0] = dup(STDIN_FILENO);
