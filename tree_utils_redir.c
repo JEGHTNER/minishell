@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 04:49:21 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/08 05:02:26 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/08 21:44:40 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	exec_redir_case_l(t_token *node)
 		dup2(node->back_up_fd[WRITE], STDOUT_FILENO);
 		ft_putstr_fd("minishell: ", 2);
 		perror(node->argv[1]);
+		g_exit_status = 1;
 		return ;
 	}
 	dup2(fd, STDIN_FILENO);
