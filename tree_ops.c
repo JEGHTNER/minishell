@@ -95,6 +95,19 @@ t_token	*init_redir_token(t_token *to_put, t_macro flag)
 		return (tmp_redir);
 }
 
+void	div_redir_token(t_token *cur, t_token *to_put)
+{
+	if (cur->left == 0)
+		cur->left = init_redir_token(to_put, NO);
+	else
+	{
+		cur = cur->left;
+		while (cur->right)
+			cur = cur->right;
+		cur->right = init_redir_token(to_put, NO);
+	}
+}
+
 void	insert_redir(t_token **head, t_token *to_put)
 {
 	t_token	*cur;
@@ -103,17 +116,7 @@ void	insert_redir(t_token **head, t_token *to_put)
 	if ((*head) == (t_token *)0)
 		*head = init_redir_token(to_put, YES);
 	else if (cur->cat == CMD)
-	{
-		if (cur->left == 0)
-			cur->left = init_redir_token(to_put, NO);
-		else
-		{
-			cur = cur->left;
-			while (cur->right)
-				cur = cur->right;
-			cur->right = init_redir_token(to_put, NO);
-		}
-	}
+		div_redir_token(cur, to_put);
 	else
 	{
 		while (cur->right)
@@ -121,15 +124,7 @@ void	insert_redir(t_token **head, t_token *to_put)
 		if (cur->left)
 		{
 			cur = cur->left;
-			if (cur->left == 0)
-			cur->left = init_redir_token(to_put, NO);
-			else
-			{
-				cur = cur->left;
-				while (cur->right)
-					cur = cur->right;
-				cur->right = init_redir_token(to_put, NO);
-			}
+			div_redir_token(cur, to_put);
 		}
 		else
 			cur->left = init_redir_token(to_put, YES);
