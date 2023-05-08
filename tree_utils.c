@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:38:21 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/08 05:02:29 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/08 22:20:06 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	exec_redirs(t_token *node)
 		node->left->pipe_fd = node->pipe_fd;
 		node->left->last_flag = node->last_flag;
 		node->left->redirect_flag = node->redirect_flag;
-		node->left->redirect_flag = node->redirect_flag;
 		node->left->fail_flag = node->fail_flag;
 		node->left->is_hd = node->is_hd;
 	}
@@ -27,7 +26,6 @@ void	exec_redirs(t_token *node)
 	{
 		node->right->pipe_fd = node->pipe_fd;
 		node->right->last_flag = node->last_flag;
-		node->right->redirect_flag = node->redirect_flag;
 		node->right->redirect_flag = node->redirect_flag;
 		node->right->fail_flag = node->fail_flag;
 		node->right->is_hd = node->is_hd;
