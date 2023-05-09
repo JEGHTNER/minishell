@@ -95,7 +95,10 @@ void	exec_scmd(t_token *node, t_cmd *cmd)
 	int		pid;
 	int		is_builtin;
 
-	is_builtin = check_builtin(node->argv[0]);
+	if (node->argv)
+		is_builtin = check_builtin(node->argv[0]);
+	else
+		is_builtin = NOT;
 	pid = fork();
 	if (pid < 0)
 		perror("pipe");

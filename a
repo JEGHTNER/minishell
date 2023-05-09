@@ -1,0 +1,4 @@
+node->cat: SIMPLE_CMD
+node->argv: NULL
+node->left: NULL
+node->right: NULL
