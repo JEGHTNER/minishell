@@ -14,41 +14,44 @@ NAME = minishell
 CC = cc
 # CFLAGS = -Wall -Wextra -Werror
 # CFLAGS = -fsanitize=address
-SRCS =  main.c \
+SRCS = main.c \
 		signal_manage.c \
-		manage_line_main.c \
-		manage_chunk.c \
-		manage_quotation.c \
-		manage_quotation_utils.c \
-		manage_redir.c \
-		manage_env.c \
-		manage_env_utils.c \
-		manage_pipe.c \
-		tree_ops.c \
-		lst_ops.c \
-		lst_utils.c \
-		convert_to_token.c \
-		syntex_check.c \
-		convert_tree.c \
-		pipe_func.c \
-		tree_func.c \
-		tree_utils.c \
-		tree_utils_scmd_parent.c \
-		tree_utils_scmd_child.c \
-		tree_utils_redir.c \
-		tree_utils_builtin.c \
-		built_in_func.c \
-		built_in_func2.c \
-		built_in_utils.c \
-		built_in_utils2.c \
-		built_in_utils_cd.c \
-		utils.c \
-		utils2.c \
-		free_func.c \
-		here_doc.c \
-		ft_split_export.c \
 		test/test_ops.c
 
+SRCS_PARSE = manage_line_main.c \
+			manage_chunk.c \
+			manage_quotation.c \
+			manage_quotation_utils.c \
+			manage_redir.c \
+			manage_env.c \
+			manage_env_utils.c \
+			manage_pipe.c \
+			tree_ops.c \
+			lst_ops.c \
+			lst_utils.c \
+			convert_to_token.c \
+			syntex_check.c \
+			convert_tree.c \
+			utils.c \
+			utils2.c \
+			free_func.c
+
+SRCS_EXECUTE = pipe_func.c \
+				tree_func.c \
+				tree_utils.c \
+				tree_utils_scmd_parent.c \
+				tree_utils_scmd_child.c \
+				tree_utils_redir.c \
+				tree_utils_builtin.c \
+				built_in_func.c \
+				built_in_func2.c \
+				built_in_utils.c \
+				built_in_utils2.c \
+				built_in_utils_cd.c \
+				here_doc.c \
+				ft_split_export.c
+
+addprefix()
 OBJS = $(SRCS:.c=.o)
 LIBFT_A = libft/libft.a
 

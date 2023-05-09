@@ -92,7 +92,6 @@ void	read_line_loop(char *line, t_cmd *cmd)
 		}
 		else
 			free(line);
-		aaa();
 	}
 }
 
