@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 13:01:34 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/05/09 20:21:05 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/09 20:32:05 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	signal_handler(int signo)
 	{
 		write(1, "\n", 1);
 		rl_on_new_line();
-		rl_replace_line("", 1);
+		// rl_replace_line("", 1);
 		printf("a\n");
 		rl_redisplay();
 	}

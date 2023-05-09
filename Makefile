@@ -6,10 +6,11 @@
 #    By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/26 18:38:09 by joon-lee          #+#    #+#              #
-#    Updated: 2023/05/09 20:27:12 by jehelee          ###   ########.fr        #
+#    Updated: 2023/05/09 20:31:37 by jehelee          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+NAME = minishell
 CC = cc
 # CFLAGS = -Wall -Wextra -Werror
 # CFLAGS = -fsanitize=address
@@ -58,8 +59,8 @@ OBJS = $(addprefix $(PARSE_DIR), $(SRCS_PARSE:.c=.o)) \
 		$(SRCS:.c=.o)
 LIBFT_A = libft/libft.a
 
-OBJS_FLAGS_IN_CLUSTER = -I/Users/joon-lee/.brew/opt/readline/include/readline
-COMP_FLAGS_IN_CLUSTER = -lreadline -L/Users/joon-lee/.brew/opt/readline/lib
+OBJS_FLAGS_IN_CLUSTER = -I/Users/jehelee/.brew/opt/readline/include/readline
+COMP_FLAGS_IN_CLUSTER = -lreadline -L/Users/jehelee/.brew/opt/readline/lib
 
 %.o : %.c
 	$(CC) $(CFLAGS) $(OBJS_FLAGS_IN_CLUSTER) -c $< -o ${<:.c=.o} -g -I $(INC_DIR)
