@@ -3,28 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_func.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 14:04:58 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/09 00:19:27 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/09 18:00:23 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_exit(char **arguments)
+int	ft_exit(char **arguments)
 {
 	if (arguments == NULL)
 	{
 		g_exit_status = 0;
-		return ;
+		return (0);
 	}
 	if (arguments[1] == NULL)
 	{
 		g_exit_status = 0;
-		return ;
+		return (0);
 	}
-	check_exit_arguments(arguments);
+	return (check_exit_arguments(arguments));
 }
 
 void	echo(char **argv)

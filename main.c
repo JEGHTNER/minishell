@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:26:47 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/05/08 05:03:38 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/09 18:15:57 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "minishell.h"
+
+#include"minishell.h"
 
 void aaa(void)
 {

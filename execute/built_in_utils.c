@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 14:12:07 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/08 05:01:58 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/09 18:11:40 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,26 +57,30 @@ int	check_isdigit(char *string)
 	return (1);
 }
 
-void	check_exit_arguments_err(int cnt)
+int	check_exit_arguments_err(int cnt, char *argument)
 {
 	if (cnt > 1)
 	{
 		g_exit_status = 1;
-		printf("minishell: exit: too many arguments\n");
-		return ;
+		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
+		return (2);
 	}
 	if (g_exit_status == 255)
 	{
 		g_exit_status = 255;
-		printf("minishell: exit: numeric argument required\n");
-		return ;
+		ft_putstr_fd("minishell: exit: ", 2);
+		ft_putstr_fd(argument, 2);
+		ft_putstr_fd(": numeric argument required\n", 2);
+		return (1);
 	}
+	return (0);
 }
 
-void	check_exit_arguments(char **arguments)
+int	check_exit_arguments(char **arguments)
 {
 	int		cnt;
 	int		i;
+	int		ret;
 
 	cnt = 0;
 	i = 0;
@@ -89,6 +93,11 @@ void	check_exit_arguments(char **arguments)
 			break ;
 		}
 	}
-	check_exit_arguments_err(cnt);
-	g_exit_status = ft_atoi(arguments[1]);
+	ret = check_exit_arguments_err(cnt, arguments[i]);
+	if (!ret)
+	{
+		g_exit_status = ft_atoi(arguments[1]);
+		return (0);
+	}
+	return (ret);
 }

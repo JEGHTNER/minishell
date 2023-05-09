@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:37:38 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/09 14:08:26 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/09 18:09:42 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,20 @@
 
 void	search_tree(t_token *node, t_cmd *cmd)
 {
-	char *cat[6] = {"WORD", "CMD", "SIMPLE_CMD", "REDIRS", "REDIR", "PIPE"};
-	printf("node->cat: %s\n", cat[node->cat]);
-	if (node->argv)
-		printf("node->argv[0]: %s\n", node->argv[0]);
-	else
-		printf("node->argv: NULL\n");
-	if (node->left)
-		printf("node->left->cat: %s\n", cat[node->left->cat]);
-	else
-		printf("node->left: NULL\n");
-	if (node->right)
-		printf("node->right->cat: %s\n", cat[node->right->cat]);
-	else
-		printf("node->right: NULL\n");
+	// char *cat[6] = {"WORD", "CMD", "SIMPLE_CMD", "REDIRS", "REDIR", "PIPE"};
+	// printf("node->cat: %s\n", cat[node->cat]);
+	// if (node->argv)
+	// 	printf("node->argv[0]: %s\n", node->argv[0]);
+	// else
+	// 	printf("node->argv: NULL\n");
+	// if (node->left)
+	// 	printf("node->left->cat: %s\n", cat[node->left->cat]);
+	// else
+	// 	printf("node->left: NULL\n");
+	// if (node->right)
+	// 	printf("node->right->cat: %s\n", cat[node->right->cat]);
+	// else
+	// 	printf("node->right: NULL\n");
 
 	execute_tree(node, cmd);
 	if (node->left != NULL)
@@ -38,6 +38,7 @@ void	search_tree(t_token *node, t_cmd *cmd)
 
 void	search_hd(t_token *node, int *hd_cnt)
 {
+	signal_init(2, 2);
 	if (node->cat == REDIR)
 	{
 		if (ft_strncmp(node->argv[0], "<<", 2) == 0)
@@ -51,6 +52,7 @@ void	search_hd(t_token *node, int *hd_cnt)
 		search_hd(node->left, hd_cnt);
 	if (node->right != NULL)
 		search_hd(node->right, hd_cnt);
+	signal_init(1, 1);
 }
 
 int	execute_tree(t_token *node, t_cmd *cmd)

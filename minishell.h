@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 12:06:54 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/05/09 00:42:00 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/09 18:02:32 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <sys/ioctl.h>
+#include <signal.h>
 #include <dirent.h>
 #include <termios.h>
 #include <term.h>
@@ -234,7 +235,7 @@ char	**lst_to_table(t_cmd *cmd);
 void	printenv(t_list **my_env);
 
 //built_in_func.c
-void	ft_exit(char **arguments);
+int		ft_exit(char **arguments);
 void	echo(char **argv);
 void	env(t_cmd *cmd);
 void	unset(t_cmd *cmd, char **argv);
@@ -246,10 +247,10 @@ void	export(t_cmd *cmd, char **argv);
 
 //built_in_utils.c
 t_env_lst	*find_env(t_cmd *cmd, char *string);
-int	argument_check(char *string);
-int	check_isdigit(char *string);
-void	check_exit_arguments(char **arguments);
-void check_exit_arguments_err(int cnt);
+int		argument_check(char *string);
+int		check_isdigit(char *string);
+int		check_exit_arguments(char **arguments);
+int 	check_exit_arguments_err(int cnt, char *argument);
 
 //bulit_in_utils2.c
 void	del_env(t_cmd *cmd, t_env_lst *find);

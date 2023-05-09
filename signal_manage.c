@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_manage.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 13:01:34 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/05/08 05:03:02 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/09 18:02:01 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,23 @@ static void	signal_handler(int signo)
 
 void	signal_init(int sig_int, int sig_quit)
 {
-	if (sig_int == 0)
-		signal(SIGINT, SIG_IGN);
-	else if (sig_int == 1)
-		signal(SIGINT, SIG_DFL);
-	else
-		signal(SIGINT, signal_handler);
-	if (sig_quit == 0)
-		signal(SIGQUIT, SIG_IGN);
-	else if (sig_quit == 1)
-		signal(SIGQUIT, SIG_DFL);
-	else
-		signal(SIGQUIT, signal_handler);
+	struct sigaction	sig;
+
+	(void)sig_int;
+	sig.sa_handler = signal_handler;
+	sigemptyset(&sig.sa_mask);
+	sigaction(SIGINT, &sig, NULL);
+	sigaction(SIGQUIT, &sig, NULL);
+	// if (sig_int == 0)
+	// 	signal(SIGINT, SIG_IGN);
+	// else if (sig_int == 1)
+	// 	signal(SIGINT, SIG_DFL);
+	// else
+	// 	signal(SIGINT, signal_handler);
+	// if (sig_quit == 0)
+	// 	signal(SIGQUIT, SIG_IGN);
+	// else if (sig_quit == 1)
+	// 	signal(SIGQUIT, SIG_DFL);
+	// else
+	// 	signal(SIGQUIT, signal_handler);
 }
