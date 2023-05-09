@@ -120,7 +120,7 @@ void	insert_redir(t_token **head, t_token *to_put)
 	if ((*head) == (t_token *)0)
 		*head = init_redir_token(to_put, YES);
 	else if (cur->cat == CMD)
-		div_redir_token(cur, to_put);
+		div_redir_token(&cur, to_put);
 	else
 	{
 		while (cur->right)
@@ -128,7 +128,7 @@ void	insert_redir(t_token **head, t_token *to_put)
 		if (cur->left)
 		{
 			cur = cur->left;
-			div_redir_token(cur, to_put);
+			div_redir_token(&cur, to_put);
 		}
 		else
 			cur->left = init_redir_token(to_put, YES);
