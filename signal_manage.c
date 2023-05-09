@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   signal_manage.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joon-lee <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 13:01:34 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/04/27 13:01:35 by joon-lee         ###   ########.fr       */
+/*   Updated: 2023/05/08 05:03:02 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 static void	signal_handler(int signo)

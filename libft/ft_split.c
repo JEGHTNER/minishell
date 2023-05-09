@@ -3,99 +3,95 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joon-lee <joon-lee@student.42seoul.>       +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 08:16:04 by joon-lee          #+#    #+#             */
-/*   Updated: 2022/11/16 13:20:29 by joon-lee         ###   ########.fr       */
+/*   Updated: 2023/05/05 17:02:43 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
-static size_t	ft_word_num_count(char *str, char c)
+static char	**free_all(char **words)
 {
-	size_t	temp;
-	size_t	ind;
+	int	i;
 
-	temp = 0;
-	ind = 0;
-	while (str[ind])
+	i = 0;
+	while (words[i])
 	{
-		if ((str[ind] != c) && (str[ind + 1] == c))
-			temp++;
-		if ((str[ind] != c) && (str[ind + 1] == '\0'))
-			temp++;
-		ind++;
+		free(words[i]);
+		i++;
 	}
-	return (temp);
-}
-
-static char	**ft_free_wrongone(char *temp, char **total, size_t ind)
-{
-	free((void *)temp);
-	while (ind >= 1)
-	{
-		free((void *)total[ind - 1]);
-		ind--;
-	}
-	free(total);
+	free(words);
 	return (0);
 }
 
-static char	*ft_put_rightone(char *arr, char *str, char c, size_t *total_i)
+static int	check_sep(char c, char sep)
 {
-	size_t	ind;
-
-	ind = 0;
-	while (str[*total_i] != c && str[*total_i])
-	{
-		arr[ind] = str[*total_i];
-		ind++;
-		(*total_i)++;
-	}
-	arr[ind] = '\0';
-	return (arr);
+	if (c == sep)
+		return (1);
+	return (0);
 }
 
-static char	**ft_write_whole(char **total, char *str, char c)
+static int	count_words(char const *string, char seperator)
 {
-	size_t	total_i;
-	size_t	ind;
-	size_t	tmp_i;
+	int	i;
+	int	count;
 
-	total_i = 0;
-	ind = 0;
-	while (str[total_i])
+	i = 0;
+	count = 0;
+	while (string[i])
 	{
-		if (str[total_i] == c)
-			total_i++;
-		else
+		while (string[i] && check_sep(string[i], seperator))
+			i++;
+		if (string[i])
+			count++;
+		while (string[i] && !check_sep(string[i], seperator))
+			i++;
+	}
+	return (count);
+}
+
+static char	*make_string(char const *string, char seperator)
+{
+	char	*tmp_string;
+	int		len;
+
+	len = 0;
+	while (string[len] && string[len] != seperator)
+		len++;
+	tmp_string = malloc(sizeof(char) * len + 1);
+	if (!tmp_string)
+		return (0);
+	ft_strlcpy(tmp_string, string, len + 1);
+	return (tmp_string);
+}
+
+char	**ft_split(char const *string, char seperator)
+{
+	int		i;
+	int		j;
+	char	**words;
+
+	i = 0;
+	j = 0;
+	words = malloc(sizeof(char *) * (count_words(string, seperator) + 1));
+	if (!words)
+		return (0);
+	while (string[i])
+	{
+		while (string[i] && check_sep(string[i], seperator))
+			i++;
+		if (string[i] && check_sep(string[i], seperator) == 0)
 		{
-			tmp_i = total_i;
-			while (str[tmp_i] != c && str[tmp_i])
-				tmp_i++;
-			total[ind] = (char *)malloc(sizeof(char) * (tmp_i - total_i + 1));
-			if (!total[ind])
-				return (ft_free_wrongone(total[ind], total, ind));
-			else
-				total[ind] = ft_put_rightone(total[ind], str, c, &total_i);
-			ind++;
+			words[j] = make_string(&string[i], seperator);
+			if (!words[j])
+				return (free_all(words));
+			j++;
 		}
+		while (string[i] && check_sep(string[i], seperator) == 0)
+			i++;
 	}
-	total[ind] = 0;
-	return (total);
-}
-
-char	**ft_split(char const *s, char c)
-{
-	char		**total;
-	size_t		word_num;
-
-	if (!s)
-		return (0);
-	word_num = ft_word_num_count((char *)s, c);
-	total = (char **)malloc(sizeof(char *) * (word_num + 1));
-	if (!total)
-		return (0);
-	total = ft_write_whole(total, (char *)s, c);
-	return (total);
+	words[j] = 0;
+	return (words);
 }

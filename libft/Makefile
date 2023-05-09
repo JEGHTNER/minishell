@@ -64,7 +64,7 @@ else
 endif
 
 %.o :	%.c
-	$(CC) -c $(CFLAGS) $< -o $@ -I $(HEAD)
+	$(CC) -c $(CFLAGS) $< -o $@ -I $(HEAD) -g
 
 $(NAME) :	$(OBJ)
 	ar rc  $@ $^
