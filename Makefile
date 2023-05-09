@@ -3,13 +3,12 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+         #
+#    By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/26 18:38:09 by joon-lee          #+#    #+#              #
-#    Updated: 2023/05/08 05:00:33 by jehelee          ###   ########.fr        #
+#    Updated: 2023/05/09 20:27:12 by jehelee          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-NAME = minishell
 
 CC = cc
 # CFLAGS = -Wall -Wextra -Werror
@@ -66,21 +65,21 @@ COMP_FLAGS_IN_CLUSTER = -lreadline -L/Users/joon-lee/.brew/opt/readline/lib
 	$(CC) $(CFLAGS) $(OBJS_FLAGS_IN_CLUSTER) -c $< -o ${<:.c=.o} -g -I $(INC_DIR)
 
 $(NAME) : $(OBJS)
-	$(MAKE) -C libft
+	make -C libft
 	$(CC) $(CFLAGS) $(COMP_FLAGS_IN_CLUSTER) $(OBJS) $(LIBFT_A) -o $(NAME) -g -I $(INC_DIR)
 
 all : $(NAME)
 
 clean :
-	$(MAKE) -C libft clean
+	make -C libft clean
 	rm -rf $(OBJS)
 
 fclean :
-	$(MAKE) -C libft fclean
+	make -C libft fclean
 	rm -rf $(OBJS) $(NAME)
 
 re :
-	$(MAKE) fclean
-	$(MAKE) all
+	make fclean
+	make all
 
 .PHONY: all re clean fclean

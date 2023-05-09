@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 04:51:37 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/09 18:04:59 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/09 19:32:28 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ int	do_builtin(int is_builtin, t_token *node, t_cmd *cmd)
 
 int	do_builtin2(int is_builtin, t_token *node, t_cmd *cmd)
 {
+	int	ret;
+
 	if (is_builtin == UNSET)
 	{
 		unset(cmd, node->argv);
@@ -71,7 +73,8 @@ int	do_builtin2(int is_builtin, t_token *node, t_cmd *cmd)
 	}
 	else if (is_builtin == EXIT)
 	{
-		if (!ft_exit(node->argv))
+		ret = ft_exit(node->argv);
+		if (ret == 0 || ret == 2)
 			exit (g_exit_status);
 		printf("exit\n");
 	}
