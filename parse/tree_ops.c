@@ -11,15 +11,16 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
-t_token	*init_token(void)
+t_token	*init_token(t_cat type)
 {
 	t_token	*to_ret;
 
 	to_ret = (t_token *)malloc(sizeof(t_token));
 	if (!to_ret)
-		ft_exit_with_error("malloc error", 0);
+		ft_exit_with_error("malloc error\n", 0);
 	to_ret->argv = 0;
 	to_ret->argc = 0;
+	to_ret->cat = type;
 	to_ret->back_up_fd[0] = dup(STDIN_FILENO);
 	to_ret->back_up_fd[1] = dup(STDOUT_FILENO);
 	to_ret->is_env = NO;
@@ -41,18 +42,18 @@ void	insert_cmd(t_token **head, t_token *to_put)
 	t_token	*pipe;
 
 	cur = *head;
-	tmp = init_token();
-	tmp->cat = CMD;
+	tmp = init_token(CMD);
 	tmp->right = to_put;
 	if ((*head) == (t_token *)0)
 		*head = tmp;
+	else if (cur->cat == CMD)
+			cur->right = to_put;
 	else
 	{
-		pipe = init_token();
-		pipe->cat = PIPE;
-		pipe->left = tmp;
 		while (cur->right)
 			cur = cur->right;
+		pipe = init_token(PIPE);
+		pipe->left = tmp;
 		cur->right = pipe;
 	}
 }
@@ -75,89 +76,26 @@ void	insert_pipe(t_token **head, t_token *to_put)
 	}
 }
 
-t_token	*init_redir_token(t_token *to_put, t_macro flag)
-{
-	t_token	*to_ret;
-	t_token *tmp_redir;
-	t_token	*tmp_cmd;
-	t_token	*tmp_sim_cmd;
-
-	tmp_redir = init_token();
-	tmp_redir->cat = REDIRS;
-	tmp_redir->left = to_put;
-	if (flag == YES)
-	{
-		tmp_cmd = init_token();
-		tmp_sim_cmd = init_token();
-		tmp_cmd->cat = CMD;
-		tmp_sim_cmd->cat = SIMPLE_CMD;
-		tmp_cmd->left = tmp_redir;
-		tmp_cmd->right = tmp_sim_cmd;
-		return (tmp_cmd);
-	}
-	else
-		return (tmp_redir);
-}
-
-void	div_redir_token(t_token **cur, t_token *to_put)
-{
-	if ((*cur)->left == 0)
-		(*cur)->left = init_redir_token(to_put, NO);
-	else
-	{
-		(*cur) = (*cur)->left;
-		while ((*cur)->right)
-			(*cur) = (*cur)->right;
-		(*cur)->right = init_redir_token(to_put, NO);
-	}
-}
-
 void	insert_redir(t_token **head, t_token *to_put)
 {
 	t_token	*cur;
+	t_token	*tmp_head;
 
 	cur = (*head);
+	tmp_head = (*head);
 	if ((*head) == (t_token *)0)
-		*head = init_redir_token(to_put, YES);
+		*head = init_redir_token(to_put, 0);
 	else if (cur->cat == CMD)
+	{
 		div_redir_token(&cur, to_put);
+		*head = tmp_head;
+	}
 	else
 	{
 		while (cur->right)
 			cur = cur->right;
-		if (cur->left)
-		{
-			cur = cur->left;
-			div_redir_token(&cur, to_put);
-		}
-		else
-			cur->left = init_redir_token(to_put, YES);
+		if (cur->right == 0)
+			(*head)->right = init_redir_token(to_put, 2);
+		*head = tmp_head;
 	}
 }
-
-// void	insert_redir(t_token **head, t_token *to_put)
-// {
-// 	t_token	*cur;
-// 	t_token	*tmp;
-// 	t_token	*tmp_cmd;
-
-// 	cur = (*head);
-// 	tmp = init_token();
-// 	tmp->cat = REDIRS;
-// 	tmp->left = to_put;
-// 	if (cur->cat == PIPE)
-// 	{
-// 		while (cur->right)
-// 			cur = cur->right;
-// 		cur = cur->left;
-// 	}
-// 	if (cur->left == 0)
-// 		cur->left = tmp;
-// 	else
-// 	{
-// 		cur = cur->left;
-// 		while (cur->right)
-// 			cur = cur->right;
-// 		cur->right = tmp;
-// 	}
-// }

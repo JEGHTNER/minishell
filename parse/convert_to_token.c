@@ -18,7 +18,7 @@ t_token	*make_word_token(t_element *tmp)
 	t_element	*start;
 	t_token		*to_ret;
 
-	to_ret = init_token();
+	to_ret = init_token(SIMPLE_CMD);
 	idx = 0;
 	start = tmp;
 	while (tmp && tmp->c_flag == WORD)
@@ -26,7 +26,6 @@ t_token	*make_word_token(t_element *tmp)
 		idx++;
 		tmp = tmp->next;
 	}
-	to_ret->cat = SIMPLE_CMD;
 	to_ret->argc = idx;
 	to_ret->argv = (char **)malloc(sizeof(char *) * (idx + 1));
 	if (!to_ret->argv)
@@ -45,8 +44,7 @@ t_token	*make_redir_token(t_element *tmp)
 {
 	t_token	*to_ret;
 
-	to_ret = init_token();
-	to_ret->cat = REDIR;
+	to_ret = init_token(REDIR);
 	to_ret->argc = 2;
 	to_ret->argv = (char **)malloc(sizeof(char *) * 3);
 	to_ret->argv[0] = tmp->content;
@@ -59,8 +57,7 @@ t_token	*make_pipe_token(t_element *tmp)
 {
 	t_token	*to_ret;
 
-	to_ret = init_token();
-	to_ret->cat = PIPE;
+	to_ret = init_token(PIPE);
 	to_ret->is_pipe = YES;
 	to_ret->argc = 1;
 	to_ret->argv = (char **)malloc(sizeof(char *) * 2);

@@ -14,17 +14,12 @@
 
 void	put_in_tree(t_cmd *cmd, t_token *to_put)
 {
-	if (cmd->tree_head == 0)
+	if (to_put->cat == PIPE)
+		insert_pipe(&(cmd->tree_head), to_put);
+	else if (to_put->cat == SIMPLE_CMD)
 		insert_cmd(&(cmd->tree_head), to_put);
 	else
-	{
-		if (to_put->cat == PIPE)
-			insert_pipe(&(cmd->tree_head), to_put);
-		else if (to_put->cat == SIMPLE_CMD)
-			insert_cmd(&(cmd->tree_head), to_put);
-		else
-			insert_redir(&(cmd->tree_head), to_put);
-	}
+		insert_redir(&(cmd->tree_head), to_put);
 }
 
 void	convert_tree(t_cmd *cmd)

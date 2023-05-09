@@ -156,10 +156,12 @@ t_token	*make_pipe_token(t_element *tmp);
 void	convert_tree(t_cmd *cmd);
 
 //parse tree utils
-t_token *init_token(void);
+t_token *init_token(t_cat type);
 void	insert_cmd(t_token **head, t_token *to_put);
 void	insert_pipe(t_token **head, t_token *to_put);
 void	insert_redir(t_token **head, t_token *to_put);
+t_token	*init_redir_token(t_token *to_put, int flag);
+void	div_redir_token(t_token **cur, t_token *to_put);
 
 //general utils
 void	cmd_init(t_cmd *cmd);

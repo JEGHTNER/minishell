@@ -29,6 +29,7 @@ SRCS_PARSE = manage_line_main.c \
 			manage_env_utils.c \
 			manage_pipe.c \
 			tree_ops.c \
+			tree_ops_utils.c \
 			lst_ops.c \
 			lst_utils.c \
 			convert_to_token.c \
