@@ -1,0 +1,5 @@
+node->cat: SIMPLE_CMD
+node->argv[0]: echo
+node->left: NULL
+node->right: NULL
+a

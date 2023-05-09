@@ -47,14 +47,31 @@ void	insert_cmd(t_token **head, t_token *to_put)
 	if ((*head) == (t_token *)0)
 		*head = tmp;
 	else if (cur->cat == CMD)
-			cur->right = to_put;
+	{
+		free(cur->right);
+		cur->right = to_put;
+	}
 	else
 	{
-		while (cur->right)
-			cur = cur->right;
-		pipe = init_token(PIPE);
-		pipe->left = tmp;
-		cur->right = pipe;
+		if (!cur->right)
+		{
+			pipe = init_token(PIPE);
+			pipe->left = tmp;
+			cur->right = pipe;
+		}
+		else
+		{
+			while (cur->right)
+				cur = cur->right;
+			if (cur->left)
+			{
+				cur = cur->left;
+				free(cur->right);
+				cur->right = to_put;
+			}
+			else
+				cur->left = tmp;
+		}
 	}
 }
 
@@ -92,10 +109,19 @@ void	insert_redir(t_token **head, t_token *to_put)
 	}
 	else
 	{
-		while (cur->right)
-			cur = cur->right;
-		if (cur->right == 0)
-			(*head)->right = init_redir_token(to_put, 2);
-		*head = tmp_head;
+		if (!cur->right)
+			cur->right = init_redir_token(to_put, 2);
+		else
+		{
+			while (cur->right)
+				cur = cur->right;
+			if (cur->left)
+			{
+				cur = cur->left;
+				div_redir_token(&cur, to_put);
+			}
+			else
+				cur->left = init_redir_token(to_put, 0);
+		}
 	}
 }
