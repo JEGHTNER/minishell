@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 04:52:34 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/09 14:40:37 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/09 15:21:56 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	parent_wait(t_token *node, int is_builtin, int pid)
 {
 	int	status;
 
-	if (node->pipe_fd)
+	if (node->pipe_fd || !is_builtin)
 	{
 		waitpid(pid, &status, 0);
 		if (WIFEXITED(status))
