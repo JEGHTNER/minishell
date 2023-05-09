@@ -29,7 +29,7 @@ t_token	*make_word_token(t_element *tmp)
 	to_ret->argc = idx;
 	to_ret->argv = (char **)malloc(sizeof(char *) * (idx + 1));
 	if (!to_ret->argv)
-		ft_exit_with_error("malloc error\n", 0);
+		ft_exit_with_error("malloc error", 0);
 	idx = 0;
 	while (idx < (size_t)to_ret->argc)
 	{
@@ -47,8 +47,6 @@ t_token	*make_redir_token(t_element *tmp)
 	to_ret = init_token(REDIR);
 	to_ret->argc = 2;
 	to_ret->argv = (char **)malloc(sizeof(char *) * 3);
-	if (!to_ret->argv)
-		ft_exit_with_error("malloc error\n", 0);
 	to_ret->argv[0] = tmp->content;
 	to_ret->argv[1] = tmp->next->content;
 	to_ret->argv[2] = 0;
@@ -63,8 +61,6 @@ t_token	*make_pipe_token(t_element *tmp)
 	to_ret->is_pipe = YES;
 	to_ret->argc = 1;
 	to_ret->argv = (char **)malloc(sizeof(char *) * 2);
-	if (!to_ret->argv)
-		ft_exit_with_error("malloc error\n", 0);
 	to_ret->argv[0] = tmp->content;
 	to_ret->argv[1] = 0;
 	return (to_ret);

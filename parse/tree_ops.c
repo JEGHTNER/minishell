@@ -96,7 +96,6 @@ void	insert_redir(t_token **head, t_token *to_put)
 			cur = cur->right;
 		if (cur->right == 0)
 			(*head)->right = init_redir_token(to_put, 2);
-
 		*head = tmp_head;
 	}
 }

@@ -36,14 +36,13 @@ static void	parse_n_execute(t_cmd *cmd, char *line)
 
 	hd_cnt = malloc(sizeof(int));
 	if (!hd_cnt)
-		ft_exit_with_error("malloc error\n", 0);
+		ft_exit_with_error("malloc error", 0);
 	*hd_cnt = 0;
 	line_parse(cmd, line);
 	syntex_check(cmd);
 	convert_tree(cmd);
-	print_tree(cmd->tree_head);
-	// search_hd(cmd->tree_head, hd_cnt);
-	// search_tree(cmd->tree_head, cmd);
+	search_hd(cmd->tree_head, hd_cnt);
+	search_tree(cmd->tree_head, cmd);
 	free(hd_cnt);
 }
 
@@ -97,13 +96,12 @@ void	read_line_loop(char *line, t_cmd *cmd)
 
 int	main(int ac, char **av, char **envp)
 {
-	atexit(aaa);
 	struct termios	term;
 	char			*line;
 	t_cmd			cmd;
 
 	if (ac != 1)
-		ft_exit_with_error("wrong number of argument\n", 0);
+		ft_exit_with_error("wrong number of argument", 0);
 	tcgetattr(STDIN_FILENO, &term);
 	init_main(&cmd, envp);
 	read_line_loop(line, &cmd);

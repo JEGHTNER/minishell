@@ -6,12 +6,12 @@
 /*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 12:06:54 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/05/08 05:01:47 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/09 00:42:00 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef MINISHELL
+// # define MINISHELL_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -262,10 +262,7 @@ int	cd_home_check(t_cmd *cmd, char **argv);
 void	refresh_path(char *path, t_cmd *cmd, char *new_path);
 void	check_a_path(char *path, t_cmd *cmd);
 int	check_r_path(char *path, t_cmd *cmd, char **argv, char **new_path);
-
-t_list	*ft_lstadd_back(t_list **lst, t_list *new);
-t_list	*ft_lstnew(char *content);
-t_list	*ft_lstlast(t_list *lst);
+void	put_err_path(char *path, char **new_path, char **argv);
 
 //ft_split_export.c
 char	**ft_split_export(char const *string, char seperator);
@@ -275,6 +272,5 @@ int	do_builtin(int is_builtin, t_token *node, t_cmd *cmd);
 int	do_builtin2(int is_builtin, t_token *node, t_cmd *cmd);
 
 void print_tree(t_token *head);
-void print_list(t_element *head);
 
 #endif

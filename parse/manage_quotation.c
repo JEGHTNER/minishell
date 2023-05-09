@@ -44,7 +44,6 @@ char	*single_quote_to_string(char *line, size_t *idx, size_t *st)
 	size_t	start_idx;
 	size_t	end_idx;
 
-	to_ret = ft_strdup("");
 	end_idx = check_side_quotation(line, *idx);
 	if (nothing_to_ret(&to_ret, idx, end_idx, st) == YES)
 		return (to_ret);
