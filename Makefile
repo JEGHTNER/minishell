@@ -14,10 +14,12 @@ NAME = minishell
 CC = cc
 # CFLAGS = -Wall -Wextra -Werror
 # CFLAGS = -fsanitize=address
+INC_DIR = ./
 SRCS = main.c \
 		signal_manage.c \
 		test/test_ops.c
-
+PARSE_DIR = parse/
+EXECUTE_DIR = execute/
 SRCS_PARSE = manage_line_main.c \
 			manage_chunk.c \
 			manage_quotation.c \
@@ -51,19 +53,20 @@ SRCS_EXECUTE = pipe_func.c \
 				here_doc.c \
 				ft_split_export.c
 
-addprefix()
-OBJS = $(SRCS:.c=.o)
+OBJS = $(addprefix $(PARSE_DIR), $(SRCS_PARSE:.c=.o)) \
+		$(addprefix $(EXECUTE_DIR), $(SRCS_EXECUTE:.c=.o)) \
+		$(SRCS:.c=.o)
 LIBFT_A = libft/libft.a
 
 OBJS_FLAGS_IN_CLUSTER = -I/Users/joon-lee/.brew/opt/readline/include/readline
 COMP_FLAGS_IN_CLUSTER = -lreadline -L/Users/joon-lee/.brew/opt/readline/lib
 
 %.o : %.c
-	$(CC) $(CFLAGS) $(OBJS_FLAGS_IN_CLUSTER) -c $< -o ${<:.c=.o} -g
+	$(CC) $(CFLAGS) $(OBJS_FLAGS_IN_CLUSTER) -c $< -o ${<:.c=.o} -g -I $(INC_DIR)
 
 $(NAME) : $(OBJS)
 	$(MAKE) -C libft
-	$(CC) $(CFLAGS) $(COMP_FLAGS_IN_CLUSTER) $(OBJS) $(LIBFT_A) -o $(NAME) -g
+	$(CC) $(CFLAGS) $(COMP_FLAGS_IN_CLUSTER) $(OBJS) $(LIBFT_A) -o $(NAME) -g -I $(INC_DIR)
 
 all : $(NAME)
 
