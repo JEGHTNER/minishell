@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 12:06:54 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/05/10 17:43:25 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/10 21:09:24 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,8 @@ t_macro	is_it_env_key(char check);
 
 //manage signal(SIGINT, SIGQUIT)
 void	signal_init(int sig_int, int sig_quit);
+void	signal_init_heredoc();
+void	signal_init_child();
 
 //split line & make list
 void		line_parse(t_cmd *cmd, char *line);

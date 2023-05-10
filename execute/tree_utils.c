@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:38:21 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/10 20:08:22 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/10 21:11:03 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ void	exec_scmd(t_token *node, t_cmd *cmd)
 	int		pid;
 	int		is_builtin;
 
+	signal_init(0, 0);
 	if (!node->argv)
 		is_builtin = NOT;
 	else
