@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree_utils_scmd_parent.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 04:52:34 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/08 05:02:27 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/09 15:21:56 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	parent_wait(t_token *node, int is_builtin, int pid)
 {
 	int	status;
 
-	if (!is_builtin)
+	if (node->pipe_fd || !is_builtin)
 	{
 		waitpid(pid, &status, 0);
 		if (WIFEXITED(status))
@@ -55,6 +55,6 @@ void	parent_redir_last(t_token *node, t_cmd *cmd, int is_builtin)
 	close(node->back_up_fd[WRITE]);
 	close(node->back_up_fd[READ]);
 	if (is_builtin && !*node->redirect_flag && !*node->fail_flag \
-	&& (node->last_flag == 1 || !node->pipe_fd))
+	&& !node->pipe_fd)
 		do_builtin(is_builtin, node, cmd);
 }

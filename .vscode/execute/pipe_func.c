@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_func.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:41:10 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/09 00:50:42 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/10 19:56:12 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	*get_path(char *cmd, char **path_args)
 	if (!cmd)
 		return (NULL);
 	if (ft_strncmp(cmd, "", 1) == 0)
-		return (NULL);
+		exit(0);
 	if (!check_dir(cmd))
 		return (NULL);
 	if (ft_strchr(cmd, '/') != NULL)

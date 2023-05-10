@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 22:10:22 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/09 01:43:39 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/10 21:20:46 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,34 @@
 void	hd_read_line(char *limiter, int fd)
 {
 	char	*line;
+	int		pid;
+	int		status;
 
-	while (1)
+	signal_init(0, 0);
+	pid = fork();
+	if (pid == 0)
 	{
-		ft_putstr_fd("> ", STDOUT_FILENO);
-		line = get_next_line(STDIN_FILENO);
-		if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
+		signal_init_heredoc(1, 1);
+		while (1)
 		{
+			ft_putstr_fd("> ", STDOUT_FILENO);
+			line = get_next_line(STDIN_FILENO);
+			if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
+			{
+				free(line);
+				break ;
+			}
+			ft_putstr_fd(line, fd);
 			free(line);
-			break ;
 		}
-		ft_putstr_fd(line, fd);
-		free(line);
+		exit(0);
 	}
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+		g_exit_status = WEXITSTATUS(status);
+	if (WIFSIGNALED(status))
+		g_exit_status = WTERMSIG(status) + 128;
+	printf("%d\n", g_exit_status);
 }
 
 void	here_doc_tmp(char *limiter, int index)

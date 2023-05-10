@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree_func.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:37:38 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/08 22:31:29 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/10 17:46:05 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,20 @@
 
 void	search_tree(t_token *node, t_cmd *cmd)
 {
-	char *cat[6] = {"WORD", "CMD", "SIMPLE_CMD", "REDIRS", "REDIR", "PIPE"};
-	printf("node->cat: %s\n", cat[node->cat]);
-	if (node->argv)
-		printf("node->argv[0]: %s\n", node->argv[0]);
-	else
-		printf("node->argv: NULL\n");
-	if (node->left)
-		printf("node->left->cat: %s\n", cat[node->left->cat]);
-	else
-		printf("node->left: NULL\n");
-	if (node->right)
-		printf("node->right->cat: %s\n", cat[node->right->cat]);
-	else
-		printf("node->right: NULL\n");
+	// char *cat[6] = {"WORD", "CMD", "SIMPLE_CMD", "REDIRS", "REDIR", "PIPE"};
+	// printf("node->cat: %s\n", cat[node->cat]);
+	// if (node->argv)
+	// 	printf("node->argv[0]: %s\n", node->argv[0]);
+	// else
+	// 	printf("node->argv: NULL\n");
+	// if (node->left)
+	// 	printf("node->left->cat: %s\n", cat[node->left->cat]);
+	// else
+	// 	printf("node->left: NULL\n");
+	// if (node->right)
+	// 	printf("node->right->cat: %s\n", cat[node->right->cat]);
+	// else
+	// 	printf("node->right: NULL\n");
 
 	execute_tree(node, cmd);
 	if (node->left != NULL)

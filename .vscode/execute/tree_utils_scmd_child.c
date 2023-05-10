@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree_utils_scmd_child.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 04:54:33 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/08 05:02:27 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/10 21:24:03 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,12 @@ void	child_last(t_token *node, int is_builtin, t_cmd *cmd)
 	if (!is_builtin)
 		ft_execute(path, node->argv, env_table);
 	else
-		exit(0);
+	{
+		if (node->pipe_fd)
+			exit(do_builtin(is_builtin, node, cmd));
+		else
+			exit(0);
+	}
 }
 
 void	child_process(t_token *node, t_cmd *cmd, int is_builtin)
@@ -86,13 +91,14 @@ void	child_process(t_token *node, t_cmd *cmd, int is_builtin)
 	char			*path;
 	struct termios	term;
 
-	tcgetattr(STDIN_FILENO, &term);
+	signal_init_child();
+	if (*node->fail_flag)
+		exit(1);
+	if (!node->argv)
+		exit(g_exit_status);
 	env_table = lst_to_table(cmd);
 	path_args = get_path_args(cmd);
 	path = get_path(node->argv[0], path_args);
-	tcsetattr(STDIN_FILENO, TCSANOW, &term);
-	if (*node->fail_flag)
-		exit(1);
 	if (!path && !is_builtin)
 	{
 		ft_putstr_fd("minishell: ", 2);
