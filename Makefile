@@ -6,7 +6,7 @@
 #    By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/26 18:38:09 by joon-lee          #+#    #+#              #
-#    Updated: 2023/05/09 20:31:37 by jehelee          ###   ########.fr        #
+#    Updated: 2023/05/10 17:40:06 by jehelee          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,8 +59,8 @@ OBJS = $(addprefix $(PARSE_DIR), $(SRCS_PARSE:.c=.o)) \
 		$(SRCS:.c=.o)
 LIBFT_A = libft/libft.a
 
-OBJS_FLAGS_IN_CLUSTER = -I/Users/jehelee/.brew/opt/readline/include/readline
-COMP_FLAGS_IN_CLUSTER = -lreadline -L/Users/jehelee/.brew/opt/readline/lib
+OBJS_FLAGS_IN_CLUSTER = -I$(shell brew --prefix readline)/include/
+COMP_FLAGS_IN_CLUSTER = -L$(shell brew --prefix readline)/lib/ -lreadline
 
 %.o : %.c
 	$(CC) $(CFLAGS) $(OBJS_FLAGS_IN_CLUSTER) -c $< -o ${<:.c=.o} -g -I $(INC_DIR)

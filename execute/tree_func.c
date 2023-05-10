@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:37:38 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/09 18:09:42 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/10 17:46:05 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	search_tree(t_token *node, t_cmd *cmd)
 
 void	search_hd(t_token *node, int *hd_cnt)
 {
-	signal_init(2, 2);
 	if (node->cat == REDIR)
 	{
 		if (ft_strncmp(node->argv[0], "<<", 2) == 0)
@@ -52,7 +51,6 @@ void	search_hd(t_token *node, int *hd_cnt)
 		search_hd(node->left, hd_cnt);
 	if (node->right != NULL)
 		search_hd(node->right, hd_cnt);
-	signal_init(1, 1);
 }
 
 int	execute_tree(t_token *node, t_cmd *cmd)

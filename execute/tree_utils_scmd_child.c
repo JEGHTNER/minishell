@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 04:54:33 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/09 16:28:14 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/10 19:55:54 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ void	child_process(t_token *node, t_cmd *cmd, int is_builtin)
 	char			*path;
 	struct termios	term;
 
+	signal_init(1, 1);
 	if (*node->fail_flag)
 		exit(1);
 	if (!node->argv)

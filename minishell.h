@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 12:06:54 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/05/09 18:02:32 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/10 17:43:25 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <readline/readline.h>
+#include <readline/history.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/wait.h>

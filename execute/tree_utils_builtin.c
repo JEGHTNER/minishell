@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 04:51:37 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/09 19:32:28 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/10 19:58:51 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	do_builtin2(int is_builtin, t_token *node, t_cmd *cmd)
 	else if (is_builtin == EXIT)
 	{
 		ret = ft_exit(node->argv);
-		if (ret == 0 || ret == 2)
+		if (ret == 0 || ret == 1)
 			exit (g_exit_status);
 		printf("exit\n");
 	}
