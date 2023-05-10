@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 14:04:58 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/09 18:00:23 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/10 20:16:00 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,9 @@
 int	ft_exit(char **arguments)
 {
 	if (arguments == NULL)
-	{
-		g_exit_status = 0;
-		return (0);
-	}
+		exit(g_exit_status);
 	if (arguments[1] == NULL)
-	{
-		g_exit_status = 0;
-		return (0);
-	}
+		exit(g_exit_status);
 	return (check_exit_arguments(arguments));
 }
 

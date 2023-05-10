@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:26:47 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/05/10 19:46:02 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/10 20:07:31 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	init_main(t_cmd *cmd, char **envp)
 	tcgetattr(STDIN_FILENO, &term);
 	term.c_lflag &= ~(ECHOCTL);
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
-	signal_init(2, 2);
+	// signal_init(2, 2);
 }
 
 static void	parse_n_execute(t_cmd *cmd, char *line)
@@ -80,6 +80,7 @@ void	read_line_loop(char *line, t_cmd *cmd)
 {
 	while (1)
 	{
+		signal_init(2, 2);
 		line = readline("MINISHELL $ ");
 		if (!line)
 		{
@@ -95,6 +96,7 @@ void	read_line_loop(char *line, t_cmd *cmd)
 		}
 		else
 			free(line);
+		signal_init(1, 1);
 	}
 }
 
