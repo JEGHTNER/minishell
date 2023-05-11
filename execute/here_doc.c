@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 22:10:22 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/11 16:04:11 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/11 16:25:55 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	hd_read_line(char *limiter, int fd, int *hd_fail)
 	pid = fork();
 	if (pid == 0)
 	{
-		signal_init_heredoc(1, 1);
+		signal_init_heredoc();
 		while (1)
 		{
 			ft_putstr_fd("> ", STDOUT_FILENO);

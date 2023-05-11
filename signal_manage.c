@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 13:01:34 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/05/11 16:11:31 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/11 16:26:14 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,6 @@ static void	signal_handler_heredoc(int signo)
 
 void	signal_init(int sig_int, int sig_quit)
 {
-	struct sigaction	sig;
-	struct termios		term;
-
 	if (sig_int == 0)
 		signal(SIGINT, SIG_IGN);
 	else if (sig_int == 1)
@@ -60,8 +57,6 @@ void	signal_init(int sig_int, int sig_quit)
 
 void	signal_init_heredoc(void)
 {
-	struct sigaction	sig;
-
 	signal(SIGINT, signal_handler_heredoc);
 	signal(SIGQUIT, signal_handler_heredoc);
 }
