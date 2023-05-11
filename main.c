@@ -3,19 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:26:47 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/05/10 21:10:33 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/11 16:15:44 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"minishell.h"
-
-void aaa(void)
-{
-	system("leaks minishell | grep leaked");
-}
 
 int	g_exit_status;
 
@@ -28,23 +23,22 @@ static void	init_main(t_cmd *cmd, char **envp)
 	tcgetattr(STDIN_FILENO, &term);
 	term.c_lflag &= ~(ECHOCTL);
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
-	signal_init(2, 2);
 }
 
 static void	parse_n_execute(t_cmd *cmd, char *line)
 {
-	int	*hd_cnt;
+	int	hd_cnt;
+	int	hd_fail;
 
-	hd_cnt = malloc(sizeof(int));
-	if (!hd_cnt)
-		ft_exit_with_error("malloc error", 0);
-	*hd_cnt = 0;
+	hd_cnt = 0;
+	hd_fail = 0;
 	line_parse(cmd, line);
 	syntex_check(cmd);
 	convert_tree(cmd);
-	search_hd(cmd->tree_head, hd_cnt);
+	search_hd(cmd->tree_head, &hd_cnt, &hd_fail);
+	if (hd_fail == 1)
+		return ;
 	search_tree(cmd->tree_head, cmd);
-	free(hd_cnt);
 }
 
 char	**lst_to_table(t_cmd *cmd)

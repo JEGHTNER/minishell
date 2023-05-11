@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 12:06:54 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/05/10 21:09:24 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/11 16:08:50 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,8 +116,8 @@ t_macro	is_it_env_key(char check);
 
 //manage signal(SIGINT, SIGQUIT)
 void	signal_init(int sig_int, int sig_quit);
-void	signal_init_heredoc();
-void	signal_init_child();
+void	signal_init_heredoc(void);
+void	signal_init_default(void);
 
 //split line & make list
 void		line_parse(t_cmd *cmd, char *line);
@@ -228,9 +228,9 @@ int		do_builtin2(int is_builtin, t_token *node, t_cmd *cmd);
 int		check_builtin(char *str);
 
 //here_doc.c
-void	here_doc_tmp(char *limiter, int index);
+void	here_doc_tmp(char *limiter, int index, int *hd_fail);
 void	here_doc(t_token *node);
-void	search_hd(t_token *node, int *hd_cnt);
+void	search_hd(t_token *node, int *hd_cnt, int *hd_fail);
 
 //lst_to_table
 // char	**lst_to_table(t_list **my_env);

@@ -3,20 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 22:10:22 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/10 21:20:46 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/11 16:04:11 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	hd_read_line(char *limiter, int fd)
+void	wait_hd(int pid, int *hd_fail)
+{
+	int		status;
+
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+		g_exit_status = WEXITSTATUS(status);
+	if (g_exit_status == 1)
+		*hd_fail = 1;
+}
+
+void	hd_read_line(char *limiter, int fd, int *hd_fail)
 {
 	char	*line;
 	int		pid;
-	int		status;
 
 	signal_init(0, 0);
 	pid = fork();
@@ -37,15 +47,10 @@ void	hd_read_line(char *limiter, int fd)
 		}
 		exit(0);
 	}
-	waitpid(pid, &status, 0);
-	if (WIFEXITED(status))
-		g_exit_status = WEXITSTATUS(status);
-	if (WIFSIGNALED(status))
-		g_exit_status = WTERMSIG(status) + 128;
-	printf("%d\n", g_exit_status);
+	wait_hd(pid, hd_fail);
 }
 
-void	here_doc_tmp(char *limiter, int index)
+void	here_doc_tmp(char *limiter, int index, int *hd_fail)
 {
 	int		fd;
 	char	*line;
@@ -58,7 +63,7 @@ void	here_doc_tmp(char *limiter, int index)
 	fd = open(file_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 		perror(file_name);
-	hd_read_line(limiter, fd);
+	hd_read_line(limiter, fd, hd_fail);
 	close(fd);
 	free(file_name);
 }

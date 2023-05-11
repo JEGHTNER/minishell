@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree_utils_scmd_child.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 04:54:33 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/10 21:24:03 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/11 16:00:51 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,8 @@ void	child_process(t_token *node, t_cmd *cmd, int is_builtin)
 	char			**env_table;
 	char			**path_args;
 	char			*path;
-	struct termios	term;
 
-	signal_init_child();
+	signal_init(1, 1);
 	if (*node->fail_flag)
 		exit(1);
 	if (!node->argv)

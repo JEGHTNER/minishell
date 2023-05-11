@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_manage.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 13:01:34 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/05/10 21:13:35 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/11 16:11:31 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,27 +35,7 @@ static void	signal_handler_heredoc(int signo)
 	{
 		g_exit_status = 1;
 		write(1, "\n", 1);
-		// rl_on_new_line();
-		// rl_replace_line("", 1);
-		// rl_redisplay();
 		exit(1);
-	}
-}
-
-static void	signal_handler_child(int signo)
-{
-	if (signo == SIGINT)
-	{
-		write(1, "child\n", 1);
-		rl_on_new_line();
-		// rl_replace_line("", 1);
-		rl_redisplay();
-	}
-	if (signo == SIGQUIT)
-	{
-		printf("^\\Quit\n");
-		rl_on_new_line();
-		rl_redisplay();
 	}
 }
 
@@ -64,11 +44,6 @@ void	signal_init(int sig_int, int sig_quit)
 	struct sigaction	sig;
 	struct termios		term;
 
-	// (void)sig_int;
-	// sig.sa_handler = signal_handler;
-	// sigemptyset(&sig.sa_mask);
-	// sigaction(SIGINT, &sig, NULL);
-	// sigaction(SIGQUIT, &sig, NULL);
 	if (sig_int == 0)
 		signal(SIGINT, SIG_IGN);
 	else if (sig_int == 1)
@@ -83,30 +58,10 @@ void	signal_init(int sig_int, int sig_quit)
 		signal(SIGQUIT, signal_handler);
 }
 
-void	signal_init_heredoc()
+void	signal_init_heredoc(void)
 {
 	struct sigaction	sig;
-	struct termios		term;
 
-	// (void)sig_int;
-	// sig.sa_handler = signal_handler;
-	// sigemptyset(&sig.sa_mask);
-	// sigaction(SIGINT, &sig, NULL);
-	// sigaction(SIGQUIT, &sig, NULL);
 	signal(SIGINT, signal_handler_heredoc);
 	signal(SIGQUIT, signal_handler_heredoc);
-}
-
-void	signal_init_child()
-{
-	struct sigaction	sig;
-	struct termios		term;
-
-	// (void)sig_int;
-	// sig.sa_handler = signal_handler;
-	// sigemptyset(&sig.sa_mask);
-	// sigaction(SIGINT, &sig, NULL);
-	// sigaction(SIGQUIT, &sig, NULL);
-	signal(SIGINT, signal_handler_child);
-	signal(SIGQUIT, signal_handler_child);
 }

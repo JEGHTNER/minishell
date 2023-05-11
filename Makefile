@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+         #
+#    By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/26 18:38:09 by joon-lee          #+#    #+#              #
-#    Updated: 2023/05/10 17:40:06 by jehelee          ###   ########.fr        #
+#    Updated: 2023/05/11 16:12:18 by jehelee          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ CC = cc
 INC_DIR = ./
 SRCS = main.c \
 		signal_manage.c \
+		signal_manage2.c \
 		test/test_ops.c
 PARSE_DIR = parse/
 EXECUTE_DIR = execute/

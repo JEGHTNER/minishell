@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:38:21 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/10 21:11:03 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/11 16:19:31 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,11 @@ void	exec_scmd(t_token *node, t_cmd *cmd)
 	int		pid;
 	int		is_builtin;
 
-	signal_init(0, 0);
+	if (!ft_strncmp(node->argv[0], "minishell", 9) || \
+	!ft_strncmp(node->argv[0], "./minishell", 11))
+		signal_init(0, 0);
+	else
+		signal_init_default();
 	if (!node->argv)
 		is_builtin = NOT;
 	else
