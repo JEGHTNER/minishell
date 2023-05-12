@@ -55,7 +55,6 @@ int	get_echo_option(char *str)
 void	echo_n(char **argv)
 {
 	int		i;
-	int		option;
 
 	i = 1;
 	while (argv[++i])

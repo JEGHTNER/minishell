@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static char	*convert_exit_stat(t_cmd *cmd, size_t *idx, size_t *st)
+static char	*convert_exit_stat(size_t *idx, size_t *st)
 {
 	char	*to_ret;
 	char	*tmp;
@@ -25,10 +25,8 @@ static char	*convert_exit_stat(t_cmd *cmd, size_t *idx, size_t *st)
 	return (to_ret);
 }
 
-static char	*convert_null(t_cmd *cmd, size_t *idx, size_t *st)
+static char	*convert_null(size_t *idx, size_t *st)
 {
-	char	*to_ret;
-
 	(*idx)++;
 	*st = *idx;
 	return (ft_strdup(""));
@@ -45,9 +43,9 @@ char	*find_n_convert(t_cmd *cmd, char *line, size_t *idx, size_t *st)
 	if (*idx == ft_strlen(line) || is_whitespace(line[*idx]) == YES)
 		return (ft_strdup("$"));
 	if (line[*idx] == '?')
-		return (convert_exit_stat(cmd, idx, st));
+		return (convert_exit_stat(idx, st));
 	if (line[*idx] == '$')
-		return (convert_null(cmd, idx, st));
+		return (convert_null(idx, st));
 	while (is_it_env_key(line[end_idx]) == YES)
 		end_idx++;
 	key = strchop(line, *idx, end_idx - 1);

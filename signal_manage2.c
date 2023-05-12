@@ -22,8 +22,6 @@ static void	signal_handler_default(int signo)
 
 void	signal_init_default(void)
 {
-	struct sigaction	sig;
-
 	signal(SIGINT, signal_handler_default);
 	signal(SIGQUIT, signal_handler_default);
 }

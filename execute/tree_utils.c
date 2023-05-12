@@ -34,8 +34,6 @@ void	exec_redirs(t_token *node)
 
 void	exec_redir(t_token *node)
 {
-	int		fd;
-
 	if (ft_strlen(node->argv[0]) == 2 && !ft_strncmp(node->argv[0], "<<", 2))
 	{
 		here_doc(node);

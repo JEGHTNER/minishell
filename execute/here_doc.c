@@ -53,7 +53,6 @@ void	hd_read_line(char *limiter, int fd, int *hd_fail)
 void	here_doc_tmp(char *limiter, int index, int *hd_fail)
 {
 	int		fd;
-	char	*line;
 	char	*file_name;
 	char	*tmp;
 

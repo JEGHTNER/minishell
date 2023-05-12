@@ -30,7 +30,7 @@ static	char	**case_no_equal(char const *string, int i)
 {
 	char	**words;
 
-	if (ft_strlen(string) == i)
+	if (ft_strlen(string) == (size_t)i)
 	{
 		words = malloc(sizeof(char *) * 2);
 		if (!words)
@@ -51,6 +51,7 @@ static	char	**case_eqaul(char const *string, int i)
 	int		j;
 	int		len;
 
+	j = 0;
 	words = malloc(sizeof(char *) * 3);
 	if (!words)
 		return (NULL);
@@ -73,7 +74,6 @@ char	**ft_split_export(char const *string, char seperator)
 {
 	int		i;
 	int		j;
-	int		len;
 	char	**words;
 
 	i = -1;

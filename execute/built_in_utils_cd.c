@@ -84,7 +84,7 @@ int	check_r_path(char *path, t_cmd *cmd, char **argv, char **new_path)
 	free(tmp);
 	if (chdir(*new_path) == -1)
 	{
-		put_err_path(path, new_path, argv);
+		put_err_path(new_path, argv);
 		return (1);
 	}
 	free(pwd->value);
@@ -92,7 +92,7 @@ int	check_r_path(char *path, t_cmd *cmd, char **argv, char **new_path)
 	return (0);
 }
 
-void	put_err_path(char *path, char **new_path, char **argv)
+void	put_err_path(char **new_path, char **argv)
 {
 	ft_putstr_fd("minishell: cd: ", 2);
 	perror(argv[1]);

@@ -16,9 +16,6 @@ void	cd(t_cmd *cmd, char **argv)
 {
 	char		path[1024];
 	char		*new_path;
-	char		*tmp;
-	t_env_lst	*old_pwd;
-	t_env_lst	*pwd;
 
 	if (cd_home_check(cmd, argv))
 		return ;
@@ -42,7 +39,6 @@ void	cd(t_cmd *cmd, char **argv)
 void	print_export(t_cmd *cmd, char **argv)
 {
 	t_env_lst	*tmp;
-	char		**split;
 
 	if (argv[1] == NULL)
 	{
@@ -79,7 +75,6 @@ void	export_err(char **argv, int *i, int *fail_flag)
 void	export_loop(t_cmd *cmd, char **argv, int *i, int *fail_flag)
 {
 	t_env_lst	*find;
-	t_env_lst	*tmp;
 	char		**split;
 
 	while (argv[++(*i)])
@@ -106,9 +101,6 @@ void	export_loop(t_cmd *cmd, char **argv, int *i, int *fail_flag)
 
 void	export(t_cmd *cmd, char **argv)
 {
-	t_env_lst	*find;
-	t_env_lst	*tmp;
-	char		**split;
 	int			i;
 	int			fail_flag;
 

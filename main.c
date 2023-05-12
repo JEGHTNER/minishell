@@ -70,8 +70,10 @@ char	**lst_to_table(t_cmd *cmd)
 	return (table);
 }
 
-void	read_line_loop(char *line, t_cmd *cmd)
+void	read_line_loop(t_cmd *cmd)
 {
+	char	*line;
+
 	while (1)
 	{
 		signal_init(2, 2);
@@ -96,14 +98,15 @@ void	read_line_loop(char *line, t_cmd *cmd)
 int	main(int ac, char **av, char **envp)
 {
 	struct termios	term;
-	char			*line;
 	t_cmd			cmd;
 
 	if (ac != 1)
 		ft_exit_with_error("wrong number of argument", 0);
+	if (!av)
+		av = 0;
 	tcgetattr(STDIN_FILENO, &term);
 	init_main(&cmd, envp);
-	read_line_loop(line, &cmd);
+	read_line_loop(&cmd);
 	signal_init(1, 1);
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	return (EXIT_SUCCESS);
