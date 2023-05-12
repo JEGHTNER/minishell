@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 04:27:34 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/09 00:49:02 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/12 18:06:45 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 
 int	cd_home_check(t_cmd *cmd, char **argv)
 {
-	char	*tmp;
+	char		*tmp;
+	t_env_lst	*old_pwd;
+	t_env_lst	*pwd;
 
+	pwd = find_env(cmd, "PWD");
 	if (!argv[1])
 	{
 		tmp = find_value_with_key(cmd->env_head, "HOME");
@@ -25,6 +28,12 @@ int	cd_home_check(t_cmd *cmd, char **argv)
 			ft_putstr_fd("minishell: cd: HOME not set\n", 2);
 		}
 		g_exit_status = 0;
+		old_pwd = find_env(cmd, "OLDPWD");
+		if (old_pwd == NULL)
+			add_env_list(cmd, pwd->key, pwd->value);
+		free(old_pwd->value);
+		old_pwd->value = ft_strdup(pwd->value);
+		refresh_path(tmp, cmd, tmp);
 		free(tmp);
 		return (1);
 	}
@@ -33,13 +42,11 @@ int	cd_home_check(t_cmd *cmd, char **argv)
 
 void	refresh_path(char *path, t_cmd *cmd, char *new_path)
 {
-	t_env_lst	*old_pwd;
 	t_env_lst	*pwd;
 
 	if (getcwd(path, 1024) == NULL)
 		perror("getcwd error\n");
 	pwd = find_env(cmd, "PWD");
-	old_pwd = find_env(cmd, "OLDPWD");
 	free(pwd->value);
 	pwd->value = ft_strdup(path);
 	chdir(new_path);

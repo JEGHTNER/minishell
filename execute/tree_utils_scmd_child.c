@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 04:54:33 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/11 16:00:51 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/12 17:37:54 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ void	child_last(t_token *node, int is_builtin, t_cmd *cmd)
 
 void	child_process(t_token *node, t_cmd *cmd, int is_builtin)
 {
-	char			**env_table;
 	char			**path_args;
 	char			*path;
 
@@ -95,7 +94,6 @@ void	child_process(t_token *node, t_cmd *cmd, int is_builtin)
 		exit(1);
 	if (!node->argv)
 		exit(g_exit_status);
-	env_table = lst_to_table(cmd);
 	path_args = get_path_args(cmd);
 	path = get_path(node->argv[0], path_args);
 	if (!path && !is_builtin)

@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 14:24:19 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/08 05:02:03 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/12 17:36:38 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,9 @@ static	char	**case_eqaul(char const *string, int i)
 char	**ft_split_export(char const *string, char seperator)
 {
 	int		i;
-	int		j;
 	char	**words;
 
 	i = -1;
-	j = 0;
 	while (string[++i])
 	{
 		if (string[i] == seperator)

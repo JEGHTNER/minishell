@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_func.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:41:10 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/10 19:56:12 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/12 17:36:44 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,9 @@ char	*get_path(char *cmd, char **path_args)
 
 char	**get_path_args(t_cmd *cmd)
 {
-	int			i;
 	char		*path;
 	t_env_lst	*tmp;
 
-	i = 0;
 	tmp = cmd->env_head;
 	while (tmp)
 	{
