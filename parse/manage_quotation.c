@@ -98,8 +98,7 @@ static char	*check_remain_quote(t_cmd *cmd, char *line, size_t *idx)
 	}
 	if (g_exit_status == 258)
 		return (free_n_ret(remain));
-	else
-		return (remain);
+	return (remain);
 }
 
 t_macro	manage_quotation(t_cmd *cmd, char *line, size_t *idx)

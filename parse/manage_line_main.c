@@ -36,5 +36,6 @@ t_macro	line_parse(t_cmd *cmd, char *line)
 		else if (manage_chunk(cmd, line, &idx) == NO)
 			return (NO);
 	}
+	g_exit_status = 0;
 	return (YES);
 }
