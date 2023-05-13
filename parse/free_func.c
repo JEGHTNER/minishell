@@ -15,8 +15,10 @@
 void	free_all(t_cmd *cmd, char *line)
 {
 	free(line);
-	ft_free_list(&(cmd->chunk_head));
-	ft_free_tree(&(cmd->tree_head));
+	if (cmd->chunk_head)
+		ft_free_list(&(cmd->chunk_head));
+	if (cmd->tree_head)
+		ft_free_tree(&(cmd->tree_head));
 }
 
 void	ft_free_tree(t_token **head)

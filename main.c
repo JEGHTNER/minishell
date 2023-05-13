@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"minishell.h"
+#include "minishell.h"
 
 int	g_exit_status;
 
@@ -33,8 +33,12 @@ static void	parse_n_execute(t_cmd *cmd, char *line)
 	hd_cnt = 0;
 	hd_fail = 0;
 	line_parse(cmd, line);
-	syntex_check(cmd);
+	if (g_exit_status == 258)
+		return ;
+	if (syntex_check(cmd) == NO)
+		return ;
 	convert_tree(cmd);
+	printf("head: %u\n", cmd->tree_head->cat);
 	search_hd(cmd->tree_head, &hd_cnt, &hd_fail);
 	if (hd_fail == 1)
 		return ;

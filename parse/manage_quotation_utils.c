@@ -12,26 +12,33 @@
 
 #include "minishell.h"
 
-size_t	check_side_quotation(char *line, size_t start)
+t_macro	check_side_quotation(char *line, size_t *start, size_t *end_idx)
 {
 	size_t	idx;
 	size_t	end;
 	char	quote;
 
-	idx = start;
-	quote = line[start];
+	idx = *start;
+	quote = line[*start];
 	end = ft_strlen(line);
 	if (ft_strlen(line) == 1)
-		ft_exit_with_error("syntax error: quotation can't find the match", 0);
+	{
+		(*start)++;
+		return (error_n_ret("syntax error: quotation can't find the match\n"));
+	}
 	while (idx < end)
 	{
-		if (start != idx && line[idx] == quote)
+		if (*start != idx && line[idx] == quote)
 			break ;
 		idx++;
 	}
+	*end_idx = idx;
 	if (idx == end)
-		ft_exit_with_error("syntax error: quotation can't find the match", 0);
-	return (idx);
+	{
+		*start = end;
+		return (error_n_ret("syntax error: quotation can't find the match\n"));
+	}
+	return (YES);
 }
 
 char	*quote_to_string(t_cmd *cmd, char *line, size_t *idx, size_t *st)

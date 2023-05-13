@@ -39,6 +39,8 @@ char	*join_n_free(char *former, char *latter)
 	char	*one_to_free;
 	char	*two_to_free;
 
+	if (latter == 0)
+		return (former);
 	one_to_free = former;
 	two_to_free = latter;
 	to_ret = ft_strjoin(former, latter);
@@ -47,4 +49,17 @@ char	*join_n_free(char *former, char *latter)
 	free(two_to_free);
 	two_to_free = 0;
 	return (to_ret);
+}
+
+t_macro	error_n_ret(char *to_print)
+{
+	ft_putstr_fd(to_print, STDERR_FILENO);
+	g_exit_status = 258;
+	return (NO);
+}
+
+char	*free_n_ret(char *to_free)
+{
+	free(to_free);
+	return ((char *)0);
 }

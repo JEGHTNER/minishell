@@ -50,14 +50,22 @@ char	*check_remain_chunk(t_cmd *cmd, char *line, size_t *idx)
 		if (is_whitespace(line[*idx]) == YES || *idx == ft_strlen(line))
 			remain = chop_n_trim(remain, line, &start_idx, idx);
 	}
-	return (remain);
+	if (g_exit_status == 258)
+		return (free_n_ret(remain));
+	else
+		return (remain);
 }
 
-void	manage_chunk(t_cmd *cmd, char *line, size_t *idx)
+t_macro	manage_chunk(t_cmd *cmd, char *line, size_t *idx)
 {
 	char	*data;
+	char	*remain;
 
 	data = chunk_to_string(line, idx);
-	data = join_n_free(data, check_remain_chunk(cmd, line, idx));
+	remain = check_remain_chunk(cmd, line, idx);
+	if (!remain)
+		return (NO);
+	data = join_n_free(data, remain);
 	insert_node(data, cmd, WORD);
+	return (YES);
 }

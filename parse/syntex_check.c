@@ -12,23 +12,23 @@
 
 #include "minishell.h"
 
-static void	pipe_syntax_check(t_element *cur)
+static t_macro	pipe_syntax_check(t_element *cur)
 {
 	if (cur->next != 0)
-		return ;
+		return (YES);
 	else
-		ft_exit_with_error("token syntex error : ", "pipe");
+		return (error_n_ret("syntax error near unexpected token"));
 }
 
-static void	redir_syntax_check(t_element *cur)
+static t_macro	redir_syntax_check(t_element *cur)
 {
 	if (cur->next->c_flag == WORD)
-		return ;
+		return (YES);
 	else
-		ft_exit_with_error("token syntex error : ", "io_redirection");
+		return (error_n_ret("syntax error near unexpected token"));
 }
 
-void	syntex_check(t_cmd *cmd)
+t_macro	syntex_check(t_cmd *cmd)
 {
 	t_element	*cur;
 
@@ -36,9 +36,16 @@ void	syntex_check(t_cmd *cmd)
 	while (cur)
 	{
 		if (cur->c_flag == REDIR)
-			redir_syntax_check(cur);
+		{
+			if (redir_syntax_check(cur) == NO)
+				return (NO);
+		}
 		else if (cur->c_flag == PIPE)
-			pipe_syntax_check(cur);
+		{
+			if (pipe_syntax_check(cur) == NO)
+				return (NO);
+		}
 		cur = cur->next;
 	}
+	return (YES);
 }

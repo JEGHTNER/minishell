@@ -119,7 +119,7 @@ void		signal_init_heredoc(void);
 void		signal_init_default(void);
 
 //split line & make list
-void		line_parse(t_cmd *cmd, char *line);
+t_macro		line_parse(t_cmd *cmd, char *line);
 void		insert_node(char *data, t_cmd *cmd, t_cat type);
 size_t		find_node(char *to_find, t_cmd *cmd);
 t_element	*ft_lstnew_mini(char *content);
@@ -128,28 +128,28 @@ void		ft_free_list(t_element **head);
 
 //manage quotation
 
-void		manage_quotation(t_cmd *cmd, char *line, size_t *idx);
+t_macro		manage_quotation(t_cmd *cmd, char *line, size_t *idx);
 char		*double_quote_to_string(t_cmd *cmd, char *line, size_t *idx, \
 			size_t *st);
 char		*single_quote_to_string(char *line, size_t *idx, size_t *st);
 
 //manage quotation utils
-size_t		check_side_quotation(char *line, size_t start);
+t_macro		check_side_quotation(char *line, size_t *start, size_t *end_idx);
 char		*quote_to_string(t_cmd *cmd, char *line, size_t *idx, size_t *st);
 t_macro		nothing_to_ret(char **tmp, size_t *idx, size_t end_idx, \
 			size_t *st);
 
 //manage pipe, redir & chunk
-void		manage_pipe(t_cmd *cmd, char *line, size_t *idx);
-void		manage_redir(t_cmd *cmd, char *line, size_t *idx);
-void		manage_chunk(t_cmd *cmd, char *line, size_t *idx);
+t_macro		manage_pipe(t_cmd *cmd, char *line, size_t *idx);
+t_macro		manage_redir(t_cmd *cmd, char *line, size_t *idx);
+t_macro		manage_chunk(t_cmd *cmd, char *line, size_t *idx);
 
 //manage env variable
 void		manage_env(t_cmd *cmd, char *line, size_t *idx);
 char		*find_n_convert(t_cmd *cmd, char *line, size_t *idx, size_t *st);
 
 //syntax check
-void		syntex_check(t_cmd *cmd);
+t_macro		syntex_check(t_cmd *cmd);
 
 //convert list to token
 t_token		*change_element_token(t_element *tmp);
@@ -182,6 +182,8 @@ t_macro		is_everything_whitespace(char *tmp);
 char		*chop_n_trim(char *data, char *line, size_t *start_idx, \
 			size_t *idx);
 char		*join_n_free(char *former, char *latter);
+t_macro		error_n_ret(char *to_print);
+char		*free_n_ret(char *to_free);
 
 //free utils
 void		free_all(t_cmd *cmd, char *line);

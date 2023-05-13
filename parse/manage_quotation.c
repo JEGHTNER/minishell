@@ -18,7 +18,8 @@ char	*double_quote_to_string(t_cmd *cmd, char *line, size_t *idx, size_t *st)
 	size_t	start;
 	size_t	end_idx;
 
-	end_idx = check_side_quotation(line, *idx);
+	if (check_side_quotation(line, idx, &end_idx) == NO)
+		return ((char *)0);
 	(*idx)++;
 	start = *idx;
 	if (nothing_to_ret(&to_ret, idx, end_idx, st) == YES)
@@ -44,7 +45,8 @@ char	*single_quote_to_string(char *line, size_t *idx, size_t *st)
 	size_t	start_idx;
 	size_t	end_idx;
 
-	end_idx = check_side_quotation(line, *idx);
+	if (check_side_quotation(line, idx, &end_idx) == NO)
+		return ((char *)0);
 	if (nothing_to_ret(&to_ret, idx, end_idx, st) == YES)
 		return (to_ret);
 	start_idx = *idx + 1;
@@ -94,10 +96,13 @@ static char	*check_remain_quote(t_cmd *cmd, char *line, size_t *idx)
 		if (*idx == ft_strlen(line) || is_whitespace(line[*idx]) == YES)
 			remain = chop_n_trim(remain, line, &start_idx, idx);
 	}
-	return (remain);
+	if (g_exit_status == 258)
+		return (free_n_ret(remain));
+	else
+		return (remain);
 }
 
-void	manage_quotation(t_cmd *cmd, char *line, size_t *idx)
+t_macro	manage_quotation(t_cmd *cmd, char *line, size_t *idx)
 {
 	size_t	start_idx;
 	char	*data;
@@ -107,6 +112,12 @@ void	manage_quotation(t_cmd *cmd, char *line, size_t *idx)
 		data = double_quote_to_string(cmd, line, idx, &start_idx);
 	else
 		data = single_quote_to_string(line, idx, &start_idx);
+	if (!data)
+		return (NO);
 	data = join_n_free(data, check_remain_quote(cmd, line, idx));
 	insert_node(data, cmd, WORD);
+	if (g_exit_status == 258)
+		return (NO);
+	else
+		return (YES);
 }

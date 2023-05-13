@@ -12,26 +12,29 @@
 
 #include "minishell.h"
 
-void	line_parse(t_cmd *cmd, char *line)
+t_macro	line_parse(t_cmd *cmd, char *line)
 {
 	size_t	idx;
 
 	idx = 0;
 	while (line[idx])
 	{
-		if (line[idx] == '|')
-			manage_pipe(cmd, line, &idx);
-		else if (line[idx] == '\'' || line[idx] == '\"')
-			manage_quotation(cmd, line, &idx);
+		if (line[idx] == '|' &&manage_pipe(cmd, line, &idx) == NO)
+				return (NO);
+		else if ((line[idx] == '\'' || line[idx] == '\"')
+				&& manage_quotation(cmd, line, &idx) == NO)
+				return (NO);
 		else if (line[idx] == '\\' || line[idx] == ';')
-			ft_exit_with_error("syntax error near unexpected token\n", line);
-		else if (line[idx] == '>' || line[idx] == '<')
-			manage_redir(cmd, line, &idx);
+			return (error_n_ret("syntax error near unexpected token\n"));
+		else if ((line[idx] == '>' || line[idx] == '<')
+			  && manage_redir(cmd, line, &idx) == NO)
+				return (NO);
 		else if (line[idx] == '$')
 			manage_env(cmd, line, &idx);
 		else if (is_whitespace(line[idx]) == YES)
 			idx++;
-		else
-			manage_chunk(cmd, line, &idx);
+		else if (manage_chunk(cmd, line, &idx) == NO)
+			return (NO);
 	}
+	return (YES);
 }

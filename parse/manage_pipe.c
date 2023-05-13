@@ -12,17 +12,18 @@
 
 #include "minishell.h"
 
-void	manage_pipe(t_cmd *cmd, char *line, size_t *idx)
+t_macro	manage_pipe(t_cmd *cmd, char *line, size_t *idx)
 {
 	if (cmd->chunk_head == 0)
-		ft_exit_with_error("syntax error near unexpected token : ", " | ");
+		return (error_n_ret("syntax error near unexpected token\n"));
 	else
 	{
 		if (line[*idx + 1] == '|')
-			ft_exit_with_error("syntax error", "||");
+			return (error_n_ret("syntax error near unexpected token\n"));
 		if (line[*idx + 1] == '\0')
-			ft_exit_with_error("syntax error for pipe", 0);
+			return (error_n_ret("syntax error\n"));
 		insert_node(ft_strdup("|"), cmd, PIPE);
 		(*idx)++;
 	}
+	return (YES);
 }
