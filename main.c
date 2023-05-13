@@ -27,18 +27,23 @@ static void	init_main(t_cmd *cmd, char **envp)
 
 static void	parse_n_execute(t_cmd *cmd, char *line)
 {
-	int	hd_cnt;
-	int	hd_fail;
+	int			hd_cnt;
+	int			hd_fail;
+	static int	tmp;
 
 	hd_cnt = 0;
 	hd_fail = 0;
 	line_parse(cmd, line);
+	if (tmp == 258)
+		g_exit_status = 0;
 	if (g_exit_status == 258)
+	{
+		tmp = g_exit_status;
 		return ;
+	}
 	if (syntex_check(cmd) == NO)
 		return ;
 	convert_tree(cmd);
-	printf("head: %u\n", cmd->tree_head->cat);
 	search_hd(cmd->tree_head, &hd_cnt, &hd_fail);
 	if (hd_fail == 1)
 		return ;
