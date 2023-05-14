@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 22:10:22 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/14 23:10:16 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/15 00:04:13 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,11 @@ void	hd_read_line(t_cmd *cmd, char *limiter, int fd, int *hd_fail)
 		signal_init_heredoc();
 		while (1)
 		{
-			line = readline("> ");
+			ft_putstr_fd("> ", STDOUT_FILENO);
+			line = get_next_line(STDIN_FILENO);
 			line = here_doc_parsing(cmd, line);
-			if (ft_strncmp(line, limiter, ft_strlen(limiter) + 1) == 0)
+			if (ft_strlen(line) == ft_strlen(limiter) + 1 && \
+			ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
 			{
 				free(line);
 				break ;

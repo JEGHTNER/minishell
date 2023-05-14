@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joon-lee <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 12:02:44 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/05/14 12:02:46 by joon-lee         ###   ########.fr       */
+/*   Updated: 2023/05/14 23:58:27 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	*here_doc_parsing(t_cmd *cmd, char *line)
 	size_t	start;
 	size_t	end_idx;
 
+	if (!line)
+		exit(0);
 	to_ret = ft_strdup("");
 	idx = 0;
 	start = idx;
