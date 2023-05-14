@@ -47,6 +47,7 @@ void	insert_cmd(t_token **head, t_token *to_put)
 	else if (cur->cat == CMD)
 	{
 		free(cur->right);
+		free(tmp);
 		cur->right = to_put;
 	}
 	else
