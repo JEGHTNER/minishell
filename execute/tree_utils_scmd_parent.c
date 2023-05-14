@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree_utils_scmd_parent.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 04:52:34 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/09 15:21:56 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/14 23:12:47 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,8 @@ void	parent_redir_last(t_token *node, t_cmd *cmd, int is_builtin)
 	if (*node->redirect_flag && !*node->fail_flag && !node->pipe_fd)
 		if (is_builtin)
 			do_builtin(is_builtin, node, cmd);
-	dup2(node->back_up_fd[READ], STDIN_FILENO);
-	dup2(node->back_up_fd[WRITE], STDOUT_FILENO);
-	close(node->back_up_fd[WRITE]);
-	close(node->back_up_fd[READ]);
+	dup2(cmd->back_up_fd[READ], STDIN_FILENO);
+	dup2(cmd->back_up_fd[WRITE], STDOUT_FILENO);
 	if (is_builtin && !*node->redirect_flag && !*node->fail_flag \
 	&& !node->pipe_fd)
 		do_builtin(is_builtin, node, cmd);

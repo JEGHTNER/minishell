@@ -6,9 +6,10 @@
 /*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:38:48 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/05/08 05:02:23 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/14 23:13:47 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 t_token	*init_token(t_cat type)
@@ -21,8 +22,6 @@ t_token	*init_token(t_cat type)
 	to_ret->argv = 0;
 	to_ret->argc = 0;
 	to_ret->cat = type;
-	to_ret->back_up_fd[0] = dup(STDIN_FILENO);
-	to_ret->back_up_fd[1] = dup(STDOUT_FILENO);
 	to_ret->is_env = NO;
 	to_ret->is_pipe = NO;
 	to_ret->pipe_fd = NULL;

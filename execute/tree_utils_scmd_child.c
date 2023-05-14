@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 04:54:33 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/12 17:37:54 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/14 23:12:36 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	child_last(t_token *node, int is_builtin, t_cmd *cmd)
 	env_table = lst_to_table(cmd);
 	path_args = get_path_args(cmd);
 	path = get_path(node->argv[0], path_args);
-	dup2(node->back_up_fd[WRITE], STDOUT_FILENO);
+	dup2(cmd->back_up_fd[WRITE], STDOUT_FILENO);
 	if (!is_builtin)
 		ft_execute(path, node->argv, env_table);
 	else

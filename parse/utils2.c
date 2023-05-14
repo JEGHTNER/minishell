@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 13:02:08 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/05/04 14:59:25 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/14 23:08:36 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	cmd_init(t_cmd *cmd)
 	cmd->env_head = 0;
 	cmd->chunk_head = 0;
 	cmd->tree_head = 0;
+	cmd->back_up_fd[READ] = dup(STDIN_FILENO);
+	cmd->back_up_fd[WRITE] = dup(STDOUT_FILENO);
 }
 
 char	*chop_n_trim(char *remain, char *line, size_t *start_idx, size_t *idx)

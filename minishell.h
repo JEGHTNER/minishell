@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 12:06:54 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/05/12 18:01:58 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/14 23:11:27 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ typedef struct s_token
 	enum e_macro	is_env;
 	enum e_macro	is_pipe;
 	char			*cmd_path;
-	int				back_up_fd[2];
 	int				last_flag;
 	int				*fail_flag;
 	int				*redirect_flag;
@@ -104,6 +103,7 @@ typedef struct s_cmd
 	struct s_env_lst	*env_head;
 	struct s_element	*chunk_head;
 	struct s_token		*tree_head;
+	int					back_up_fd[2];
 }	t_cmd;
 
 extern int	g_exit_status;
@@ -210,7 +210,7 @@ int			execute_tree(t_token *node, t_cmd *cmd);
 
 //tree_utils.c
 void		exec_redirs(t_token *node);
-void		exec_redir(t_token *node);
+void		exec_redir(t_token *node, t_cmd *cmd);
 void		exec_pipe(t_token *node);
 void		exec_cmd(t_token *node);
 void		exec_scmd(t_token *node, t_cmd *cmd);
@@ -218,7 +218,7 @@ void		exec_scmd(t_token *node, t_cmd *cmd);
 //tree_utils_redir.c
 void		exec_redir_case_dr(t_token *node);
 void		exec_redir_case_r(t_token *node);
-void		exec_redir_case_l(t_token *node);
+void		exec_redir_case_l(t_token *node, t_cmd *cmd);
 
 //tree_utils_scmd_parent.c
 void		parent_pipe(t_token *node);

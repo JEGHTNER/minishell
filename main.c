@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:26:47 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/05/11 16:15:44 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/14 23:07:27 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ void	read_line_loop(t_cmd *cmd)
 		else
 			free(line);
 	}
+	close(cmd->back_up_fd[READ]);
+	close(cmd->back_up_fd[WRITE]);
 }
 
 int	main(int ac, char **av, char **envp)

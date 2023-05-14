@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:38:21 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/12 17:32:14 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/14 23:13:58 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	exec_redirs(t_token *node)
 	}
 }
 
-void	exec_redir(t_token *node)
+void	exec_redir(t_token *node, t_cmd *cmd)
 {
 	if (ft_strlen(node->argv[0]) == 2 && !ft_strncmp(node->argv[0], "<<", 2))
 	{
@@ -47,7 +47,7 @@ void	exec_redir(t_token *node)
 		exec_redir_case_r(node);
 	else if (ft_strlen(node->argv[0]) == 1 && \
 	!ft_strncmp(node->argv[0], "<", ft_strlen(node->argv[0])))
-		exec_redir_case_l(node);
+		exec_redir_case_l(node, cmd);
 }
 
 void	exec_pipe(t_token *node)

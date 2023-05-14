@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 04:49:21 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/08 21:44:40 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/14 23:12:23 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	exec_redir_case_r(t_token *node)
 	close(fd);
 }
 
-void	exec_redir_case_l(t_token *node)
+void	exec_redir_case_l(t_token *node, t_cmd *cmd)
 {
 	int	fd;
 
@@ -45,7 +45,7 @@ void	exec_redir_case_l(t_token *node)
 	if (fd < 0)
 	{
 		*node->fail_flag = 1;
-		dup2(node->back_up_fd[WRITE], STDOUT_FILENO);
+		dup2(cmd->back_up_fd[WRITE], STDOUT_FILENO);
 		ft_putstr_fd("minishell: ", 2);
 		perror(node->argv[1]);
 		g_exit_status = 1;

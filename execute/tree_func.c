@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 18:37:38 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/11 16:20:45 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/14 23:10:52 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	execute_tree(t_token *node, t_cmd *cmd)
 	else if (node->cat == REDIRS)
 		exec_redirs(node);
 	else if (node->cat == REDIR)
-		exec_redir(node);
+		exec_redir(node, cmd);
 	else if (node->cat == CMD)
 		exec_cmd(node);
 	else if (node->cat == SIMPLE_CMD)
