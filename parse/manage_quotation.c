@@ -93,11 +93,11 @@ static char	*check_remain_quote(t_cmd *cmd, char *line, size_t *idx)
 				find_n_convert(cmd, line, idx, &start_idx));
 		else
 			(*idx)++;
+		if (g_exit_status == 258)
+			return (free_n_ret(remain));
 		if (*idx == ft_strlen(line) || is_whitespace(line[*idx]) == YES)
 			remain = chop_n_trim(remain, line, &start_idx, idx);
 	}
-	if (g_exit_status == 258)
-		return (free_n_ret(remain));
 	return (remain);
 }
 
@@ -113,11 +113,7 @@ t_macro	manage_quotation(t_cmd *cmd, char *line, size_t *idx)
 		data = single_quote_to_string(line, idx, &start_idx);
 	if (!data)
 		return (NO);
-	g_exit_status = 0;
 	data = join_n_free(data, check_remain_quote(cmd, line, idx));
 	insert_node(data, cmd, WORD);
-	if (g_exit_status == 258)
-		return (NO);
-	else
-		return (YES);
+	return (YES);
 }

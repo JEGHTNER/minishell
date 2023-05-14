@@ -41,7 +41,10 @@ char	*find_n_convert(t_cmd *cmd, char *line, size_t *idx, size_t *st)
 	(*idx)++;
 	end_idx = *idx;
 	if (*idx == ft_strlen(line) || is_whitespace(line[*idx]) == YES)
+	{
+		*st = *idx;
 		return (ft_strdup("$"));
+	}
 	if (line[*idx] == '?')
 		return (convert_exit_stat(idx, st));
 	if (line[*idx] == '$')
@@ -83,14 +86,14 @@ static char	*check_remain_env(t_cmd *cmd, char *line, size_t *idx)
 	return (remain);
 }
 
-void	manage_env(t_cmd *cmd, char *line, size_t *idx)
+t_macro	manage_env(t_cmd *cmd, char *line, size_t *idx)
 {
 	size_t	start_idx;
 	char	*data;
 
 	start_idx = 0;
 	data = find_n_convert(cmd, line, idx, &start_idx);
-	g_exit_status = 0;
 	data = join_n_free(data, check_remain_env(cmd, line, idx));
 	insert_node(data, cmd, WORD);
+	return (YES);
 }

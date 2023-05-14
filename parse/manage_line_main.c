@@ -29,8 +29,9 @@ t_macro	line_parse(t_cmd *cmd, char *line)
 		else if ((line[idx] == '>' || line[idx] == '<')
 			&& manage_redir(cmd, line, &idx) == NO)
 			return (NO);
-		else if (line[idx] == '$')
-			manage_env(cmd, line, &idx);
+		else if ((line[idx] == '$')
+			&& manage_env(cmd, line, &idx) == NO)
+			return (NO);
 		else if (is_whitespace(line[idx]) == YES)
 			idx++;
 		else if (manage_chunk(cmd, line, &idx) == NO)

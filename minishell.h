@@ -145,7 +145,7 @@ t_macro		manage_redir(t_cmd *cmd, char *line, size_t *idx);
 t_macro		manage_chunk(t_cmd *cmd, char *line, size_t *idx);
 
 //manage env variable
-void		manage_env(t_cmd *cmd, char *line, size_t *idx);
+t_macro		manage_env(t_cmd *cmd, char *line, size_t *idx);
 char		*find_n_convert(t_cmd *cmd, char *line, size_t *idx, size_t *st);
 char		*convert_exit_stat(size_t *idx, size_t *st);
 char		*convert_null(size_t *idx, size_t *st);

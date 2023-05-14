@@ -60,6 +60,10 @@ t_macro	error_n_ret(char *to_print)
 
 char	*free_n_ret(char *to_free)
 {
-	free(to_free);
-	return ((char *)0);
+	if (g_exit_status == 258)
+	{
+		free(to_free);
+		return ((char *)0);
+	}
+	return (to_free);
 }
