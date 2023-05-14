@@ -55,6 +55,7 @@ void	ft_free_list(t_element **head)
 	while (*head)
 	{
 		tmp = (*head)->next;
+		// free((*head)->content);
 		free(*head);
 		*head = tmp;
 	}
