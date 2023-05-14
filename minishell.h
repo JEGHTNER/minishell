@@ -191,6 +191,7 @@ char		*free_n_ret(char *to_free);
 void		free_all(t_cmd *cmd, char *line);
 void		ft_free_tree(t_token **head);
 void		ft_free_list(t_element **head);
+void		ft_free_list_err(t_element **head);
 
 //test
 void		print_list(t_element *head);

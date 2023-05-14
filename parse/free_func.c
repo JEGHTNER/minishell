@@ -15,10 +15,18 @@
 void	free_all(t_cmd *cmd, char *line)
 {
 	free(line);
-	if (cmd->chunk_head)
-		ft_free_list(&(cmd->chunk_head));
-	if (cmd->tree_head)
-		ft_free_tree(&(cmd->tree_head));
+	if (g_exit_status != 258)
+	{
+		if (cmd->chunk_head)
+			ft_free_list(&(cmd->chunk_head));
+		if (cmd->tree_head)
+			ft_free_tree(&(cmd->tree_head));
+	}
+	else
+	{
+		if (cmd->chunk_head)
+			ft_free_list_err(&(cmd->chunk_head));
+	}
 }
 
 void	ft_free_tree(t_token **head)
@@ -55,7 +63,20 @@ void	ft_free_list(t_element **head)
 	while (*head)
 	{
 		tmp = (*head)->next;
-		// free((*head)->content);
+		free(*head);
+		*head = tmp;
+	}
+	head = 0;
+}
+
+void	ft_free_list_err(t_element **head)
+{
+	t_element	*tmp;
+
+	while (*head)
+	{
+		tmp = (*head)->next;
+		free((*head)->content);
 		free(*head);
 		*head = tmp;
 	}
