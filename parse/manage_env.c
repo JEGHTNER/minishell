@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static char	*convert_exit_stat(size_t *idx, size_t *st)
+char	*convert_exit_stat(size_t *idx, size_t *st)
 {
 	char	*to_ret;
 	char	*tmp;
@@ -25,7 +25,7 @@ static char	*convert_exit_stat(size_t *idx, size_t *st)
 	return (to_ret);
 }
 
-static char	*convert_null(size_t *idx, size_t *st)
+char	*convert_null(size_t *idx, size_t *st)
 {
 	(*idx)++;
 	*st = *idx;

@@ -21,21 +21,21 @@ void	search_tree(t_token *node, t_cmd *cmd)
 		search_tree(node->right, cmd);
 }
 
-void	search_hd(t_token *node, int *hd_cnt, int *hd_fail)
+void	search_hd(t_cmd *cmd, t_token *node, int *hd_cnt, int *hd_fail)
 {
 	if (node->cat == REDIR)
 	{
 		if (ft_strncmp(node->argv[0], "<<", 2) == 0)
 		{
-			here_doc_tmp(node->argv[1], *hd_cnt, hd_fail);
+			here_doc_tmp(cmd, node->argv[1], *hd_cnt, hd_fail);
 			node->hd_index = *hd_cnt;
 			*hd_cnt += 1;
 		}
 	}
 	if (node->left != NULL)
-		search_hd(node->left, hd_cnt, hd_fail);
+		search_hd(cmd, node->left, hd_cnt, hd_fail);
 	if (node->right != NULL)
-		search_hd(node->right, hd_cnt, hd_fail);
+		search_hd(cmd, node->right, hd_cnt, hd_fail);
 }
 
 int	execute_tree(t_token *node, t_cmd *cmd)

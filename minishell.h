@@ -147,6 +147,8 @@ t_macro		manage_chunk(t_cmd *cmd, char *line, size_t *idx);
 //manage env variable
 void		manage_env(t_cmd *cmd, char *line, size_t *idx);
 char		*find_n_convert(t_cmd *cmd, char *line, size_t *idx, size_t *st);
+char		*convert_exit_stat(size_t *idx, size_t *st);
+char		*convert_null(size_t *idx, size_t *st);
 
 //syntax check
 t_macro		syntex_check(t_cmd *cmd);
@@ -195,7 +197,6 @@ void		print_list(t_element *head);
 void		print_env(t_env_lst *head);
 void		print_tree(t_token *head);
 // void	search_tree(t_token *node, t_list **my_env);
-void		aaa(void);
 
 //pipe functions
 // char	**get_path_args(t_list **my_env);
@@ -237,9 +238,12 @@ int			do_builtin2(int is_builtin, t_token *node, t_cmd *cmd);
 int			check_builtin(char *str);
 
 //here_doc.c
-void		here_doc_tmp(char *limiter, int index, int *hd_fail);
+void		here_doc_tmp(t_cmd *cmd, char *limiter, int index, int *hd_fail);
 void		here_doc(t_token *node);
-void		search_hd(t_token *node, int *hd_cnt, int *hd_fail);
+void		search_hd(t_cmd *cmd, t_token *node, int *hd_cnt, int *hd_fail);
+
+//here_doc_utils.c
+char		*here_doc_parsing(t_cmd *cmd, char *line);
 
 //lst_to_table
 // char	**lst_to_table(t_list **my_env);

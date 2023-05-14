@@ -53,6 +53,7 @@ SRCS_EXECUTE = pipe_func.c \
 				built_in_utils2.c \
 				built_in_utils_cd.c \
 				here_doc.c \
+				here_doc_utils.c \
 				ft_split_export.c
 
 OBJS = $(addprefix $(PARSE_DIR), $(SRCS_PARSE:.c=.o)) \

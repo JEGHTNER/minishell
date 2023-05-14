@@ -23,7 +23,7 @@ void	wait_hd(int pid, int *hd_fail)
 		*hd_fail = 1;
 }
 
-void	hd_read_line(char *limiter, int fd, int *hd_fail)
+void	hd_read_line(t_cmd *cmd, char *limiter, int fd, int *hd_fail)
 {
 	char	*line;
 	int		pid;
@@ -42,6 +42,7 @@ void	hd_read_line(char *limiter, int fd, int *hd_fail)
 				free(line);
 				break ;
 			}
+			line = here_doc_parsing(cmd, line);
 			ft_putstr_fd(line, fd);
 			free(line);
 		}
@@ -50,7 +51,7 @@ void	hd_read_line(char *limiter, int fd, int *hd_fail)
 	wait_hd(pid, hd_fail);
 }
 
-void	here_doc_tmp(char *limiter, int index, int *hd_fail)
+void	here_doc_tmp(t_cmd *cmd, char *limiter, int index, int *hd_fail)
 {
 	int		fd;
 	char	*file_name;
@@ -62,7 +63,7 @@ void	here_doc_tmp(char *limiter, int index, int *hd_fail)
 	fd = open(file_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 		perror(file_name);
-	hd_read_line(limiter, fd, hd_fail);
+	hd_read_line(cmd, limiter, fd, hd_fail);
 	close(fd);
 	free(file_name);
 }

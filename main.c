@@ -38,7 +38,7 @@ static void	parse_n_execute(t_cmd *cmd, char *line)
 	if (syntex_check(cmd) == NO)
 		return ;
 	convert_tree(cmd);
-	search_hd(cmd->tree_head, &hd_cnt, &hd_fail);
+	search_hd(cmd, cmd->tree_head, &hd_cnt, &hd_fail);
 	if (hd_fail == 1)
 		return ;
 	search_tree(cmd->tree_head, cmd);

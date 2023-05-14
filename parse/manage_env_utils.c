@@ -12,11 +12,21 @@
 
 #include "minishell.h"
 
+static t_macro	is_it_in_charset(char checker, char *charset)
+{
+	while (*charset)
+	{
+		if (checker == *charset)
+			return (YES);
+		charset++;
+	}
+	return (NO);
+}
+
 t_macro	is_it_env_key(char check)
 {
-	if (check && is_whitespace(check) == NO && check != '\"' && check != '\''
-		&& check != '.' && check != '|' && check != '>' && check != '?'
-		&& check != '<' && check != '$' && check != ':')
+	if (check && is_whitespace(check) == NO
+		&& is_it_in_charset(check, "`~!#%^&*(){}\\ |\'\";") == NO)
 		return (YES);
 	else
 		return (NO);
