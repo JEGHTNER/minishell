@@ -113,6 +113,7 @@ t_macro	manage_quotation(t_cmd *cmd, char *line, size_t *idx)
 		data = single_quote_to_string(line, idx, &start_idx);
 	if (!data)
 		return (NO);
+	g_exit_status = 0;
 	data = join_n_free(data, check_remain_quote(cmd, line, idx));
 	insert_node(data, cmd, WORD);
 	if (g_exit_status == 258)

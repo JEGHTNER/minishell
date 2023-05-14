@@ -90,6 +90,7 @@ void	manage_env(t_cmd *cmd, char *line, size_t *idx)
 
 	start_idx = 0;
 	data = find_n_convert(cmd, line, idx, &start_idx);
+	g_exit_status = 0;
 	data = join_n_free(data, check_remain_env(cmd, line, idx));
 	insert_node(data, cmd, WORD);
 }
