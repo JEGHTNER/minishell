@@ -38,6 +38,7 @@ SRCS_PARSE = manage_line_main.c \
 			convert_tree.c \
 			utils.c \
 			utils2.c \
+			utils3.c \
 			free_func.c
 
 SRCS_EXECUTE = pipe_func.c \

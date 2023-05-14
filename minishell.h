@@ -186,6 +186,7 @@ char		*chop_n_trim(char *data, char *line, size_t *start_idx, \
 char		*join_n_free(char *former, char *latter);
 t_macro		error_n_ret(char *to_print);
 char		*free_n_ret(char *to_free);
+int 		for_chunk(char bite);
 
 //free utils
 void		free_all(t_cmd *cmd, char *line);
