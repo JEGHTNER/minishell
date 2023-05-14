@@ -23,7 +23,6 @@ void	search_tree(t_token *node, t_cmd *cmd)
 
 void	search_hd(t_cmd *cmd, t_token *node, int *hd_cnt, int *hd_fail)
 {
-	system("leaks minishell | grep leaked");
 	if (node->cat == REDIR)
 	{
 		if (ft_strncmp(node->argv[0], "<<", 2) == 0)

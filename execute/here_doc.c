@@ -29,7 +29,6 @@ void	hd_read_line(t_cmd *cmd, char *limiter, int fd, int *hd_fail)
 	int		pid;
 
 	signal_init(0, 0);
-	system("leaks minishell | grep leaked");
 	pid = fork();
 	if (pid == 0)
 	{

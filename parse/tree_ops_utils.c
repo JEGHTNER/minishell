@@ -38,16 +38,16 @@ t_token	*init_redir_token(t_token *to_put, int flag)
 		return (tmp_redir);
 }
 
-void	div_redir_token(t_token **cur, t_token *to_put)
+void	div_redir_token(t_token *cur, t_token *to_put)
 {
-	if ((*cur)->left == 0)
-		(*cur)->left = init_redir_token(to_put, 1);
+	if (cur->left == 0)
+		cur->left = init_redir_token(to_put, 1);
 	else
 	{
-		(*cur) = (*cur)->left;
-		while ((*cur)->right)
-			(*cur) = (*cur)->right;
-		(*cur)->right = init_redir_token(to_put, 1);
+		cur = cur->left;
+		while (cur->right)
+			cur = cur->right;
+		cur->right = init_redir_token(to_put, 1);
 	}
 }
 
@@ -88,7 +88,7 @@ void	insert_redir_when_head_pipe(t_token *cur, t_token *to_put)
 		if (cur->left)
 		{
 			cur = cur->left;
-			div_redir_token(&cur, to_put);
+			div_redir_token(cur, to_put);
 		}
 		else
 			cur->left = init_redir_token(to_put, 0);

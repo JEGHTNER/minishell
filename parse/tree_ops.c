@@ -83,7 +83,7 @@ void	insert_redir(t_token **head, t_token *to_put)
 		*head = init_redir_token(to_put, 0);
 	else if (cur->cat == CMD)
 	{
-		div_redir_token(&cur, to_put);
+		div_redir_token(cur, to_put);
 		*head = tmp_head;
 	}
 	else

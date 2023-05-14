@@ -26,7 +26,7 @@ static t_macro	is_it_in_charset(char checker, char *charset)
 t_macro	is_it_env_key(char check)
 {
 	if (check && is_whitespace(check) == NO
-		&& is_it_in_charset(check, "`~!#%^&*(){}\\ |\'\";") == NO)
+		&& is_it_in_charset(check, "`~!#%^&*(){}\\|\'\";") == NO)
 		return (YES);
 	else
 		return (NO);
