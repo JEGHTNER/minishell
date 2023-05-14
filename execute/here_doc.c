@@ -29,6 +29,7 @@ void	hd_read_line(t_cmd *cmd, char *limiter, int fd, int *hd_fail)
 	int		pid;
 
 	signal_init(0, 0);
+	system("leaks minishell | grep leaked");
 	pid = fork();
 	if (pid == 0)
 	{
@@ -39,12 +40,12 @@ void	hd_read_line(t_cmd *cmd, char *limiter, int fd, int *hd_fail)
 			line = get_next_line(STDIN_FILENO);
 			if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
 			{
-				free(line);
+				free_all(cmd, line);
 				break ;
 			}
 			line = here_doc_parsing(cmd, line);
 			ft_putstr_fd(line, fd);
-			free(line);
+			free_all(cmd, line);
 		}
 		exit(0);
 	}
