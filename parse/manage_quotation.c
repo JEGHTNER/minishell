@@ -56,7 +56,7 @@ char	*single_quote_to_string(char *line, size_t *idx, size_t *st)
 	return (to_ret);
 }
 
-static char	*trim_before_conv(char *data, char *line, size_t *st, size_t *idx)
+char	*trim_before_conv(char *data, char *line, size_t *st, size_t *idx)
 {
 	size_t	end_idx;
 	char	*tmp;

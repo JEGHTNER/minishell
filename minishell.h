@@ -138,6 +138,7 @@ t_macro		check_side_quotation(char *line, size_t *start, size_t *end_idx);
 char		*quote_to_string(t_cmd *cmd, char *line, size_t *idx, size_t *st);
 t_macro		nothing_to_ret(char **tmp, size_t *idx, size_t end_idx, \
 			size_t *st);
+char		*trim_before_conv(char *data, char *line, size_t *st, size_t *idx);
 
 //manage pipe, redir & chunk
 t_macro		manage_pipe(t_cmd *cmd, char *line, size_t *idx);
@@ -187,6 +188,8 @@ char		*join_n_free(char *former, char *latter);
 t_macro		error_n_ret(char *to_print);
 char		*free_n_ret(char *to_free);
 int 		for_chunk(char bite);
+t_macro		is_it_in_charset(char checker, char *charset);
+
 
 //free utils
 void		free_all(t_cmd *cmd, char *line);

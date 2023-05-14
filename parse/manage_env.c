@@ -40,7 +40,8 @@ char	*find_n_convert(t_cmd *cmd, char *line, size_t *idx, size_t *st)
 
 	(*idx)++;
 	end_idx = *idx;
-	if (*idx == ft_strlen(line) || is_whitespace(line[*idx]) == YES)
+	if (*idx == ft_strlen(line) || is_whitespace(line[*idx]) == YES
+		|| is_it_in_charset(line[*idx], "./`~!#^&%%*(){}\\|\'\";") == YES)
 	{
 		*st = *idx;
 		return (ft_strdup("$"));
@@ -71,7 +72,7 @@ static char	*check_remain_env(t_cmd *cmd, char *line, size_t *idx)
 	while (line[*idx] && is_whitespace(line[*idx]) == NO)
 	{
 		if (line[*idx] == '|' || line[*idx] == '>' || line[*idx] == '<')
-			return (remain);
+			return (trim_before_conv(remain, line, &start_idx, idx));
 		else if (line[*idx] == '\'' || line[*idx] == '\"')
 			remain = join_n_free(chop_n_trim(remain, line, &start_idx, idx), \
 				quote_to_string(cmd, line, idx, &start_idx));
