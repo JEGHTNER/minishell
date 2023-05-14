@@ -19,16 +19,16 @@ t_macro	line_parse(t_cmd *cmd, char *line)
 	idx = 0;
 	while (line[idx])
 	{
-		if (line[idx] == '|' &&manage_pipe(cmd, line, &idx) == NO)
-				return (NO);
+		if (line[idx] == '|' && manage_pipe(cmd, line, &idx) == NO)
+			return (NO);
 		else if ((line[idx] == '\'' || line[idx] == '\"')
-				&& manage_quotation(cmd, line, &idx) == NO)
-				return (NO);
+			&& manage_quotation(cmd, line, &idx) == NO)
+			return (NO);
 		else if (line[idx] == '\\' || line[idx] == ';')
 			return (error_n_ret("syntax error near unexpected token\n"));
 		else if ((line[idx] == '>' || line[idx] == '<')
-			  && manage_redir(cmd, line, &idx) == NO)
-				return (NO);
+			&& manage_redir(cmd, line, &idx) == NO)
+			return (NO);
 		else if (line[idx] == '$')
 			manage_env(cmd, line, &idx);
 		else if (is_whitespace(line[idx]) == YES)

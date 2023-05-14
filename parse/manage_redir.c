@@ -67,7 +67,7 @@ t_macro	manage_redir(t_cmd *cmd, char *line, size_t *idx)
 		|| ft_strncmp(line + *idx, "<<", 2) == 0)
 	{
 		if (manage_append_output_redir(cmd, line, idx) == NO)
-			return(NO);
+			return (NO);
 	}
 	else
 	{
