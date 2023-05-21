@@ -6,7 +6,7 @@
 /*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 14:15:09 by jehelee           #+#    #+#             */
-/*   Updated: 2023/05/08 05:02:00 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/21 16:31:08 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,12 @@ void	echo_n(char **argv)
 	while (argv[++i])
 	{
 		if (i > 2)
-			printf(" %s", argv[i]);
+		{
+			ft_putstr_fd(" ", 1);
+			ft_putstr_fd(argv[i], 1);
+		}
 		else
-			printf("%s", argv[i]);
+			ft_putstr_fd(argv[i], 1);
 	}
 }
 
