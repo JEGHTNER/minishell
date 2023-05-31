@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 12:06:54 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/05/14 23:11:27 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/31 23:54:23 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ typedef struct s_cmd
 	struct s_element	*chunk_head;
 	struct s_token		*tree_head;
 	int					back_up_fd[2];
+	int					hd_fail;
 }	t_cmd;
 
 extern int	g_exit_status;
@@ -195,6 +196,7 @@ void		free_all(t_cmd *cmd, char *line);
 void		ft_free_tree(t_token **head);
 void		ft_free_list(t_element **head);
 void		ft_free_list_err(t_element **head);
+void		free_env(t_env_lst **head);
 
 //test
 void		print_list(t_element *head);

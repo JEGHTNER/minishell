@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_func.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 11:15:33 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/05/08 22:28:20 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/31 23:57:40 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,18 @@ void	ft_free_list_err(t_element **head)
 		*head = tmp;
 	}
 	head = 0;
+}
+
+void	free_env(t_env_lst **head)
+{
+	t_env_lst	*tmp;
+
+	tmp = *head;
+	while (tmp)
+	{
+		free(tmp->key);
+		free(tmp->value);
+		free(tmp);
+		tmp = tmp->next;
+	}
 }

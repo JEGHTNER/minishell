@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jehelee <jehelee@student.42.kr>            +#+  +:+       +#+        */
+/*   By: jehelee <jehelee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:26:47 by joon-lee          #+#    #+#             */
-/*   Updated: 2023/05/14 23:07:27 by jehelee          ###   ########.fr       */
+/*   Updated: 2023/05/31 23:58:43 by jehelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,17 @@ static void	init_main(t_cmd *cmd, char **envp)
 static void	parse_n_execute(t_cmd *cmd, char *line)
 {
 	int			hd_cnt;
-	int			hd_fail;
 
+	cmd->hd_fail = 0;
 	hd_cnt = 0;
-	hd_fail = 0;
 	line_parse(cmd, line);
 	if (g_exit_status == 258)
 		return ;
 	if (syntex_check(cmd) == NO)
 		return ;
 	convert_tree(cmd);
-	search_hd(cmd, cmd->tree_head, &hd_cnt, &hd_fail);
-	if (hd_fail == 1)
+	search_hd(cmd, cmd->tree_head, &hd_cnt, &cmd->hd_fail);
+	if (cmd->hd_fail == 1)
 		return ;
 	search_tree(cmd->tree_head, cmd);
 }
@@ -114,5 +113,6 @@ int	main(int ac, char **av, char **envp)
 	read_line_loop(&cmd);
 	signal_init(1, 1);
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
+	free_env(&cmd.env_head);
 	return (EXIT_SUCCESS);
 }
